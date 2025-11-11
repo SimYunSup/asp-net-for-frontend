@@ -5,47 +5,79 @@
 
 ## **Part 1: C# 기초 - 자바스크립트/타입스크립트 개발자 관점**
 
-### **Chapter 1: 프론트엔드 개발자가 알아야 할 C# 핵심 개념**
+### **Chapter 1: C# 기초 문법 - TypeScript 개발자를 위한 빠른 시작**
 
 #### 1.1 타입 시스템: TypeScript와 C#의 차이점
 - 정적 타입 vs 동적 타입의 근본적 차이
 - C#의 컴파일 타임 타입 체킹
 - nullable 참조 타입과 TypeScript의 strict mode 비교
 - 제네릭: `<T>` 사용법의 유사점과 차이점
-- 인터페이스와 추상 클래스의 실전 활용
+- 인터페이스 기초
 
-#### 1.2 JavaScript/TypeScript에 없는 C# 개념
-- 값 타입(Value Types) vs 참조 타입(Reference Types)
-- struct와 class의 차이점과 성능 영향
-- 프로퍼티(Properties): getter/setter의 진화된 형태
-- 이벤트(Events)와 델리게이트(Delegates)
-- LINQ: SQL과 함수형 프로그래밍의 만남
-
-#### 1.3 익숙한 개념, 다른 문법
+#### 1.2 익숙한 개념, 다른 문법
 - 화살표 함수 vs 람다 표현식
 - Promise/async-await vs Task/async-await
 - 구조 분해 할당과 패턴 매칭
 - 모듈 시스템: ES6 modules vs C# namespaces
-- `var`, `let`, `const` vs `var`, `let`, `const` (같지만 다른)
+- `var`, `let`, `const` 비교
 
-#### 1.4 객체지향 프로그래밍: 더 엄격한 세계
-- 클래스 기반 OOP의 전통적 접근
-- 접근 제한자: `public`, `private`, `protected`, `internal`
-- 상속과 다형성: TypeScript보다 강력한 제약
-- 인터페이스 구현의 명시성
-- 추상 클래스 활용 패턴
+#### 1.3 LINQ 기초 - JavaScript 배열 메서드와 비교
+- 기본 LINQ 메서드 (Where, Select, OrderBy 등)
+- JavaScript 메서드 → LINQ 매핑
+- LINQ 기본 예제
 
-#### 1.5 C# 13의 최신 기능 (2025 기준)
-- 기본 람다 매개변수
-- 향상된 패턴 매칭
-- ref struct와 성능 최적화
-- 간결한 using 선언
+#### 1.4 패턴 매칭 기초
+- Switch 표현식
+- is 패턴
+- 타입 패턴
 
-#### 1.6 실습: 프론트엔드 개발자를 위한 C# 코드 변환 연습
-- React 컴포넌트 로직을 C# 클래스로 변환하기
-- TypeScript 인터페이스를 C# 인터페이스로
+#### 1.5 실습: 기초 문법 변환 연습
 - Async 패턴 비교 실습
 - Array 메서드를 LINQ로 재작성하기
+
+---
+
+### **Chapter 2: 객체지향 프로그래밍과 고급 기능**
+
+#### 2.1 값 타입 vs 참조 타입
+- JavaScript의 메모리 모델과 비교
+- struct와 class의 차이점과 성능 영향
+- 언제 struct를 사용할까?
+
+#### 2.2 프로퍼티(Properties): getter/setter의 진화된 형태
+- 자동 구현 프로퍼티
+- init 접근자
+- Required 프로퍼티
+- C# 14: field 키워드
+
+#### 2.3 이벤트(Events)와 델리게이트(Delegates)
+- JavaScript 이벤트 시스템과 비교
+- 델리게이트 기초
+- 이벤트 패턴
+- 실전 예제
+
+#### 2.4 객체지향 프로그래밍: 더 엄격한 세계
+- 접근 제한자
+- 상속과 다형성
+- 인터페이스와 추상 클래스 심화
+- 디자인 패턴 적용
+
+#### 2.5 LINQ 고급 활용
+- GroupBy와 집계
+- Join 작업
+- SelectMany (flatMap)
+- 복잡한 쿼리 예제
+
+#### 2.6 C# 13 & 14의 최신 기능 (2025 기준)
+- C# 13: 기본 람다 매개변수, 향상된 패턴 매칭
+- C# 14: Extension Members, First-Class Span Support, field 키워드
+- C# 14: Null-Conditional Assignment, Partial Constructors
+- C# 14: Compound Operator Overloading
+
+#### 2.7 실습: 고급 패턴 연습
+- OOP 패턴 구현
+- LINQ 고급 쿼리
+- 이벤트와 델리게이트
 
 ---
 
