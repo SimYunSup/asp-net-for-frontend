@@ -773,24 +773,6 @@ if (obj is string s)
 
 ---
 
-## 1.5 실습: 기초 문법 변환 연습
-
-이 섹션에서는 실제 코드를 변환하면서 학습합니다. `examples/` 폴더의 코드를 참고하세요.
-
-### 실습 1: Async 패턴 비교 실습
-
-**목표**: Promise/async-await를 Task/async-await로 변환
-- [예제 코드 보기](./examples/01-async-patterns/)
-
-### 실습 2: Array 메서드를 LINQ로 재작성하기
-
-**목표**: JavaScript 배열 메서드를 LINQ로 변환
-- [예제 코드 보기](./examples/02-linq-basics/)
-
----
-
----
-
 ## Chapter 1 마무리: TypeScript에서 C#으로의 첫 걸음
 
 축하합니다! Chapter 1을 완료했습니다. 이제 여러분은 TypeScript/JavaScript의 익숙한 개념들을 C#으로 표현할 수 있습니다. `const`와 `let`이 C#의 변수 선언으로, 화살표 함수가 람다 표현식으로, `Promise`가 `Task`로, 그리고 배열 메서드가 LINQ로 자연스럽게 매핑되는 것을 보았습니다.

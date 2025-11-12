@@ -7,6 +7,7 @@ export default defineConfig({
   // For custom domain or root deployment: use '/'
   base: '/asp-net-for-frontend/',
   lang: 'ko-KR',
+  srcDir: 'docs',
 
   themeConfig: {
     logo: '/logo.svg',
