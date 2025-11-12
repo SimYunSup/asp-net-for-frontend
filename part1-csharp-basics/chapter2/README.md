@@ -1,0 +1,982 @@
+# Chapter 2: 객체지향 프로그래밍과 고급 기능
+
+## 개요
+
+이 챕터에서는 C#의 객체지향 프로그래밍 심화와 JavaScript/TypeScript에는 없는 고급 기능들을 다룹니다. 값 타입과 참조 타입의 차이, 이벤트 시스템, LINQ 고급 활용, 그리고 C# 13/14의 최신 기능까지 학습합니다.
+
+---
+
+## 2.1 값 타입(Value Types) vs 참조 타입(Reference Types)
+
+### JavaScript의 메모리 모델
+
+```javascript
+// JavaScript: 원시 타입은 값 복사, 객체는 참조 복사
+let a = 10;
+let b = a;  // 값 복사
+b = 20;
+console.log(a); // 10
+
+let obj1 = { x: 10 };
+let obj2 = obj1;  // 참조 복사
+obj2.x = 20;
+console.log(obj1.x); // 20
+```
+
+### C#의 메모리 모델
+
+```csharp
+// 값 타입 (struct, int, bool, enum 등)
+int a = 10;
+int b = a;  // 값 복사
+b = 20;
+Console.WriteLine(a); // 10
+
+// 참조 타입 (class)
+class Point
+{
+    public int X { get; set; }
+}
+
+Point p1 = new Point { X = 10 };
+Point p2 = p1;  // 참조 복사
+p2.X = 20;
+Console.WriteLine(p1.X); // 20
+
+// struct (값 타입)
+struct PointStruct
+{
+    public int X { get; set; }
+}
+
+PointStruct ps1 = new PointStruct { X = 10 };
+PointStruct ps2 = ps1;  // 값 복사
+ps2.X = 20;
+Console.WriteLine(ps1.X); // 10 (독립적인 복사본)
+```
+
+**메모리 할당:**
+- **값 타입**: 스택(Stack)에 저장 - 빠르지만 크기 제한
+- **참조 타입**: 힙(Heap)에 저장 - 느리지만 크기 유연
+
+### struct와 class의 차이점과 성능 영향
+
+**class (참조 타입):**
+```csharp
+// 힙 할당, 참조 의미론
+public class PersonClass
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public PersonClass(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+}
+
+// 사용
+PersonClass person1 = new PersonClass("John", 30);  // 힙 할당
+PersonClass person2 = person1;  // 참조 복사
+person2.Age = 31;
+Console.WriteLine(person1.Age); // 31
+```
+
+**struct (값 타입):**
+```csharp
+// 스택 할당, 값 의미론
+public struct PersonStruct
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public PersonStruct(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+}
+
+// 사용
+PersonStruct person1 = new PersonStruct("John", 30);  // 스택 할당
+PersonStruct person2 = person1;  // 값 복사
+person2.Age = 31;
+Console.WriteLine(person1.Age); // 30
+```
+
+**언제 struct를 사용할까?**
+1. 작은 데이터 구조 (16바이트 이하 권장)
+2. 불변성이 중요한 경우
+3. 빈번한 생성/소멸이 일어나는 경우
+4. 컬렉션에 많이 저장되는 경우
+
+```csharp
+// 좋은 struct 예제
+public readonly struct Point2D
+{
+    public double X { get; init; }
+    public double Y { get; init; }
+
+    public Point2D(double x, double y)
+    {
+        X = x;
+        Y = y;
+    }
+
+    public double DistanceFromOrigin() => Math.Sqrt(X * X + Y * Y);
+}
+
+// readonly struct: 불변성 보장
+```
+
+---
+
+## 2.2 프로퍼티(Properties): getter/setter의 진화된 형태
+
+### JavaScript/TypeScript getter/setter
+
+```typescript
+class User {
+    private _name: string;
+
+    get name(): string {
+        return this._name;
+    }
+
+    set name(value: string) {
+        if (!value) throw new Error("Name is required");
+        this._name = value;
+    }
+}
+```
+
+### C# 프로퍼티
+
+```csharp
+// 자동 구현 프로퍼티 (가장 간단)
+public class User
+{
+    public string Name { get; set; }  // 컴파일러가 backing field 자동 생성
+    public int Age { get; set; }
+}
+
+// 읽기 전용 프로퍼티
+public class User
+{
+    public string Name { get; }  // 생성자에서만 설정 가능
+
+    public User(string name)
+    {
+        Name = name;
+    }
+}
+
+// init 접근자 (C# 9.0+) - 객체 초기화 시에만 설정
+public class User
+{
+    public string Name { get; init; }
+    public int Age { get; init; }
+}
+
+var user = new User { Name = "John", Age = 30 };
+// user.Name = "Jane"; // 에러! init만 가능
+
+// 계산된 프로퍼티
+public class User
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+
+    // Expression-bodied property
+    public string FullName => $"{FirstName} {LastName}";
+
+    // 또는
+    public string FullName
+    {
+        get => $"{FirstName} {LastName}";
+    }
+}
+
+// Backing field를 사용한 프로퍼티 (유효성 검사)
+public class User
+{
+    private string _name;
+
+    public string Name
+    {
+        get => _name;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Name is required");
+            _name = value;
+        }
+    }
+}
+
+// Required 프로퍼티 (C# 11+)
+public class User
+{
+    public required string Name { get; init; }
+    public required string Email { get; init; }
+    public int? Age { get; init; }
+}
+
+// var user = new User(); // 에러! Name과 Email 필수
+var user = new User { Name = "John", Email = "john@example.com" }; // OK
+```
+
+### C# 14: field 키워드 (새로운 기능!)
+
+```csharp
+// C# 14: field 키워드로 backing field 접근
+public class User
+{
+    public string Name
+    {
+        get => field;
+        set => field = value?.Trim() ?? throw new ArgumentNullException();
+    }
+
+    // 더 간결한 유효성 검사
+    public int Age
+    {
+        get => field;
+        set
+        {
+            if (value < 0 || value > 150)
+                throw new ArgumentOutOfRangeException(nameof(Age));
+            field = value;
+        }
+    }
+}
+```
+
+**프로퍼티 접근 제한자:**
+```csharp
+public class BankAccount
+{
+    // Public get, private set
+    public decimal Balance { get; private set; }
+
+    // Protected set
+    public string AccountNumber { get; protected set; }
+
+    // Internal get
+    internal string InternalId { get; set; }
+
+    public void Deposit(decimal amount)
+    {
+        if (amount > 0)
+            Balance += amount;
+    }
+}
+```
+
+---
+
+## 2.3 이벤트(Events)와 델리게이트(Delegates)
+
+### JavaScript의 이벤트
+
+```javascript
+class Button {
+    constructor() {
+        this.listeners = [];
+    }
+
+    addEventListener(callback) {
+        this.listeners.push(callback);
+    }
+
+    click() {
+        this.listeners.forEach(listener => listener());
+    }
+}
+```
+
+### C# 델리게이트
+
+```csharp
+// 델리게이트 선언 (함수 타입 정의)
+public delegate void ClickHandler(object sender, EventArgs e);
+
+// 또는 내장 델리게이트 사용
+// Action<T>: 반환값 없음
+// Func<T, TResult>: 반환값 있음
+// EventHandler<T>: 이벤트용
+```
+
+### C# 이벤트
+
+```csharp
+public class Button
+{
+    // 이벤트 선언
+    public event EventHandler<EventArgs> Click;
+
+    // 또는 커스텀 EventArgs
+    public event EventHandler<ButtonClickEventArgs> CustomClick;
+
+    // 이벤트 발생 메서드
+    protected virtual void OnClick()
+    {
+        // Null 조건부 호출
+        Click?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void PerformClick()
+    {
+        OnClick();
+    }
+}
+
+public class ButtonClickEventArgs : EventArgs
+{
+    public int X { get; set; }
+    public int Y { get; set; }
+}
+
+// 사용
+var button = new Button();
+
+// 이벤트 구독 (+=)
+button.Click += (sender, e) =>
+{
+    Console.WriteLine("Button clicked!");
+};
+
+button.Click += Button_Click;
+
+void Button_Click(object sender, EventArgs e)
+{
+    Console.WriteLine("Another handler");
+}
+
+// 이벤트 해제 (-=)
+button.Click -= Button_Click;
+
+// 이벤트 발생
+button.PerformClick();
+```
+
+### 실전 예제: 데이터 변경 알림
+
+```csharp
+public class DataStore<T>
+{
+    private T _data;
+
+    // 데이터 변경 전/후 이벤트
+    public event EventHandler<DataChangingEventArgs<T>> DataChanging;
+    public event EventHandler<DataChangedEventArgs<T>> DataChanged;
+
+    public T Data
+    {
+        get => _data;
+        set
+        {
+            var changingArgs = new DataChangingEventArgs<T>(_data, value);
+            DataChanging?.Invoke(this, changingArgs);
+
+            if (!changingArgs.Cancel)
+            {
+                var oldValue = _data;
+                _data = value;
+                DataChanged?.Invoke(this, new DataChangedEventArgs<T>(oldValue, value));
+            }
+        }
+    }
+}
+
+public class DataChangingEventArgs<T> : EventArgs
+{
+    public T OldValue { get; }
+    public T NewValue { get; }
+    public bool Cancel { get; set; }
+
+    public DataChangingEventArgs(T oldValue, T newValue)
+    {
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
+}
+
+public class DataChangedEventArgs<T> : EventArgs
+{
+    public T OldValue { get; }
+    public T NewValue { get; }
+
+    public DataChangedEventArgs(T oldValue, T newValue)
+    {
+        OldValue = oldValue;
+        NewValue = newValue;
+    }
+}
+```
+
+---
+
+## 2.4 객체지향 프로그래밍: 더 엄격한 세계
+
+### 접근 제한자: `public`, `private`, `protected`, `internal`
+
+```csharp
+public class AccessModifierExample
+{
+    // public: 어디서나 접근 가능
+    public string PublicField = "public";
+
+    // private: 같은 클래스 내에서만 (기본값)
+    private string _privateField = "private";
+
+    // protected: 같은 클래스 + 파생 클래스
+    protected string ProtectedField = "protected";
+
+    // internal: 같은 어셈블리(프로젝트) 내에서만
+    internal string InternalField = "internal";
+
+    // protected internal: protected OR internal (합집합)
+    protected internal string ProtectedInternalField = "protected internal";
+
+    // private protected: protected AND internal (교집합) - C# 7.2+
+    private protected string PrivateProtectedField = "private protected";
+}
+
+public class DerivedClass : AccessModifierExample
+{
+    public void Test()
+    {
+        var x = PublicField;        // OK
+        // var y = _privateField;   // 에러!
+        var z = ProtectedField;     // OK
+        var w = InternalField;      // OK (같은 어셈블리)
+    }
+}
+```
+
+### 상속과 다형성
+
+**TypeScript:**
+```typescript
+class Animal {
+    makeSound(): void {
+        console.log("Some sound");
+    }
+}
+
+class Dog extends Animal {
+    makeSound(): void {
+        console.log("Woof!");
+    }
+}
+```
+
+**C#:**
+```csharp
+// 기본 클래스
+public class Animal
+{
+    // virtual: 오버라이드 가능
+    public virtual void MakeSound()
+    {
+        Console.WriteLine("Some sound");
+    }
+
+    // sealed 메서드: 더 이상 오버라이드 불가
+    public void Eat()
+    {
+        Console.WriteLine("Eating...");
+    }
+}
+
+// 파생 클래스
+public class Dog : Animal
+{
+    // override: 명시적으로 오버라이드
+    public override void MakeSound()
+    {
+        Console.WriteLine("Woof!");
+    }
+
+    // new: 기본 메서드 숨김 (shadowing)
+    public new void Eat()
+    {
+        Console.WriteLine("Dog eating...");
+    }
+}
+
+// sealed 클래스: 상속 불가
+public sealed class FinalClass
+{
+    // 더 이상 상속할 수 없음
+}
+
+// abstract 클래스
+public abstract class Shape
+{
+    // 추상 메서드: 구현 필수
+    public abstract double GetArea();
+
+    // 일반 메서드
+    public void Display()
+    {
+        Console.WriteLine($"Area: {GetArea()}");
+    }
+}
+
+public class Circle : Shape
+{
+    public double Radius { get; set; }
+
+    // 추상 메서드 구현 필수
+    public override double GetArea()
+    {
+        return Math.PI * Radius * Radius;
+    }
+}
+```
+
+### 인터페이스와 추상 클래스 심화
+
+**인터페이스 vs 추상 클래스 선택 기준:**
+
+| 기준 | 인터페이스 | 추상 클래스 |
+|------|-----------|-----------|
+| 다중 상속 | ✅ 가능 | ❌ 불가능 (단일 상속만) |
+| 구현 포함 | C# 8.0+에서만 | ✅ 가능 |
+| 필드 포함 | ❌ 불가능 | ✅ 가능 |
+| 생성자 | ❌ 없음 | ✅ 있음 |
+| 접근 제한자 | 모두 public | ✅ 다양하게 설정 |
+| 용도 | 계약 정의 | 공통 기능 + 계약 |
+
+**추상 클래스 활용 패턴:**
+```csharp
+// 추상 클래스: 공통 기능 + 추상 메서드
+public abstract class BaseController
+{
+    protected ILogger Logger { get; }
+
+    protected BaseController(ILogger logger)
+    {
+        Logger = logger;
+    }
+
+    // 추상 메서드
+    protected abstract string GetControllerName();
+
+    // 템플릿 메서드 패턴
+    public void HandleRequest()
+    {
+        Logger.Log($"Handling request in {GetControllerName()}");
+        BeforeAction();
+        ExecuteAction();
+        AfterAction();
+    }
+
+    protected virtual void BeforeAction()
+    {
+        Logger.Log("Before action");
+    }
+
+    protected abstract void ExecuteAction();
+
+    protected virtual void AfterAction()
+    {
+        Logger.Log("After action");
+    }
+}
+
+public class UserController : BaseController
+{
+    public UserController(ILogger logger) : base(logger)
+    {
+    }
+
+    protected override string GetControllerName() => "UserController";
+
+    protected override void ExecuteAction()
+    {
+        Logger.Log("Executing user action");
+    }
+
+    // BeforeAction과 AfterAction은 선택적 오버라이드
+}
+```
+
+---
+
+## 2.5 LINQ 고급 활용
+
+### GroupBy와 집계
+
+```csharp
+var products = new List<Product>
+{
+    new() { Id = 1, Name = "Laptop", Price = 1000, Category = "Electronics" },
+    new() { Id = 2, Name = "Mouse", Price = 25, Category = "Electronics" },
+    new() { Id = 3, Name = "Desk", Price = 300, Category = "Furniture" },
+};
+
+// GroupBy: 카테고리별 그룹화
+var grouped = products.GroupBy(p => p.Category);
+
+foreach (var group in grouped)
+{
+    Console.WriteLine($"Category: {group.Key}");
+    foreach (var product in group)
+    {
+        Console.WriteLine($"  - {product.Name}: ${product.Price}");
+    }
+}
+
+// 카테고리별 총 가격
+var categoryTotals = products
+    .GroupBy(p => p.Category)
+    .Select(g => new
+    {
+        Category = g.Key,
+        Total = g.Sum(p => p.Price),
+        Count = g.Count(),
+        Average = g.Average(p => p.Price)
+    });
+
+// 쿼리 구문
+var categoryTotals2 = from p in products
+                       group p by p.Category into g
+                       select new
+                       {
+                           Category = g.Key,
+                           Total = g.Sum(p => p.Price),
+                           Count = g.Count()
+                       };
+```
+
+### Join 작업
+
+```csharp
+var users = new List<User>
+{
+    new() { Id = 1, Name = "John" },
+    new() { Id = 2, Name = "Jane" }
+};
+
+var orders = new List<Order>
+{
+    new() { UserId = 1, Product = "Laptop" },
+    new() { UserId = 1, Product = "Mouse" },
+    new() { UserId = 2, Product = "Desk" }
+};
+
+// LINQ Join (내부 조인)
+var userOrders = users.Join(
+    orders,
+    user => user.Id,
+    order => order.UserId,
+    (user, order) => new { user.Name, order.Product }
+);
+
+// 쿼리 구문
+var userOrders2 = from user in users
+                  join order in orders on user.Id equals order.UserId
+                  select new { user.Name, order.Product };
+
+// GroupJoin (왼쪽 외부 조인)
+var userWithOrders = users.GroupJoin(
+    orders,
+    user => user.Id,
+    order => order.UserId,
+    (user, userOrders) => new
+    {
+        user.Name,
+        Orders = userOrders.Select(o => o.Product).ToList()
+    }
+);
+```
+
+### SelectMany (flatMap)
+
+```csharp
+var orders = new List<Order>
+{
+    new() { Id = 1, Items = new[] { "A", "B" } },
+    new() { Id = 2, Items = new[] { "C" } },
+    new() { Id = 3, Items = new[] { "D", "E", "F" } }
+};
+
+// SelectMany: 모든 아이템을 평탄화
+var allItems = orders.SelectMany(order => order.Items);
+// ["A", "B", "C", "D", "E", "F"]
+
+// 사용자와 주문 ID 쌍
+var users = new List<User>
+{
+    new() { Id = 1, Name = "John", OrderIds = new[] { 1, 2 } },
+    new() { Id = 2, Name = "Jane", OrderIds = new[] { 3 } }
+};
+
+var userOrders = users.SelectMany(
+    u => u.OrderIds,
+    (user, orderId) => new { user.Name, OrderId = orderId }
+);
+```
+
+### 복잡한 쿼리 예제
+
+```csharp
+var students = new List<Student>
+{
+    new() { Name = "Alice", Grade = 90, Subject = "Math" },
+    new() { Name = "Bob", Grade = 75, Subject = "Math" },
+    new() { Name = "Alice", Grade = 85, Subject = "Science" },
+    new() { Name = "Charlie", Grade = 95, Subject = "Math" },
+    new() { Name = "Bob", Grade = 80, Subject = "Science" }
+};
+
+// 수학 점수가 80점 이상인 학생의 이름 (중복 제거)
+var result = students
+    .Where(s => s.Subject == "Math" && s.Grade >= 80)
+    .Select(s => s.Name)
+    .Distinct()
+    .ToList();
+// ["Alice", "Charlie"]
+
+// 학생별 평균 점수
+var averages = students
+    .GroupBy(s => s.Name)
+    .Select(g => new
+    {
+        Name = g.Key,
+        Average = g.Average(s => s.Grade)
+    })
+    .ToList();
+```
+
+---
+
+## 2.6 C# 13 & 14의 최신 기능 (2025 기준)
+
+### C# 13 기능
+
+**1. 기본 람다 매개변수**
+```csharp
+// C# 13: 람다 표현식에 기본 매개변수 지원
+var greet = (string name = "Guest") => $"Hello, {name}!";
+
+Console.WriteLine(greet());          // Hello, Guest!
+Console.WriteLine(greet("John"));    // Hello, John!
+
+// LINQ에서 활용
+var increment = (int x, int step = 1) => x + step;
+var numbers = new[] { 1, 2, 3, 4, 5 };
+var incremented = numbers.Select(n => increment(n));     // [2, 3, 4, 5, 6]
+```
+
+**2. 향상된 패턴 매칭**
+```csharp
+// 개선된 리스트 패턴
+int[] numbers = { 1, 2, 3, 4, 5 };
+
+var result = numbers switch
+{
+    [1, ..] => "Starts with 1",
+    [.., 5] => "Ends with 5",
+    [1, .., 5] => "Starts with 1 and ends with 5",
+    [var first, .., var last] => $"First: {first}, Last: {last}",
+    _ => "Other"
+};
+```
+
+### C# 14 기능 (2025년 11월 릴리스)
+
+**1. Extension Members (확장 멤버)**
+```csharp
+// C# 14: 확장 프로퍼티 및 연산자
+public static class IntExtensions
+{
+    // 확장 프로퍼티
+    public static bool IsEven(this int value) => value % 2 == 0;
+
+    // 정적 확장 메서드
+    public static int Parse(this string value) => int.Parse(value);
+}
+
+// 사용
+int num = 10;
+bool even = num.IsEven(); // true
+
+string str = "123";
+int parsed = str.Parse(); // 123
+```
+
+**2. First-Class Span Support**
+```csharp
+// C# 14: Span<T>에 대한 향상된 지원
+Span<int> numbers = stackalloc int[] { 1, 2, 3, 4, 5 };
+
+// 더 자연스러운 Span 사용
+var filtered = numbers.Where(n => n > 2); // Span에서 직접 LINQ 사용 가능
+
+// 제네릭 타입 추론 개선
+void ProcessSpan<T>(Span<T> span) where T : struct
+{
+    // Span이 extension method receiver로 사용 가능
+}
+```
+
+**3. field 키워드**
+```csharp
+// C# 14: 프로퍼티에서 backing field 직접 접근
+public class User
+{
+    public string Name
+    {
+        get => field;
+        set => field = value?.Trim() ?? throw new ArgumentNullException();
+    }
+
+    // 유효성 검사가 더 간결해짐
+    public int Age
+    {
+        get => field;
+        set
+        {
+            if (value < 0 || value > 150)
+                throw new ArgumentOutOfRangeException();
+            field = value;
+        }
+    }
+}
+```
+
+**4. Null-Conditional Assignment**
+```csharp
+// C# 14: null 조건부 할당
+User? user = GetUser();
+
+// 이전 방식
+if (user != null)
+{
+    user.Name = "John";
+}
+
+// C# 14 방식
+user?.Name = "John"; // user가 null이 아닐 때만 할당
+```
+
+**5. Partial Constructors and Events**
+```csharp
+// C# 14: 생성자와 이벤트도 partial 가능
+public partial class User
+{
+    partial User(string name);
+
+    partial event EventHandler NameChanged;
+}
+
+public partial class User
+{
+    partial User(string name)
+    {
+        Name = name;
+    }
+
+    partial event EventHandler NameChanged
+    {
+        add { /* 구현 */ }
+        remove { /* 구현 */ }
+    }
+}
+```
+
+**6. Unbound Generic Types in nameof**
+```csharp
+// C# 14: nameof에서 제네릭 타입 사용
+var typeName = nameof(List<>); // "List"
+
+// 이전에는 불가능했던 패턴
+public static string GetTypeName<T>()
+{
+    return nameof(T); // 제네릭 타입 파라미터의 이름
+}
+```
+
+**7. Compound Operator Overloading**
+```csharp
+// C# 14: +=, *=, /= 등의 복합 연산자 오버로딩
+public class Vector
+{
+    public double X { get; set; }
+    public double Y { get; set; }
+
+    // += 오버로딩
+    public static Vector operator +(Vector a, Vector b) =>
+        new Vector { X = a.X + b.X, Y = a.Y + b.Y };
+
+    // *= 오버로딩
+    public static Vector operator *(Vector v, double scalar) =>
+        new Vector { X = v.X * scalar, Y = v.Y * scalar };
+}
+
+var v1 = new Vector { X = 1, Y = 2 };
+v1 += new Vector { X = 3, Y = 4 }; // 이제 가능!
+v1 *= 2; // 이것도 가능!
+```
+
+---
+
+## 2.7 실습: 고급 패턴 연습
+
+이 섹션에서는 실제 코드를 작성하면서 고급 패턴을 학습합니다.
+
+### 실습 1: OOP 패턴 구현
+
+**목표**: 객체지향 디자인 패턴 적용
+- [예제 코드 보기](./examples/01-oop-patterns/)
+
+### 실습 2: LINQ 고급 쿼리
+
+**목표**: 복잡한 LINQ 쿼리 작성
+- [예제 코드 보기](./examples/02-linq-advanced/)
+
+### 실습 3: 이벤트와 델리게이트
+
+**목표**: 이벤트 기반 프로그래밍
+- [예제 코드 보기](./examples/03-events-delegates/)
+
+---
+
+## Part 1 정리
+
+Part 1을 완료했습니다! 다음 내용을 학습했습니다:
+
+**Chapter 1:**
+- TypeScript와 C#의 타입 시스템 차이
+- 기본 문법 (람다, async/await, 구조 분해)
+- LINQ 기초
+- 패턴 매칭
+
+**Chapter 2:**
+- 값 타입 vs 참조 타입
+- 프로퍼티와 이벤트
+- 객체지향 프로그래밍 심화
+- LINQ 고급
+- C# 13 & 14 최신 기능
+
+### 다음 단계
+
+Part 2에서는 ASP.NET Core의 기초를 다룹니다:
+- ASP.NET Core 소개와 개발 환경
+- 첫 번째 애플리케이션 구축
+- 미들웨어와 의존성 주입
+- Minimal APIs
+
+---
+
+## 추가 학습 리소스
+
+- [Microsoft C# 문서](https://docs.microsoft.com/dotnet/csharp/)
+- [C# 14의 새로운 기능](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-14)
+- [LINQ 문서](https://docs.microsoft.com/dotnet/csharp/programming-guide/concepts/linq/)
+- [디자인 패턴 in C#](https://refactoring.guru/design-patterns/csharp)
