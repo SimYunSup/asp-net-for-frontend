@@ -1737,9 +1737,8 @@ public void OldMethod()
 :::
 
 **TypeScript 데코레이터 비교**
-::: v-pre
 ```typescript
-// TypeScript 데코레이터 (실험적 기능)
+// TypeScript decorators (experimental feature)
 function Controller(route: string) {
     return function(target: any) {
         target.prototype.route = route;
@@ -1748,24 +1747,20 @@ function Controller(route: string) {
 
 function Get(path: string) {
     return function(target: any, propertyKey: string) {
-        // ...
+        // metadata handling
     };
 }
 
-@Controller('/api/products')
-class ProductsController {
-    @Get('/')
-    async getAll() {
-        // ...
-    }
-
-    @Get('/:id')
-    async getById(id: number) {
-        // ...
-    }
-}
+// Usage with decorators:
+// @Controller('/api/products')
+// class ProductsController {
+//     @Get('/')
+//     async getAll() { }
+//
+//     @Get('/:id')
+//     async getById(id: number) { }
+// }
 ```
-:::
 
 ## 14. 확장 메서드
 
