@@ -139,6 +139,51 @@ Part 12   (2-4주)   → 실전 프로젝트
 
 ---
 
+## 📖 문서 사이트
+
+이 가이드는 VitePress로 빌드되어 정적 사이트로 배포할 수 있습니다.
+
+### 로컬에서 문서 사이트 실행하기
+
+```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 시작
+npm run docs:dev
+
+# 프로덕션 빌드
+npm run docs:build
+
+# 빌드 미리보기
+npm run docs:preview
+```
+
+개발 서버는 `http://localhost:5173`에서 실행됩니다.
+
+### GitHub Pages 배포
+
+이 리포지토리는 GitHub Actions를 통해 자동으로 GitHub Pages에 배포됩니다.
+
+**배포 설정 방법:**
+
+1. GitHub 리포지토리의 Settings > Pages로 이동
+2. Source를 "GitHub Actions"로 선택
+3. `main` 브랜치에 push하면 자동으로 배포됩니다
+
+배포된 사이트는 `https://<username>.github.io/asp-net-for-frontend/`에서 확인할 수 있습니다.
+
+**커스텀 도메인 사용 시:**
+
+`.vitepress/config.ts` 파일에서 `base` 값을 `'/'`로 변경하세요:
+
+```typescript
+export default defineConfig({
+  base: '/', // 커스텀 도메인 사용 시
+  // ...
+})
+```
+
 ## 🚀 시작하기
 
 ### 필요한 사전 지식
