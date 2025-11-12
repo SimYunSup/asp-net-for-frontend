@@ -481,7 +481,7 @@ Part 6를 마치면 다음을 할 수 있습니다:
 
 ## 챕터 구성
 
-### Chapter 14: RESTful API 설계와 구현
+### [Chapter 14: RESTful API 설계와 구현](./chapter14/)
 
 REST의 원칙부터 실전까지, 프론트엔드 개발자가 사용하기 좋은 API를 만드는 모든 방법을 배웁니다.
 
@@ -503,7 +503,7 @@ REST의 원칙부터 실전까지, 프론트엔드 개발자가 사용하기 좋
 
 **실습**: 전자상거래 REST API - 제품 목록/상세/생성/수정/삭제, 검색, 필터링, 페이징, 정렬
 
-### Chapter 15: API 보안과 인증
+### [Chapter 15: API 보안과 인증](./chapter15/)
 
 보안을 아키텍처의 기초부터 고려하여, 안전한 API를 만드는 모든 기법을 배웁니다.
 
@@ -526,7 +526,7 @@ REST의 원칙부터 실전까지, 프론트엔드 개발자가 사용하기 좋
 
 **실습**: 보안이 적용된 블로그 API - JWT 로그인, Refresh Token, 역할별 권한, 소유자만 수정/삭제 가능
 
-### Chapter 16: GraphQL과 SignalR
+### [Chapter 16: GraphQL, gRPC, SignalR](./chapter16/)
 
 데이터 페칭의 혁신(GraphQL)과 실시간 통신의 단순함(SignalR)을 마스터합니다.
 
