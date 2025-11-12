@@ -337,6 +337,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
 
 ### MVC View
 
+::: v-pre
 ```razor
 @* Views/Products/Index.cshtml *@
 @model List<ProductViewModel>
@@ -382,6 +383,7 @@ const ProductList: React.FC<ProductListProps> = ({ products }) => {
   }
 </div>
 ```
+:::
 
 **강타입 뷰의 장점:**
 - `@model List<ProductViewModel>`: 뷰가 받는 데이터 타입 명시
@@ -778,6 +780,7 @@ URL 구조:
 
 ### Area 간 링크
 
+::: v-pre
 ```razor
 @* 같은 Area 내 링크 *@
 <a asp-action="Index" asp-controller="Products">상품 관리</a>
@@ -790,6 +793,7 @@ URL 구조:
 @* 메인 영역으로 링크 *@
 <a asp-area="" asp-action="Index" asp-controller="Home">홈</a>
 ```
+:::
 
 React에서는 폴더로 구분:
 ```
@@ -927,6 +931,7 @@ public class ProductsController : Controller
 
 ### 3. 상품 목록 뷰
 
+::: v-pre
 ```razor
 @* Views/Products/Index.cshtml *@
 @model List<Product>
@@ -994,6 +999,7 @@ else
   </div>
 }
 ```
+:::
 
 ### 4. 장바구니 컨트롤러 (세션 기반)
 

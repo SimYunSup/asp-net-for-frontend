@@ -64,6 +64,7 @@ JSX나 Vue 템플릿을 작성해본 경험이 있다면, Razor는 금방 익숙
 
 **JSX와 Razor 비교:**
 
+::: v-pre
 ```jsx
 // React JSX
 function UserList({ users }) {
@@ -85,7 +86,9 @@ function UserList({ users }) {
   );
 }
 ```
+:::
 
+::: v-pre
 ```razor
 @* Razor *@
 @model List<User>
@@ -107,6 +110,7 @@ function UserList({ users }) {
   }
 </div>
 ```
+:::
 
 차이점을 보셨나요? 문법만 약간 다를 뿐, 구조와 흐름은 거의 동일합니다. `{}`가 `@`로, `.map()`이 `@foreach`로 바뀐 것입니다. 더 중요한 것은, Razor는 컴파일 타임에 타입을 검증한다는 것입니다. `@model List<User>`는 이 뷰가 `List<User>` 타입을 받는다는 것을 명시하며, 잘못된 프로퍼티에 접근하면 컴파일 오류가 발생합니다.
 
@@ -329,28 +333,34 @@ Razor Pages/MVC는 오래된 기술이 아닙니다. 현대적인 프론트엔�
 
 **Tailwind CSS**: Razor 뷰에서 Tailwind 클래스를 사용할 수 있습니다.
 
+::: v-pre
 ```razor
 <div class="flex items-center justify-between p-4 bg-gray-100">
   <h1 class="text-2xl font-bold">@Model.Title</h1>
 </div>
 ```
+:::
 
 **HTMX**: JavaScript 없이 AJAX 요청, 웹소켓, SSE를 사용합니다.
 
+::: v-pre
 ```razor
 <button hx-post="/api/like" hx-swap="outerHTML">
   좋아요 (@Model.LikeCount)
 </button>
 ```
+:::
 
 **Alpine.js**: Razor에 가벼운 인터랙티비티를 추가합니다.
 
+::: v-pre
 ```razor
 <div x-data="{ open: false }">
   <button @click="open = !open">토글</button>
   <div x-show="open">@Model.Content</div>
 </div>
 ```
+:::
 
 **Vite**: Razor Pages/MVC 프로젝트에서 Vite를 사용하여 빠른 빌드와 HMR을 얻을 수 있습니다.
 

@@ -82,6 +82,7 @@ Blazor Server는 기술적으로 가장 흥미로운 모델입니다. 사용자�
 
 **전체 .NET API 접근**: 서버에서 실행되므로, 파일 시스템, 데이터베이스, 서드파티 라이브러리—모든 것에 접근할 수 있습니다. Entity Framework Core로 직접 데이터베이스 쿼리를 실행하고, 결과를 UI에 바인딩할 수 있습니다. API 엔드포인트를 만들 필요가 없습니다.
 
+::: v-pre
 ```razor
 @page "/users"
 @inject ApplicationDbContext DbContext
@@ -105,6 +106,7 @@ Blazor Server는 기술적으로 가장 흥미로운 모델입니다. 사용자�
   }
 }
 ```
+:::
 
 **강화된 보안**: 비즈니스 로직이 서버에 있으므로, 클라이언트에 노출되지 않습니다. 사용자는 코드를 볼 수 없고, 디컴파일할 수도 없습니다. API 키, 데이터베이스 연결 문자열 같은 비밀이 안전합니다.
 
@@ -251,6 +253,7 @@ React나 Vue를 알고 있다면 Blazor가 매우 친숙하게 느껴질 것입�
 
 **React (함수형 컴포넌트):**
 
+::: v-pre
 ```jsx
 import { useState } from 'react';
 
@@ -273,9 +276,11 @@ function Counter() {
 
 export default Counter;
 ```
+:::
 
 **Blazor:**
 
+::: v-pre
 ```razor
 @page "/counter"
 
@@ -295,6 +300,7 @@ export default Counter;
   }
 }
 ```
+:::
 
 **핵심 유사점:**
 
@@ -313,6 +319,7 @@ export default Counter;
 
 **React:**
 
+::: v-pre
 ```jsx
 // Child.jsx
 function Greeting({ name, age, onGreet }) {
@@ -331,9 +338,11 @@ function App() {
   return <Greeting name="홍길동" age={30} onGreet={handleGreet} />;
 }
 ```
+:::
 
 **Blazor:**
 
+::: v-pre
 ```razor
 @* Greeting.razor *@
 <div>
@@ -364,6 +373,7 @@ function App() {
   }
 }
 ```
+:::
 
 **핵심 유사점:**
 
@@ -381,6 +391,7 @@ function App() {
 
 **React (Hooks):**
 
+::: v-pre
 ```jsx
 import { useState, useEffect } from 'react';
 
@@ -410,9 +421,11 @@ function UserProfile({ userId }) {
   return <div>{user.name}</div>;
 }
 ```
+:::
 
 **Blazor:**
 
+::: v-pre
 ```razor
 @if (loading)
 {
@@ -451,6 +464,7 @@ else
 
 @implements IDisposable
 ```
+:::
 
 **생명주기 메서드 비교:**
 
@@ -465,6 +479,7 @@ else
 
 **React:**
 
+::: v-pre
 ```jsx
 function ProductList({ products }) {
   return (
@@ -487,9 +502,11 @@ function ProductList({ products }) {
   );
 }
 ```
+:::
 
 **Blazor:**
 
+::: v-pre
 ```razor
 @page "/products"
 
@@ -521,6 +538,7 @@ function ProductList({ products }) {
   private List<Product> products = new();
 }
 ```
+:::
 
 **핵심 패턴:**
 
@@ -648,6 +666,7 @@ MyBlazorServerApp/
 
 **`App.razor`** - 라우터 설정
 
+::: v-pre
 ```razor
 <Router AppAssembly="@typeof(App).Assembly">
   <Found Context="routeData">
@@ -661,11 +680,13 @@ MyBlazorServerApp/
   </NotFound>
 </Router>
 ```
+:::
 
 이는 React Router의 설정과 유사합니다.
 
 **`Pages/Counter.razor`** - 간단한 카운터
 
+::: v-pre
 ```razor
 @page "/counter"
 
@@ -686,6 +707,7 @@ MyBlazorServerApp/
   }
 }
 ```
+:::
 
 `@page "/counter"` 지시문이 라우팅을 정의합니다. React Router의 `<Route path="/counter">` 와 동일합니다.
 

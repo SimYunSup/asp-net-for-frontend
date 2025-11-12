@@ -16,17 +16,20 @@ React Router, Vue Router가 클라이언트 사이드 라우팅의 표준이듯,
 
 Next.js의 파일 시스템 라우팅과 유사하게, Blazor는 `@page` 지시문으로 라우트를 정의합니다.
 
+::: v-pre
 ```razor
 @* Pages/Products.razor *@
 @page "/products"
 
 <h1>상품 목록</h1>
 ```
+:::
 
 사용자가 `/products`를 방문하면 이 컴포넌트가 렌더링됩니다.
 
 ### 동적 라우트 매개변수
 
+::: v-pre
 ```razor
 @* Pages/ProductDetail.razor *@
 @page "/products/{id:int}"
@@ -45,6 +48,7 @@ Next.js의 파일 시스템 라우팅과 유사하게, Blazor는 `@page` 지시�
   }
 }
 ```
+:::
 
 `{id:int}`는 라우트 제약입니다. 정수만 허용되며, 타입 안정성을 보장합니다.
 
@@ -113,6 +117,7 @@ URL: `/blog/2024/11/12/blazor-introduction`
 
 ### 선택적 매개변수
 
+::: v-pre
 ```razor
 @page "/search/{category?}"
 
@@ -127,11 +132,13 @@ URL: `/blog/2024/11/12/blazor-introduction`
   public string? Category { get; set; }
 }
 ```
+:::
 
 `/search`와 `/search/books` 모두 매칭됩니다.
 
 ### 쿼리 문자열
 
+::: v-pre
 ```razor
 @page "/products"
 @inject NavigationManager Navigation
@@ -157,6 +164,7 @@ URL: `/blog/2024/11/12/blazor-introduction`
   }
 }
 ```
+:::
 
 URL: `/products?page=2&sort=price`
 
@@ -178,6 +186,7 @@ URL: `/products?page=2&sort=price`
 
 ### 프로그래밍 방식 네비게이션
 
+::: v-pre
 ```razor
 @inject NavigationManager Navigation
 
@@ -202,6 +211,7 @@ URL: `/products?page=2&sort=price`
   }
 }
 ```
+:::
 
 React Router 버전:
 
@@ -232,6 +242,7 @@ function MyComponent() {
 
 ### NavLink 컴포넌트: 활성 링크 스타일링
 
+::: v-pre
 ```razor
 <nav>
   <NavLink href="/" Match="NavLinkMatch.All">홈</NavLink>
@@ -246,6 +257,7 @@ function MyComponent() {
   }
 </style>
 ```
+:::
 
 현재 경로와 일치하면 자동으로 `active` 클래스가 추가됩니다.
 
@@ -272,6 +284,7 @@ React의 Layout 컴포넌트와 유사하게, Blazor는 레이아웃을 통해 �
 
 ### MainLayout 생성
 
+::: v-pre
 ```razor
 @* Shared/MainLayout.razor *@
 @inherits LayoutComponentBase
@@ -306,15 +319,18 @@ React의 Layout 컴포넌트와 유사하게, Blazor는 레이아웃을 통해 �
   }
 </style>
 ```
+:::
 
 페이지에서 사용:
 
+::: v-pre
 ```razor
 @page "/products"
 @layout MainLayout  @* 명시적 지정 (선택적) *@
 
 <h1>상품 목록</h1>
 ```
+:::
 
 또는 `_Imports.razor`에서 전역 설정:
 
@@ -327,6 +343,7 @@ React의 Layout 컴포넌트와 유사하게, Blazor는 레이아웃을 통해 �
 
 복잡한 애플리케이션에서는 레이아웃을 중첩할 수 있습니다.
 
+::: v-pre
 ```razor
 @* Shared/AdminLayout.razor *@
 @inherits LayoutComponentBase
@@ -344,20 +361,24 @@ React의 Layout 컴포넌트와 유사하게, Blazor는 레이아웃을 통해 �
   </div>
 </div>
 ```
+:::
 
 관리자 페이지:
 
+::: v-pre
 ```razor
 @page "/admin/dashboard"
 @layout AdminLayout
 
 <h1>관리자 대시보드</h1>
 ```
+:::
 
 렌더링 결과: `MainLayout` → `AdminLayout` → 페이지 콘텐츠
 
 ### 동적 레이아웃 전환
 
+::: v-pre
 ```razor
 @* App.razor *@
 <Router AppAssembly="@typeof(App).Assembly">
@@ -378,6 +399,7 @@ React의 Layout 컴포넌트와 유사하게, Blazor는 레이아웃을 통해 �
   }
 }
 ```
+:::
 
 ## Razor Class Library: 재사용 가능한 컴포넌트 라이브러리
 
@@ -403,6 +425,7 @@ MyComponentLibrary/
 
 ### 컴포넌트 작성
 
+::: v-pre
 ```razor
 @* Card.razor *@
 <div class="card @CssClass">
@@ -437,6 +460,7 @@ MyComponentLibrary/
   public string CssClass { get; set; } = string.Empty;
 }
 ```
+:::
 
 ### NuGet 패키지로 배포
 
@@ -451,6 +475,7 @@ dotnet nuget push bin/Release/MyComponentLibrary.1.0.0.nupkg -s https://api.nuge
 dotnet add package MyComponentLibrary
 ```
 
+::: v-pre
 ```razor
 @using MyComponentLibrary
 
@@ -466,6 +491,7 @@ dotnet add package MyComponentLibrary
   </Footer>
 </Card>
 ```
+:::
 
 **인기 있는 Blazor 컴포넌트 라이브러리:**
 
@@ -482,6 +508,7 @@ React에서 `React.memo`, `useMemo`, `useCallback`으로 최적화하듯, Blazor
 
 React Virtualized나 react-window와 동일한 개념입니다.
 
+::: v-pre
 ```razor
 @using Microsoft.AspNetCore.Components.Web.Virtualization
 
@@ -505,11 +532,13 @@ React Virtualized나 react-window와 동일한 개념입니다.
     .ToList();
 }
 ```
+:::
 
 화면에 보이는 항목만 렌더링하므로, 10만 개의 항목도 부드럽게 스크롤됩니다.
 
 **비동기 데이터 로딩:**
 
+::: v-pre
 ```razor
 <Virtualize ItemsProvider="@LoadItems" Context="item">
   <ItemContent>
@@ -533,6 +562,7 @@ React Virtualized나 react-window와 동일한 개념입니다.
   }
 }
 ```
+:::
 
 스크롤할 때마다 필요한 데이터만 서버에서 가져옵니다. 무한 스크롤의 최적화된 버전입니다.
 
@@ -540,6 +570,7 @@ React Virtualized나 react-window와 동일한 개념입니다.
 
 리스트 렌더링 시 각 항목을 고유하게 식별합니다.
 
+::: v-pre
 ```razor
 <ul>
   @foreach (var todo in todos)
@@ -550,6 +581,7 @@ React Virtualized나 react-window와 동일한 개념입니다.
   }
 </ul>
 ```
+:::
 
 React 버전:
 
@@ -580,6 +612,7 @@ builder.Services.AddScoped(sp => new HttpClient
 var assemblies = new[] { "MyApp.AdminModule.dll" };
 ```
 
+::: v-pre
 ```razor
 @* App.razor *@
 <Router AppAssembly="@typeof(App).Assembly"
@@ -606,6 +639,7 @@ var assemblies = new[] { "MyApp.AdminModule.dll" };
   }
 }
 ```
+:::
 
 ### Prerendering: SSR 같은 초기 로딩
 
@@ -616,6 +650,7 @@ Blazor WebAssembly는 초기 로딩이 느릴 수 있습니다. Prerendering은 
 app.MapFallbackToPage("/_Host");
 ```
 
+::: v-pre
 ```razor
 @* Pages/_Host.cshtml *@
 @page "/"
@@ -633,6 +668,7 @@ app.MapFallbackToPage("/_Host");
 </body>
 </html>
 ```
+:::
 
 `render-mode="WebAssemblyPrerendered"`:
 
@@ -649,6 +685,7 @@ React에서 NextAuth나 Auth0를 사용하듯, Blazor는 ASP.NET Core Identity�
 
 ### AuthorizeView 컴포넌트
 
+::: v-pre
 ```razor
 <AuthorizeView>
   <Authorized>
@@ -661,11 +698,13 @@ React에서 NextAuth나 Auth0를 사용하듯, Blazor는 ASP.NET Core Identity�
   </NotAuthorized>
 </AuthorizeView>
 ```
+:::
 
 React에서 조건부 렌더링으로 하던 것을 컴포넌트로 제공합니다.
 
 ### 역할 기반 UI
 
+::: v-pre
 ```razor
 <AuthorizeView Roles="Admin, Manager">
   <Authorized>
@@ -682,20 +721,24 @@ React에서 조건부 렌더링으로 하던 것을 컴포넌트로 제공합니
   </NotAuthorized>
 </AuthorizeView>
 ```
+:::
 
 ### 페이지 수준 권한
 
+::: v-pre
 ```razor
 @page "/admin/dashboard"
 @attribute [Authorize(Roles = "Admin")]
 
 <h1>관리자 대시보드</h1>
 ```
+:::
 
 권한이 없는 사용자가 접근하면 자동으로 로그인 페이지로 리디렉션됩니다.
 
 ### 사용자 정보 접근
 
+::: v-pre
 ```razor
 @inject AuthenticationStateProvider AuthStateProvider
 
@@ -719,6 +762,7 @@ React에서 조건부 렌더링으로 하던 것을 컴포넌트로 제공합니
   }
 }
 ```
+:::
 
 ## SignalR 통합: 실시간 데이터 업데이트
 
@@ -761,6 +805,7 @@ app.MapHub<ChatHub>("/chathub");
 
 ### Blazor 클라이언트에서 연결
 
+::: v-pre
 ```razor
 @page "/chat"
 @inject NavigationManager Navigation
@@ -833,9 +878,11 @@ app.MapHub<ChatHub>("/chathub");
   }
 }
 ```
+:::
 
 ### 실시간 대시보드 예시
 
+::: v-pre
 ```razor
 @page "/dashboard"
 @inject HubConnection HubConnection
@@ -932,11 +979,13 @@ app.MapHub<ChatHub>("/chathub");
   }
 }
 ```
+:::
 
 ## 에러 처리: ErrorBoundary
 
 React의 Error Boundary와 동일한 개념입니다.
 
+::: v-pre
 ```razor
 <ErrorBoundary>
   <ChildContent>
@@ -951,9 +1000,11 @@ React의 Error Boundary와 동일한 개념입니다.
   </ErrorContent>
 </ErrorBoundary>
 ```
+:::
 
 전역 에러 경계:
 
+::: v-pre
 ```razor
 @* App.razor *@
 <Router AppAssembly="@typeof(App).Assembly">
@@ -977,6 +1028,7 @@ React의 Error Boundary와 동일한 개념입니다.
   </Found>
 </Router>
 ```
+:::
 
 ## 상태 관리 패턴: 복잡한 상태 다루기
 
@@ -1023,6 +1075,7 @@ builder.Services.AddScoped<AppState>();
 
 컴포넌트에서 사용:
 
+::: v-pre
 ```razor
 @inject AppState AppState
 @implements IDisposable
@@ -1049,6 +1102,7 @@ builder.Services.AddScoped<AppState>();
   }
 }
 ```
+:::
 
 ### 2. Fluxor: Redux 패턴
 
@@ -1080,6 +1134,7 @@ public static class CounterReducers
 }
 ```
 
+::: v-pre
 ```razor
 @page "/fluxor-counter"
 @using Fluxor
@@ -1096,6 +1151,7 @@ public static class CounterReducers
   private void Decrement() => Dispatcher.Dispatch(new DecrementCounterAction());
 }
 ```
+:::
 
 Redux 개발 경험과 거의 동일합니다!
 

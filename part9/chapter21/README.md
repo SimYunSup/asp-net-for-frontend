@@ -1146,6 +1146,7 @@ dotnet add package bUnit.web
 
 간단한 Counter 컴포넌트를 테스트해봅시다:
 
+::: v-pre
 ```razor
 @* Components/Counter.razor *@
 <div>
@@ -1162,6 +1163,7 @@ dotnet add package bUnit.web
     }
 }
 ```
+:::
 
 테스트는 다음과 같습니다:
 
@@ -1214,6 +1216,7 @@ public class CounterTests : TestContext
 
 더 복잡한 컴포넌트 테스트:
 
+::: v-pre
 ```razor
 @* Components/ProductCard.razor *@
 @inject IProductService ProductService
@@ -1237,6 +1240,7 @@ public class CounterTests : TestContext
     }
 }
 ```
+:::
 
 ```csharp
 public class ProductCardTests : TestContext

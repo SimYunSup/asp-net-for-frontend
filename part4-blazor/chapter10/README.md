@@ -14,6 +14,7 @@ Blazor 컴포넌트는 `.razor` 확장자를 가진 파일입니다. Vue의 단�
 
 ### 기본 구조
 
+::: v-pre
 ```razor
 @* TodoItem.razor *@
 
@@ -38,6 +39,7 @@ Blazor 컴포넌트는 `.razor` 확장자를 가진 파일입니다. Vue의 단�
   }
 }
 ```
+:::
 
 Vue SFC와 비교:
 
@@ -92,6 +94,7 @@ public partial class TodoItem : ComponentBase
 }
 ```
 
+::: v-pre
 ```razor
 @* TodoItem.razor (마크업만) *@
 <div class="todo-item @(Todo.IsCompleted ? "completed" : "")">
@@ -100,6 +103,7 @@ public partial class TodoItem : ComponentBase
   <button @onclick="OnDelete">삭제</button>
 </div>
 ```
+:::
 
 `partial` 키워드가 핵심입니다. Razor 컴파일러가 `.razor` 파일을 컴파일할 때 같은 이름의 partial 클래스를 생성하므로, 두 파일이 하나의 클래스로 병합됩니다.
 
@@ -111,6 +115,7 @@ React의 `useState`, Vue의 `ref/reactive`처럼, Blazor 컴포넌트도 자체 
 
 ### 필드를 사용한 상태
 
+::: v-pre
 ```razor
 @page "/counter"
 
@@ -128,9 +133,11 @@ React의 `useState`, Vue의 `ref/reactive`처럼, Blazor 컴포넌트도 자체 
   private void Reset() => count = 0;
 }
 ```
+:::
 
 React 버전:
 
+::: v-pre
 ```jsx
 function Counter() {
   const [count, setCount] = useState(0);
@@ -146,6 +153,7 @@ function Counter() {
   );
 }
 ```
+:::
 
 **핵심 차이점:**
 
@@ -155,6 +163,7 @@ function Counter() {
 
 ### 복잡한 상태: 객체와 리스트
 
+::: v-pre
 ```razor
 @page "/todo"
 
@@ -218,9 +227,11 @@ public class TodoItemModel
   public bool IsCompleted { get; set; }
 }
 ```
+:::
 
 React 버전 (비교):
 
+::: v-pre
 ```jsx
 function TodoList() {
   const [todos, setTodos] = useState([]);
@@ -254,6 +265,7 @@ function TodoList() {
   );
 }
 ```
+:::
 
 **중요한 차이:**
 
@@ -291,6 +303,7 @@ React의 props와 정확히 같은 개념입니다.
 
 ### 기본 Parameter
 
+::: v-pre
 ```razor
 @* UserCard.razor *@
 <div class="user-card">
@@ -320,9 +333,11 @@ React의 props와 정확히 같은 개념입니다.
   public bool ShowBio { get; set; } = true;
 }
 ```
+:::
 
 사용법:
 
+::: v-pre
 ```razor
 <UserCard Name="홍길동"
           Email="hong@example.com"
@@ -330,9 +345,11 @@ React의 props와 정확히 같은 개념입니다.
           Bio="Blazor 개발자입니다."
           ShowBio="true" />
 ```
+:::
 
 React/TypeScript 버전:
 
+::: v-pre
 ```tsx
 interface UserCardProps {
   name: string;
@@ -367,6 +384,7 @@ function UserCard({
   bio="Blazor 개발자입니다."
 />
 ```
+:::
 
 **비교:**
 
@@ -390,6 +408,7 @@ function UserCard({
 
 ### ChildContent: React의 `children`
 
+::: v-pre
 ```razor
 @* Card.razor *@
 <div class="card">
@@ -418,9 +437,11 @@ function UserCard({
   public RenderFragment? Footer { get; set; }
 }
 ```
+:::
 
 사용법:
 
+::: v-pre
 ```razor
 <Card>
   <Header>
@@ -434,9 +455,11 @@ function UserCard({
   </Footer>
 </Card>
 ```
+:::
 
 React 버전:
 
+::: v-pre
 ```jsx
 function Card({ header, children, footer }) {
   return (
@@ -456,6 +479,7 @@ function Card({ header, children, footer }) {
   <p>본문 내용입니다.</p>
 </Card>
 ```
+:::
 
 `RenderFragment`는 Blazor의 특별한 타입으로, 렌더링할 수 있는 UI 조각을 나타냅니다. React의 `ReactNode`와 유사합니다.
 
@@ -465,6 +489,7 @@ React의 콜백 prop과 동일한 개념입니다.
 
 ### 기본 EventCallback
 
+::: v-pre
 ```razor
 @* DeleteButton.razor *@
 <button class="btn btn-danger" @onclick="HandleClick" disabled="@IsDeleting">
@@ -492,9 +517,11 @@ React의 콜백 prop과 동일한 개념입니다.
   }
 }
 ```
+:::
 
 사용법:
 
+::: v-pre
 ```razor
 <DeleteButton OnDelete="@DeleteItem" />
 
@@ -506,9 +533,11 @@ React의 콜백 prop과 동일한 개념입니다.
   }
 }
 ```
+:::
 
 React 버전:
 
+::: v-pre
 ```jsx
 function DeleteButton({ onDelete }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -532,9 +561,11 @@ function DeleteButton({ onDelete }) {
   // 실제 삭제 로직
 }} />
 ```
+:::
 
 ### EventCallback<T>: 매개변수 전달
 
+::: v-pre
 ```razor
 @* TodoItem.razor *@
 <li class="todo-item">
@@ -555,9 +586,11 @@ function DeleteButton({ onDelete }) {
   public EventCallback<int> OnDelete { get; set; }
 }
 ```
+:::
 
 부모 컴포넌트:
 
+::: v-pre
 ```razor
 <ul>
   @foreach (var todo in todos)
@@ -586,6 +619,7 @@ function DeleteButton({ onDelete }) {
   }
 }
 ```
+:::
 
 React에서는 `(id) => onDelete(id)`처럼 콜백을 전달하지만, Blazor는 `EventCallback<int>`로 타입 안정성을 제공합니다.
 
@@ -595,6 +629,7 @@ React는 단방향 바인딩만 지원하지만, Vue와 Angular는 양방향 바
 
 ### 입력 필드 바인딩
 
+::: v-pre
 ```razor
 <input type="text" @bind="username" />
 <p>입력한 값: @username</p>
@@ -603,16 +638,20 @@ React는 단방향 바인딩만 지원하지만, Vue와 Angular는 양방향 바
   private string username = string.Empty;
 }
 ```
+:::
 
 이것은 다음과 동일합니다:
 
+::: v-pre
 ```razor
 <input type="text" value="@username"
        @onchange="@((ChangeEventArgs e) => username = e.Value?.ToString() ?? string.Empty)" />
 ```
+:::
 
 React 버전 (수동 양방향 바인딩):
 
+::: v-pre
 ```jsx
 const [username, setUsername] = useState('');
 
@@ -620,6 +659,7 @@ const [username, setUsername] = useState('');
        onChange={(e) => setUsername(e.target.value)} />
 <p>입력한 값: {username}</p>
 ```
+:::
 
 Blazor의 `@bind`가 훨씬 간결합니다!
 
@@ -627,6 +667,7 @@ Blazor의 `@bind`가 훨씬 간결합니다!
 
 기본적으로 `@bind`는 `onchange` 이벤트를 사용합니다 (포커스를 잃을 때 업데이트). 실시간으로 업데이트하려면:
 
+::: v-pre
 ```razor
 <input type="text" @bind="searchQuery" @bind:event="oninput" />
 <p>검색 중: @searchQuery</p>
@@ -635,11 +676,13 @@ Blazor의 `@bind`가 훨씬 간결합니다!
   private string searchQuery = string.Empty;
 }
 ```
+:::
 
 `@bind:event="oninput"`은 키를 누를 때마다 업데이트합니다.
 
 ### 체크박스, 셀렉트 등
 
+::: v-pre
 ```razor
 <input type="checkbox" @bind="agreeToTerms" />
 <label>약관에 동의합니다</label>
@@ -659,11 +702,13 @@ Blazor의 `@bind`가 훨씬 간결합니다!
   private DateTime birthDate = DateTime.Today;
 }
 ```
+:::
 
 ### 커스텀 컴포넌트에 @bind 지원
 
 자체 컴포넌트에서 `@bind`를 지원하려면 규칙을 따라야 합니다:
 
+::: v-pre
 ```razor
 @* CustomInput.razor *@
 <input type="text" value="@Value"
@@ -677,9 +722,11 @@ Blazor의 `@bind`가 훨씬 간결합니다!
   public EventCallback<string> ValueChanged { get; set; }
 }
 ```
+:::
 
 사용법:
 
+::: v-pre
 ```razor
 <CustomInput @bind-Value="myText" />
 
@@ -687,6 +734,7 @@ Blazor의 `@bind`가 훨씬 간결합니다!
   private string myText = string.Empty;
 }
 ```
+:::
 
 규칙: `Value` Parameter와 `ValueChanged` EventCallback이 쌍을 이루면 `@bind-Value`를 사용할 수 있습니다.
 
@@ -706,6 +754,7 @@ React의 생명주기 메서드(또는 Hooks)처럼, Blazor 컴포넌트도 생�
 
 ### OnInitialized: 초기화
 
+::: v-pre
 ```razor
 @page "/user/{UserId:int}"
 @inject HttpClient Http
@@ -735,9 +784,11 @@ else
   }
 }
 ```
+:::
 
 React 버전:
 
+::: v-pre
 ```jsx
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null);
@@ -758,6 +809,7 @@ function UserProfile({ userId }) {
   );
 }
 ```
+:::
 
 **주의**: React의 `useEffect([], [])`와 달리, Blazor의 `OnInitializedAsync`는 `UserId` Parameter가 변경되어도 다시 호출되지 않습니다!
 
@@ -765,6 +817,7 @@ function UserProfile({ userId }) {
 
 Parameter가 변경될 때마다 실행되려면:
 
+::: v-pre
 ```razor
 protected override async Task OnParametersSetAsync()
 {
@@ -772,9 +825,11 @@ protected override async Task OnParametersSetAsync()
   user = await Http.GetFromJsonAsync<User>($"/api/users/{UserId}");
 }
 ```
+:::
 
 React 버전:
 
+::: v-pre
 ```jsx
 useEffect(() => {
   fetch(`/api/users/${userId}`)
@@ -782,6 +837,7 @@ useEffect(() => {
     .then(data => setUser(data));
 }, [userId]);  // userId 변경 시 재실행
 ```
+:::
 
 **실행 순서 예시:**
 
@@ -802,6 +858,7 @@ useEffect(() => {
 
 렌더링 후 DOM에 접근해야 할 때:
 
+::: v-pre
 ```razor
 @inject IJSRuntime JS
 
@@ -820,6 +877,7 @@ useEffect(() => {
   }
 }
 ```
+:::
 
 JavaScript:
 
@@ -832,6 +890,7 @@ window.focusElement = (element) => {
 
 React 버전:
 
+::: v-pre
 ```jsx
 import { useEffect, useRef } from 'react';
 
@@ -845,11 +904,13 @@ function MyComponent() {
   return <input ref={inputRef} />;
 }
 ```
+:::
 
 **중요**: `OnAfterRender`는 서버 사이드 프리렌더링 시에는 호출되지 않을 수 있으므로, `firstRender` 플래그를 확인하세요.
 
 ### Dispose: 리소스 정리
 
+::: v-pre
 ```razor
 @page "/live-updates"
 @inject IDisposable subscription
@@ -879,9 +940,11 @@ function MyComponent() {
   }
 }
 ```
+:::
 
 React 버전:
 
+::: v-pre
 ```jsx
 function LiveUpdates() {
   const [latestMessage, setLatestMessage] = useState('');
@@ -902,6 +965,7 @@ function LiveUpdates() {
   );
 }
 ```
+:::
 
 `IDisposable` 인터페이스를 구현하면 Blazor가 컴포넌트 제거 시 `Dispose()`를 자동 호출합니다.
 
@@ -911,6 +975,7 @@ React에는 공식 폼 라이브러리가 없어 서드파티(React Hook Form, F
 
 ### EditForm 기본 사용
 
+::: v-pre
 ```razor
 @page "/register"
 
@@ -964,9 +1029,11 @@ public class RegisterModel
   public int Age { get; set; }
 }
 ```
+:::
 
 React Hook Form 버전:
 
+::: v-pre
 ```jsx
 import { useForm } from 'react-hook-form';
 
@@ -1008,6 +1075,7 @@ function RegisterForm() {
   );
 }
 ```
+:::
 
 **Blazor의 장점:**
 
@@ -1055,6 +1123,7 @@ public class RegisterModel : IValidatableObject
 
 ### 비동기 유효성 검사 (서버 검증)
 
+::: v-pre
 ```razor
 <EditForm Model="@model" OnValidSubmit="@HandleValidSubmit">
   <DataAnnotationsValidator />
@@ -1098,6 +1167,7 @@ public class RegisterModel : IValidatableObject
   }
 }
 ```
+:::
 
 ## JavaScript Interop: 두 세계의 연결
 
@@ -1105,6 +1175,7 @@ Blazor만으로 모든 것을 할 수는 없습니다. 기존 JavaScript 라이�
 
 ### C#에서 JavaScript 호출
 
+::: v-pre
 ```razor
 @inject IJSRuntime JS
 
@@ -1125,6 +1196,7 @@ Blazor만으로 모든 것을 할 수는 없습니다. 기존 JavaScript 라이�
   }
 }
 ```
+:::
 
 ### JavaScript에서 C# 호출
 
@@ -1159,6 +1231,7 @@ window.callDotNet = async () => {
 
 ### 기존 라이브러리 통합 (Chart.js 예시)
 
+::: v-pre
 ```razor
 @inject IJSRuntime JS
 
@@ -1191,6 +1264,7 @@ window.callDotNet = async () => {
   }
 }
 ```
+:::
 
 ```javascript
 // wwwroot/js/chart-helper.js

@@ -44,6 +44,7 @@ Pages/
 
 Razor Pages의 동적 라우트 템플릿을 사용하면 Next.js와 더 유사해집니다:
 
+::: v-pre
 ```razor
 @* Pages/Products/Details.cshtml *@
 @page "/products/{id:int}"
@@ -51,6 +52,7 @@ Razor Pages의 동적 라우트 템플릿을 사용하면 Next.js와 더 유사�
 
 <h1>상품 #@Model.ProductId</h1>
 ```
+:::
 
 이제 `/products/123`처럼 깔끔한 URL을 사용할 수 있습니다.
 
@@ -123,6 +125,7 @@ namespace MyApp.Pages.Products
 }
 ```
 
+::: v-pre
 ```razor
 @* Pages/Products/Details.cshtml *@
 @page
@@ -134,6 +137,7 @@ namespace MyApp.Pages.Products
   <p>가격: @Model.Product.Price원</p>
 </div>
 ```
+:::
 
 **비교:**
 
@@ -276,6 +280,7 @@ namespace MyApp.Pages
 }
 ```
 
+::: v-pre
 ```razor
 @* Pages/Contact.cshtml *@
 @page
@@ -314,6 +319,7 @@ namespace MyApp.Pages
   <partial name="_ValidationScriptsPartial" />
 }
 ```
+:::
 
 **Razor Pages의 장점:**
 
@@ -349,6 +355,7 @@ public class ProductsModel : PageModel
 
 ### 명명된 핸들러: 여러 버튼/액션
 
+::: v-pre
 ```razor
 @* Edit.cshtml *@
 <form method="post">
@@ -357,6 +364,7 @@ public class ProductsModel : PageModel
   <button type="submit" asp-page-handler="Delete">삭제</button>
 </form>
 ```
+:::
 
 ```csharp
 // Edit.cshtml.cs
@@ -448,6 +456,7 @@ public class CreateModel : PageModel
 }
 ```
 
+::: v-pre
 ```razor
 <form method="post">
   <input asp-for="Product.Name" />
@@ -456,6 +465,7 @@ public class CreateModel : PageModel
   <button type="submit">생성</button>
 </form>
 ```
+:::
 
 폼 필드 이름이 `Product.Name`, `Product.Price`로 자동 생성되며, POST 시 `Product` 객체로 자동 바인딩됩니다.
 
@@ -512,6 +522,7 @@ public class RegisterModel : PageModel
 
 ### 뷰에서 검증 메시지 표시
 
+::: v-pre
 ```razor
 <form method="post">
   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -541,6 +552,7 @@ public class RegisterModel : PageModel
   <partial name="_ValidationScriptsPartial" />
 }
 ```
+:::
 
 **자동으로 제공되는 것:**
 - 서버 사이드 검증 (`ModelState.IsValid`)
@@ -601,6 +613,7 @@ public async Task<IActionResult> OnPostAsync()
 }
 ```
 
+::: v-pre
 ```razor
 @* Index.cshtml *@
 @if (TempData["SuccessMessage"] != null)
@@ -610,6 +623,7 @@ public async Task<IActionResult> OnPostAsync()
   </div>
 }
 ```
+:::
 
 `TempData`는 한 요청에만 유지되며, 읽으면 자동으로 삭제됩니다. 리디렉션 후 일회성 메시지를 표시하는 데 완벽합니다.
 
@@ -623,6 +637,7 @@ public void OnGet()
 }
 ```
 
+::: v-pre
 ```razor
 @{
   ViewData["Title"] = "상품 목록";
@@ -631,12 +646,15 @@ public void OnGet()
 <h1>@ViewData["Title"]</h1>
 <p>@ViewData["PageDescription"]</p>
 ```
+:::
 
 레이아웃에서 사용:
+::: v-pre
 ```razor
 @* _Layout.cshtml *@
 <title>@ViewData["Title"] - My App</title>
 ```
+:::
 
 ### ViewBag: ViewData의 동적 버전
 
@@ -648,6 +666,7 @@ public void OnGet()
 }
 ```
 
+::: v-pre
 ```razor
 <h1>@ViewBag.Title</h1>
 @foreach (var category in ViewBag.Categories)
@@ -655,6 +674,7 @@ public void OnGet()
   <span>@category</span>
 }
 ```
+:::
 
 `ViewBag`은 `dynamic` 타입이므로 타입 안전성이 없습니다. 가능하면 강타입 `@Model`을 사용하는 것이 좋습니다.
 
@@ -662,6 +682,7 @@ public void OnGet()
 
 Razor Pages는 기본적으로 모든 POST 요청에 CSRF 방지 기능을 제공합니다.
 
+::: v-pre
 ```razor
 <form method="post">
   @* Anti-forgery 토큰 자동 생성 *@
@@ -669,6 +690,7 @@ Razor Pages는 기본적으로 모든 POST 요청에 CSRF 방지 기능을 제�
   <button type="submit">전송</button>
 </form>
 ```
+:::
 
 렌더링된 HTML:
 ```html
@@ -813,6 +835,7 @@ public class IndexModel : PageModel
 }
 ```
 
+::: v-pre
 ```razor
 @* Pages/Blog/Index.cshtml *@
 @page
@@ -858,6 +881,7 @@ else
   </div>
 }
 ```
+:::
 
 ### 3. 게시글 작성 페이지
 
@@ -895,6 +919,7 @@ public class CreateModel : PageModel
 }
 ```
 
+::: v-pre
 ```razor
 @* Pages/Blog/Create.cshtml *@
 @page
@@ -937,6 +962,7 @@ public class CreateModel : PageModel
   <partial name="_ValidationScriptsPartial" />
 }
 ```
+:::
 
 ### 4. 게시글 수정 페이지
 
@@ -995,6 +1021,7 @@ public class EditModel : PageModel
 }
 ```
 
+::: v-pre
 ```razor
 @* Pages/Blog/Edit.cshtml *@
 @page "{id:int}"
@@ -1016,6 +1043,7 @@ public class EditModel : PageModel
   <partial name="_ValidationScriptsPartial" />
 }
 ```
+:::
 
 ### 5. 게시글 삭제 페이지
 
@@ -1061,6 +1089,7 @@ public class DeleteModel : PageModel
 }
 ```
 
+::: v-pre
 ```razor
 @* Pages/Blog/Delete.cshtml *@
 @page "{id:int}"
@@ -1086,6 +1115,7 @@ public class DeleteModel : PageModel
   <a asp-page="./Index" class="btn btn-secondary">취소</a>
 </form>
 ```
+:::
 
 ## Next.js와 Razor Pages 비교 요약
 

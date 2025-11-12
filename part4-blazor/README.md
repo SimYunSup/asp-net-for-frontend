@@ -50,6 +50,7 @@ React를 알고 있다면 Blazor가 매우 친숙하게 느껴질 것입니다. 
 
 **컴포넌트 구조 비교:**
 
+::: v-pre
 ```jsx
 // React 컴포넌트
 import { useState } from 'react';
@@ -68,7 +69,9 @@ function Counter() {
   );
 }
 ```
+:::
 
+::: v-pre
 ```razor
 @* Blazor 컴포넌트 *@
 <div>
@@ -86,11 +89,13 @@ function Counter() {
   }
 }
 ```
+:::
 
 구조를 보세요. 거의 동일합니다. JSX의 `{expression}`이 Razor의 `@expression`으로, `onClick`이 `@onclick`으로 바뀐 것뿐입니다. `useState`는 클래스 필드로 대체되며, `setCount`를 호출하는 대신 직접 값을 변경합니다. Blazor가 자동으로 변경을 감지하고 UI를 업데이트합니다.
 
 **Props와 Parameters:**
 
+::: v-pre
 ```jsx
 // React Props
 function Greeting({ name, onGreet }) {
@@ -105,7 +110,9 @@ function Greeting({ name, onGreet }) {
 // 사용
 <Greeting name="홍길동" onGreet={() => alert('안녕!')} />
 ```
+:::
 
+::: v-pre
 ```razor
 @* Blazor Parameters *@
 <div>
@@ -124,11 +131,13 @@ function Greeting({ name, onGreet }) {
 @* 사용 *@
 <Greeting Name="홍길동" OnGreet="@(() => Console.WriteLine("안녕!"))" />
 ```
+:::
 
 React의 props가 Blazor에서는 `[Parameter]` 특성으로 표시된 프로퍼티입니다. 이벤트 콜백도 `EventCallback` 타입으로 동일하게 작동합니다. 차이점은 타입 안정성입니다. `Name`은 `string`이어야 하고, `OnGreet`은 `EventCallback`이어야 합니다. 잘못된 타입을 전달하면 컴파일 시점에 오류가 발생합니다.
 
 **생명주기 메서드:**
 
+::: v-pre
 ```jsx
 // React Hooks
 import { useEffect } from 'react';
@@ -148,7 +157,9 @@ function UserProfile({ userId }) {
   return <div>{user?.name}</div>;
 }
 ```
+:::
 
+::: v-pre
 ```razor
 @* Blazor 생명주기 *@
 @if (user != null)
@@ -173,6 +184,7 @@ function UserProfile({ userId }) {
   }
 }
 ```
+:::
 
 `useEffect`가 Blazor에서는 생명주기 메서드로 대체됩니다. `OnInitializedAsync`는 컴포넌트가 처음 생성될 때, `OnParametersSetAsync`는 파라미터가 변경될 때 호출됩니다. `useEffect`의 cleanup 함수는 `IDisposable` 인터페이스의 `Dispose` 메서드가 됩니다.
 
@@ -214,6 +226,7 @@ public class ProductsController : ControllerBase
 
 JavaScript와 TypeScript의 가장 큰 차이는 타입 시스템입니다. Blazor는 C#의 강타입 시스템을 그대로 가져옵니다. 모든 변수, 모든 함수, 모든 컴포넌트 파라미터가 타입을 가집니다. 잘못된 타입을 전달하면 코드가 컴파일되지 않습니다.
 
+::: v-pre
 ```razor
 @* 컴파일 오류 예시 *@
 <UserProfile UserId="abc" />  @* 오류: string을 int에 할당할 수 없음 *@
@@ -227,6 +240,7 @@ JavaScript와 TypeScript의 가장 큰 차이는 타입 시스템입니다. Blaz
   }
 }
 ```
+:::
 
 TypeScript도 타입 체킹을 제공하지만, 컴파일 타임입니다. 브라우저에서 실행되는 것은 여전히 JavaScript이며, 런타임에 예상치 못한 타입이 나타날 수 있습니다. C#은 런타임에도 타입이 유지됩니다.
 

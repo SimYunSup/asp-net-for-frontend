@@ -863,6 +863,7 @@ var result = await _paymentService.ProcessPaymentAsync("stripe", 100.00m, token)
 React 개발자라면 Context API로 상태나 서비스를 공유하는 패턴에 익숙할 것입니다.
 
 **React Context API**:
+::: v-pre
 ```typescript
 const UserContext = createContext<UserService | null>(null);
 
@@ -881,6 +882,7 @@ function Dashboard() {
   // userService 사용
 }
 ```
+:::
 
 **ASP.NET Core DI**는 비슷하지만 더 강력합니다:
 - 타입 안전성: 컴파일 타임에 의존성 확인
@@ -1005,6 +1007,7 @@ router.delete('/products/:id', deleteProduct);
 
 프론트엔드 개발자라면 React Router에 익숙할 것입니다:
 
+::: v-pre
 ```typescript
 // React Router
 <Routes>
@@ -1013,6 +1016,7 @@ router.delete('/products/:id', deleteProduct);
   <Route path="/products/:id/reviews" element={<ProductReviews />} />
 </Routes>
 ```
+:::
 
 ASP.NET Core의 라우팅은 서버 사이드 버전입니다:
 

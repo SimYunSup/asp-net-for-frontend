@@ -15,6 +15,7 @@ JSX에서 JavaScript 표현식을 삽입할 때 중괄호 `{}`를 사용합니�
 ### 표현식 출력하기
 
 **React JSX:**
+::: v-pre
 ```jsx
 function Greeting({ name, age }) {
   return (
@@ -26,8 +27,10 @@ function Greeting({ name, age }) {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model User
 
@@ -37,6 +40,7 @@ function Greeting({ name, age }) {
   <p>내년에는 @(Model.Age + 1)세가 됩니다.</p>
 </div>
 ```
+:::
 
 차이점을 보셨나요?
 
@@ -57,6 +61,7 @@ function Greeting({ name, age }) {
 ```
 
 **Razor:**
+::: v-pre
 ```razor
 @model User
 
@@ -66,6 +71,7 @@ function Greeting({ name, age }) {
   <p>내년에는 @(Model.Age + 1)세가 됩니다.</p>
 </div>
 ```
+:::
 
 Vue의 `{{ }}` 대신 Razor는 `@`를 사용합니다. 더 간결하죠?
 
@@ -73,12 +79,15 @@ Vue의 `{{ }}` 대신 Razor는 `@`를 사용합니다. 더 간결하죠?
 
 JSX와 Razor 모두 기본적으로 출력을 HTML 인코딩합니다. 이는 XSS(Cross-Site Scripting) 공격을 자동으로 방지합니다.
 
+::: v-pre
 ```jsx
 // React - 자동 이스케이프
 const userInput = '<script>alert("XSS")</script>';
 <div>{userInput}</div>  // 화면에 문자열 그대로 표시됨
 ```
+:::
 
+::: v-pre
 ```razor
 @* Razor - 자동 이스케이프 *@
 @{
@@ -86,18 +95,23 @@ const userInput = '<script>alert("XSS")</script>';
 }
 <div>@userInput</div>  @* 화면에 문자열 그대로 표시됨 *@
 ```
+:::
 
 둘 다 `<script>` 태그를 실행하지 않고, 텍스트로 표시합니다. 의도적으로 HTML을 렌더링하려면:
 
+::: v-pre
 ```jsx
 // React - 위험한 HTML 렌더링 (신중하게 사용)
 <div dangerouslySetInnerHTML={{ __html: htmlString }} />
 ```
+:::
 
+::: v-pre
 ```razor
 @* Razor - 원시 HTML 렌더링 (신중하게 사용) *@
 <div>@Html.Raw(htmlString)</div>
 ```
+:::
 
 이름에서 알 수 있듯이 (`dangerouslySetInnerHTML`, `Html.Raw`), 이 기능은 신뢰할 수 있는 데이터에만 사용해야 합니다.
 
@@ -108,6 +122,7 @@ UI를 조건에 따라 다르게 표시하는 것은 모든 템플릿 엔진의 
 ### 단순 조건: if-else
 
 **React JSX:**
+::: v-pre
 ```jsx
 function WelcomeMessage({ user }) {
   return (
@@ -121,8 +136,10 @@ function WelcomeMessage({ user }) {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model User
 
@@ -137,6 +154,7 @@ function WelcomeMessage({ user }) {
   }
 </div>
 ```
+:::
 
 Razor는 C#의 `if-else` 문을 그대로 사용합니다. JSX의 삼항 연산자보다 더 읽기 쉽다고 느낄 수 있습니다.
 
@@ -151,6 +169,7 @@ Razor는 C#의 `if-else` 문을 그대로 사용합니다. JSX의 삼항 연산�
 ```
 
 **Razor (같은 결과):**
+::: v-pre
 ```razor
 @model User
 
@@ -165,10 +184,12 @@ Razor는 C#의 `if-else` 문을 그대로 사용합니다. JSX의 삼항 연산�
   }
 </div>
 ```
+:::
 
 ### 논리 AND 연산자
 
 **React JSX:**
+::: v-pre
 ```jsx
 function Notification({ hasNewMessages, messageCount }) {
   return (
@@ -180,8 +201,10 @@ function Notification({ hasNewMessages, messageCount }) {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model NotificationViewModel
 
@@ -192,12 +215,14 @@ function Notification({ hasNewMessages, messageCount }) {
   }
 </div>
 ```
+:::
 
 JSX의 `&&` 트릭은 Razor에서 명시적인 `@if`로 표현됩니다. 더 명확하지만 약간 더 장황합니다.
 
 ### 다중 조건: switch-case
 
 **React JSX:**
+::: v-pre
 ```jsx
 function StatusBadge({ status }) {
   let badge;
@@ -217,8 +242,10 @@ function StatusBadge({ status }) {
   return <div>{badge}</div>;
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model OrderViewModel
 
@@ -240,10 +267,12 @@ function StatusBadge({ status }) {
   }
 </div>
 ```
+:::
 
 Razor의 `@switch`는 C#의 switch 문법을 그대로 사용하며, 각 case 안에 직접 HTML을 작성할 수 있습니다.
 
 **현대적인 C# switch 표현식 (C# 8+):**
+::: v-pre
 ```razor
 @model OrderViewModel
 
@@ -260,6 +289,7 @@ Razor의 `@switch`는 C#의 switch 문법을 그대로 사용하며, 각 case �
   @Html.Raw(badgeHtml)
 </div>
 ```
+:::
 
 ## 리스트 렌더링
 
@@ -268,6 +298,7 @@ Razor의 `@switch`는 C#의 switch 문법을 그대로 사용하며, 각 case �
 ### 기본 반복
 
 **React JSX:**
+::: v-pre
 ```jsx
 function UserList({ users }) {
   return (
@@ -281,8 +312,10 @@ function UserList({ users }) {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model List<User>
 
@@ -295,6 +328,7 @@ function UserList({ users }) {
   }
 </ul>
 ```
+:::
 
 JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razor에서 자동 처리되므로 명시할 필요가 없습니다(서버 렌더링이므로 React의 reconciliation이 필요 없음).
 
@@ -310,6 +344,7 @@ JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razo
 ```
 
 **Razor (같은 결과):**
+::: v-pre
 ```razor
 @model List<User>
 
@@ -322,10 +357,12 @@ JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razo
   }
 </ul>
 ```
+:::
 
 ### 인덱스 접근
 
 **React JSX:**
+::: v-pre
 ```jsx
 {users.map((user, index) => (
   <li key={user.id}>
@@ -333,8 +370,10 @@ JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razo
   </li>
 ))}
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @{
   var index = 0;
@@ -346,9 +385,11 @@ JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razo
   </li>
 }
 ```
+:::
 
 또는 LINQ를 사용하여:
 
+::: v-pre
 ```razor
 @foreach (var item in Model.Select((user, index) => new { user, index }))
 {
@@ -357,10 +398,12 @@ JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razo
   </li>
 }
 ```
+:::
 
 ### 빈 리스트 처리
 
 **React JSX:**
+::: v-pre
 ```jsx
 function ProductList({ products }) {
   return (
@@ -378,8 +421,10 @@ function ProductList({ products }) {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model List<Product>
 
@@ -399,9 +444,11 @@ function ProductList({ products }) {
   }
 </div>
 ```
+:::
 
 또는 더 간결하게:
 
+::: v-pre
 ```razor
 @model List<Product>
 
@@ -421,6 +468,7 @@ function ProductList({ products }) {
   }
 </div>
 ```
+:::
 
 ## Razor 지시문 (Directives)
 
@@ -431,6 +479,7 @@ Razor 지시문은 `@` 뒤에 키워드를 붙여 특별한 기능을 제공합�
 React의 props 타입을 선언하는 것과 비슷합니다.
 
 **TypeScript + React:**
+::: v-pre
 ```tsx
 interface UserProps {
   name: string;
@@ -442,13 +491,16 @@ function UserProfile(props: UserProps) {
   return <div>{props.name}</div>;
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @model User
 
 <div>@Model.Name</div>
 ```
+:::
 
 `@model User`는 이 뷰가 `User` 타입의 모델을 받는다고 선언합니다. IntelliSense(자동완성)와 컴파일 타임 타입 체크를 제공합니다. `@Model.`을 입력하면 IDE가 `User` 클래스의 모든 프로퍼티를 자동완성해줍니다.
 
@@ -462,18 +514,21 @@ import { formatDate, formatCurrency } from './utils';
 ```
 
 **Razor:**
+::: v-pre
 ```razor
 @using MyApp.Utilities
 @using MyApp.Models
 
 <div>@FormatHelper.FormatDate(Model.CreatedAt)</div>
 ```
+:::
 
 ### `@inject`: 의존성 주입
 
 React의 Context나 Angular의 DI와 유사합니다.
 
 **React Context:**
+::: v-pre
 ```jsx
 import { useContext } from 'react';
 import { ThemeContext } from './ThemeContext';
@@ -483,8 +538,10 @@ function ThemedButton() {
   return <button style={{ color: theme.color }}>버튼</button>;
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @inject IConfiguration Config
 
@@ -492,12 +549,14 @@ function ThemedButton() {
   API Key: @Config["ApiSettings:Key"]
 </div>
 ```
+:::
 
 `@inject`는 ASP.NET Core의 의존성 주입 컨테이너에서 서비스를 직접 뷰에 주입합니다. 별도의 Provider나 설정 없이 즉시 사용 가능합니다.
 
 ### `@section`: 레이아웃의 특정 영역에 콘텐츠 삽입
 
 **React Layout 패턴:**
+::: v-pre
 ```jsx
 // Layout.jsx
 function Layout({ children, header, sidebar }) {
@@ -518,8 +577,10 @@ function Layout({ children, header, sidebar }) {
   <p>메인 콘텐츠</p>
 </Layout>
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @* _Layout.cshtml (레이아웃 파일) *@
 <!DOCTYPE html>
@@ -561,6 +622,7 @@ function Layout({ children, header, sidebar }) {
   <script src="/js/home.js"></script>
 }
 ```
+:::
 
 `@section`은 레이아웃의 특정 "구멍"에 콘텐츠를 삽입하는 메커니즘입니다. 페이지별로 다른 CSS나 JavaScript를 로드하는 데 유용합니다.
 
@@ -569,6 +631,7 @@ function Layout({ children, header, sidebar }) {
 JSX에서는 `{}`안에 모든 JavaScript를 작성할 수 있지만, 여러 문장을 작성하려면 IIFE를 사용해야 합니다. Razor는 `@{ }`로 여러 줄의 C# 코드를 작성할 수 있습니다.
 
 **React JSX (IIFE 사용):**
+::: v-pre
 ```jsx
 function ProductPrice({ price, discount }) {
   return (
@@ -588,8 +651,10 @@ function ProductPrice({ price, discount }) {
   );
 }
 ```
+:::
 
 **Razor (코드 블록 사용):**
+::: v-pre
 ```razor
 @model Product
 
@@ -603,6 +668,7 @@ function ProductPrice({ price, discount }) {
   <span>절약: @savings원</span>
 </div>
 ```
+:::
 
 `@{ }` 블록 안의 코드는 실행만 되고 출력되지 않습니다. 변수를 선언하거나, 복잡한 로직을 수행하는 데 사용합니다.
 
@@ -611,6 +677,7 @@ function ProductPrice({ price, discount }) {
 React의 Layout 컴포넌트와 개념적으로 동일합니다.
 
 **React:**
+::: v-pre
 ```jsx
 // Layout.jsx
 function Layout({ children }) {
@@ -632,8 +699,10 @@ function App() {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @* _Layout.cshtml *@
 <!DOCTYPE html>
@@ -658,6 +727,7 @@ function App() {
 
 <h1>홈 페이지 콘텐츠</h1>
 ```
+:::
 
 차이점은 React는 명시적으로 `<Layout>` 컴포넌트로 감싸지만, Razor는 페이지에서 `Layout = "_Layout"`으로 사용할 레이아웃을 지정한다는 것입니다.
 
@@ -665,6 +735,7 @@ function App() {
 
 복잡한 애플리케이션에서는 레이아웃을 중첩할 수 있습니다.
 
+::: v-pre
 ```razor
 @* _Layout.cshtml (기본 레이아웃) *@
 <!DOCTYPE html>
@@ -693,6 +764,7 @@ function App() {
 
 <h1>관리자 대시보드</h1>
 ```
+:::
 
 결과적으로 페이지는 `_Layout` → `_AdminLayout` → 페이지 콘텐츠 순서로 렌더링됩니다.
 
@@ -701,6 +773,7 @@ function App() {
 React의 컴포넌트와 유사합니다.
 
 **React:**
+::: v-pre
 ```jsx
 // UserCard.jsx
 function UserCard({ user }) {
@@ -724,8 +797,10 @@ function UserList({ users }) {
   );
 }
 ```
+:::
 
 **Razor:**
+::: v-pre
 ```razor
 @* _UserCard.cshtml (부분 뷰) *@
 @model User
@@ -746,6 +821,7 @@ function UserList({ users }) {
   }
 </div>
 ```
+:::
 
 또는 `@Html.Partial()` 헬퍼 사용:
 
@@ -772,6 +848,7 @@ Tag Helpers는 Razor만의 강력한 기능으로, HTML 태그를 확장하여 �
 ```
 
 **Tag Helper 사용:**
+::: v-pre
 ```razor
 @model RegisterViewModel
 
@@ -779,6 +856,7 @@ Tag Helpers는 Razor만의 강력한 기능으로, HTML 태그를 확장하여 �
 <input asp-for="Email" />
 <span asp-validation-for="Email"></span>
 ```
+:::
 
 컴파일 후 결과 (자동 생성):
 ```html
@@ -806,16 +884,19 @@ Tag Helper가 자동으로:
 문제: 라우트가 변경되면 모든 링크를 수동으로 업데이트해야 함.
 
 **Tag Helper 사용:**
+::: v-pre
 ```razor
 <a asp-controller="Products" asp-action="Details" asp-route-id="123">
   상품 보기
 </a>
 ```
+:::
 
 컴파일러가 `ProductsController`의 `Details` 액션이 존재하는지 확인하며, 라우트 URL을 자동 생성합니다. 리팩토링 안전성이 보장됩니다.
 
 ### `asp-validation-summary`: 폼 유효성 검사 요약
 
+::: v-pre
 ```razor
 <form method="post">
   <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -835,6 +916,7 @@ Tag Helper가 자동으로:
   <button type="submit">로그인</button>
 </form>
 ```
+:::
 
 `asp-validation-summary`는 모든 검증 오류의 요약을 표시합니다. React의 폼 라이브러리(React Hook Form, Formik)에서 `errors` 객체를 렌더링하는 것과 유사합니다.
 
@@ -842,6 +924,7 @@ Tag Helper가 자동으로:
 
 개발/프로덕션 환경에 따라 다른 콘텐츠를 표시합니다.
 
+::: v-pre
 ```razor
 <environment include="Development">
   <link rel="stylesheet" href="~/css/site.css" />
@@ -853,6 +936,7 @@ Tag Helper가 자동으로:
   <script src="~/js/site.min.js" asp-append-version="true"></script>
 </environment>
 ```
+:::
 
 `asp-append-version="true"`는 파일 내용의 해시를 쿼리 스트링에 추가하여 캐시 무효화를 자동 처리합니다 (Webpack의 `[contenthash]`와 유사).
 
@@ -861,6 +945,7 @@ Tag Helper가 자동으로:
 부분 뷰보다 강력한 재사용 가능한 컴포넌트입니다. React 컴포넌트처럼 자체 로직과 상태를 가질 수 있습니다.
 
 **React 컴포넌트:**
+::: v-pre
 ```jsx
 // RecentPosts.jsx
 function RecentPosts() {
@@ -884,6 +969,7 @@ function RecentPosts() {
   );
 }
 ```
+:::
 
 **Razor View Component:**
 
@@ -906,6 +992,7 @@ public class RecentPostsViewComponent : ViewComponent
 }
 ```
 
+::: v-pre
 ```razor
 @* Views/Shared/Components/RecentPosts/Default.cshtml *@
 @model List<Post>
@@ -920,8 +1007,10 @@ public class RecentPostsViewComponent : ViewComponent
   </ul>
 </div>
 ```
+:::
 
 **사용 방법:**
+::: v-pre
 ```razor
 @* 어떤 뷰에서든 사용 가능 *@
 <vc:recent-posts count="10"></vc:recent-posts>
@@ -929,6 +1018,7 @@ public class RecentPostsViewComponent : ViewComponent
 @* 또는 *@
 @await Component.InvokeAsync("RecentPosts", new { count = 10 })
 ```
+:::
 
 View Component는:
 - 의존성 주입을 지원합니다 (생성자 주입)
@@ -943,6 +1033,7 @@ React 컴포넌트와의 차이점은 서버에서 실행되며, 한 번만 렌�
 다음 React 컴포넌트를 Razor로 변환해보세요.
 
 **React 코드:**
+::: v-pre
 ```jsx
 function BlogPost({ post, author, comments }) {
   const formattedDate = new Date(post.publishedAt).toLocaleDateString();
@@ -980,8 +1071,10 @@ function BlogPost({ post, author, comments }) {
   );
 }
 ```
+:::
 
 **Razor 변환:**
+::: v-pre
 ```razor
 @model BlogPostViewModel
 
@@ -1023,6 +1116,7 @@ function BlogPost({ post, author, comments }) {
   </section>
 </article>
 ```
+:::
 
 **ViewModel 클래스:**
 ```csharp

@@ -117,7 +117,7 @@ numbers.sort();
 numbers.reverse();
 ```
 
-### 2.2 List<T>
+### 2.2 List\<T>
 
 **C#**
 ```csharp
@@ -162,7 +162,7 @@ const index = numbers.indexOf(5);
 const filtered = numbers.filter(n => n > 3);
 ```
 
-### 2.3 Dictionary<TKey, TValue>
+### 2.3 Dictionary\<TKey, TValue>
 
 **C#**
 ```csharp
@@ -1723,6 +1723,7 @@ public void OldMethod()
 ```
 
 **TypeScript 데코레이터 비교**
+::: v-pre
 ```typescript
 // TypeScript 데코레이터 (실험적 기능)
 function Controller(route: string) {
@@ -1750,6 +1751,7 @@ class ProductsController {
     }
 }
 ```
+:::
 
 ## 14. 확장 메서드
 
