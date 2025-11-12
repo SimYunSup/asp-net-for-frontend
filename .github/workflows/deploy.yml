@@ -1,4 +1,4 @@
-name: Deploy VitePress site to Pages
+name: Deploy Starlight site to Pages
 
 on:
   push:
@@ -41,13 +41,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build with VitePress
-        run: pnpm run docs:build
+      - name: Build with Astro
+        run: pnpm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .vitepress/dist
+          path: dist
 
   deploy:
     environment:

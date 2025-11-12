@@ -1,9 +1,9 @@
 # Node modules
 node_modules/
 
-# VitePress build output
-.vitepress/dist
-.vitepress/cache
+# Astro build output
+dist/
+.astro/
 
 # Log files
 npm-debug.log*

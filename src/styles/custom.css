@@ -1,0 +1,9 @@
+/* Custom styles for ASP.NET Core for Frontend Developers */
+
+:root {
+  --sl-color-accent-low: #0d1117;
+  --sl-color-accent: #58a6ff;
+  --sl-color-accent-high: #79c0ff;
+}
+
+/* Add any custom styling here */
