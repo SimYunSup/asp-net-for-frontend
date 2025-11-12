@@ -122,6 +122,7 @@ class DataStore<T> {
 ```
 
 **C# 제네릭:**
+::: v-pre
 ```csharp
 // 기본 제네릭
 public T Identity<T>(T arg)
@@ -156,6 +157,7 @@ public class EntityRepository<T> where T : class, IEntity, new()
     }
 }
 ```
+:::
 
 **제네릭 제약 조건 종류:**
 ```csharp
@@ -365,6 +367,7 @@ async function fetchMultipleUsers() {
 ```
 
 **C# Task:**
+::: v-pre
 ```csharp
 // Task (Promise와 유사)
 public Task<User> FetchUserAsync(int id)
@@ -410,8 +413,10 @@ public async Task<User> SafeFetchUserAsync(int id)
     }
 }
 ```
+:::
 
 **Task vs ValueTask:**
+::: v-pre
 ```csharp
 // Task: 항상 힙 할당
 public async Task<int> GetValueAsync()
@@ -433,8 +438,10 @@ public async ValueTask<int> GetCachedValueAsync(int id)
     return result;
 }
 ```
+:::
 
 **취소 토큰 (CancellationToken):**
+::: v-pre
 ```csharp
 public async Task<User> FetchUserAsync(int id, CancellationToken cancellationToken)
 {
@@ -455,6 +462,7 @@ catch (OperationCanceledException)
     Console.WriteLine("Request cancelled");
 }
 ```
+:::
 
 ### 구조 분해 할당 (Deconstruction)
 
@@ -688,6 +696,7 @@ var result2 = (from n in numbers
 
 ### LINQ 기본 예제
 
+::: v-pre
 ```csharp
 var products = new List<Product>
 {
@@ -723,6 +732,7 @@ decimal avg = products.Average(p => p.Price);
 var page1 = products.Skip(0).Take(10);
 var page2 = products.Skip(10).Take(10);
 ```
+:::
 
 ---
 

@@ -459,27 +459,25 @@ function UserCard({
 
 React 버전:
 
-::: v-pre
 ```jsx
 function Card({ header, children, footer }) {
   return (
-    <div className="card">
-      {header && <div className="card-header">{header}</div>}
-      <div className="card-body">{children}</div>
-      {footer && <div className="card-footer">{footer}</div>}
-    </div>
+    React.createElement('div', { className: 'card' },
+      header && React.createElement('div', { className: 'card-header' }, header),
+      React.createElement('div', { className: 'card-body' }, children),
+      footer && React.createElement('div', { className: 'card-footer' }, footer)
+    )
   );
 }
 
-// 사용
-<Card
-  header={<h2>제목</h2>}
-  footer={<button>확인</button>}
->
-  <p>본문 내용입니다.</p>
-</Card>
+// 사용 (JSX)
+// <Card
+//   header={<h2>제목</h2>}
+//   footer={<button>확인</button>}
+// >
+//   <p>본문 내용입니다.</p>
+// </Card>
 ```
-:::
 
 `RenderFragment`는 Blazor의 특별한 타입으로, 렌더링할 수 있는 UI 조각을 나타냅니다. React의 `ReactNode`와 유사합니다.
 

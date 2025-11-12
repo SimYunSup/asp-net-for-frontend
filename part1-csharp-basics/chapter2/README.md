@@ -393,6 +393,7 @@ button.PerformClick();
 
 ### 실전 예제: 데이터 변경 알림
 
+::: v-pre
 ```csharp
 public class DataStore<T>
 {
@@ -445,6 +446,7 @@ public class DataChangedEventArgs<T> : EventArgs
     }
 }
 ```
+:::
 
 ---
 
@@ -657,6 +659,7 @@ Chapter 1에서 LINQ의 기본 메서드(`Where`, `Select`, `First` 등)를 배�
 
 ### GroupBy와 집계
 
+::: v-pre
 ```csharp
 var products = new List<Product>
 {
@@ -698,9 +701,11 @@ var categoryTotals2 = from p in products
                            Count = g.Count()
                        };
 ```
+:::
 
 ### Join 작업
 
+::: v-pre
 ```csharp
 var users = new List<User>
 {
@@ -740,9 +745,11 @@ var userWithOrders = users.GroupJoin(
     }
 );
 ```
+:::
 
 ### SelectMany (flatMap)
 
+::: v-pre
 ```csharp
 var orders = new List<Order>
 {
@@ -767,6 +774,7 @@ var userOrders = users.SelectMany(
     (user, orderId) => new { user.Name, OrderId = orderId }
 );
 ```
+:::
 
 ### 복잡한 쿼리 예제
 

@@ -258,12 +258,14 @@ public class ProductValidator : AbstractValidator<Product>
 ### Generic
 타입 매개변수를 사용하는 클래스나 메서드입니다.
 **JavaScript 비교**: TypeScript generics
+::: v-pre
 ```csharp
 public class Repository<T> where T : class
 {
     public async Task<T> GetByIdAsync(int id) { ... }
 }
 ```
+:::
 
 ### gRPC
 고성능 RPC 프레임워크입니다.
@@ -405,6 +407,7 @@ _logger.LogInformation("Processing product {ProductId}", productId);
 
 ### MediatR
 중재자 패턴을 구현한 라이브러리입니다. CQRS에 자주 사용됩니다.
+::: v-pre
 ```csharp
 public class CreateProductCommand : IRequest<int>
 {
@@ -417,6 +420,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, int>
     public async Task<int> Handle(CreateProductCommand request, ...) { ... }
 }
 ```
+:::
 
 ### Middleware
 요청 파이프라인의 구성 요소입니다.
@@ -575,6 +579,7 @@ public record Product(int Id, string Name, decimal Price);
 ### Refit
 타입 안전 HTTP 클라이언트 라이브러리입니다.
 **JavaScript 비교**: axios with TypeScript
+::: v-pre
 ```csharp
 public interface IGitHubApi
 {
@@ -582,6 +587,7 @@ public interface IGitHubApi
     Task<User> GetUserAsync(string username);
 }
 ```
+:::
 
 ### Repository Pattern
 데이터 액세스 로직을 캡슐화하는 패턴입니다.
@@ -668,12 +674,14 @@ app.UseSwaggerUI();
 ### Task
 비동기 작업을 나타냅니다.
 **JavaScript 비교**: Promise
+::: v-pre
 ```csharp
 public async Task<Product> GetProductAsync(int id)
 {
     return await _repository.GetByIdAsync(id);
 }
 ```
+:::
 
 ### TDD (Test-Driven Development)
 테스트 주도 개발 방법론입니다.
@@ -715,6 +723,7 @@ public string Name { get; set; }
 
 ### ValueTask
 성능 최적화된 Task 대안입니다.
+::: v-pre
 ```csharp
 public ValueTask<Product> GetProductAsync(int id)
 {
@@ -724,6 +733,7 @@ public ValueTask<Product> GetProductAsync(int id)
     return new ValueTask<Product>(FetchFromDbAsync(id));
 }
 ```
+:::
 
 ## W
 

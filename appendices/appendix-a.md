@@ -120,6 +120,7 @@ numbers.reverse();
 ### 2.2 List\<T>
 
 **C#**
+::: v-pre
 ```csharp
 // List 생성 (동적 크기)
 var numbers = new List<int> { 1, 2, 3, 4, 5 };
@@ -143,6 +144,7 @@ bool contains = numbers.Contains(5);
 int index = numbers.IndexOf(5);
 var filtered = numbers.Where(n => n > 3).ToList();
 ```
+:::
 
 **JavaScript 비교**
 ```javascript
@@ -165,6 +167,7 @@ const filtered = numbers.filter(n => n > 3);
 ### 2.3 Dictionary\<TKey, TValue>
 
 **C#**
+::: v-pre
 ```csharp
 // Dictionary 생성
 var userAges = new Dictionary<string, int>
@@ -200,6 +203,7 @@ foreach (var kvp in userAges)
     Console.WriteLine($"{kvp.Key}: {kvp.Value}");
 }
 ```
+:::
 
 **JavaScript 비교**
 ```javascript
@@ -660,6 +664,7 @@ class Circle extends Shape {
 ### 5.3 인터페이스
 
 **C#**
+::: v-pre
 ```csharp
 public interface IRepository<T>
 {
@@ -709,6 +714,7 @@ public class NotificationService : ILogger, IEmailSender
     }
 }
 ```
+:::
 
 **TypeScript 비교**
 ```typescript
@@ -756,6 +762,7 @@ class NotificationService implements ILogger, IEmailSender {
 ### 6.1 제네릭 클래스와 메서드
 
 **C#**
+::: v-pre
 ```csharp
 // 제네릭 클래스
 public class Stack<T>
@@ -820,6 +827,7 @@ var pair = new Pair<string, int>
     Second = 30
 };
 ```
+:::
 
 **TypeScript 비교**
 ```typescript
@@ -1144,6 +1152,7 @@ try {
 ### 8.2 Task 패턴
 
 **C#**
+::: v-pre
 ```csharp
 // Task 생성 및 시작
 var task = Task.Run(() =>
@@ -1195,6 +1204,7 @@ public ValueTask<Product> GetProductAsync(int id)
     return new ValueTask<Product>(FetchFromDbAsync(id));
 }
 ```
+:::
 
 ## 9. 예외 처리
 
@@ -1403,6 +1413,7 @@ public record struct Point3D(int X, int Y, int Z);
 ## 11. 패턴 매칭 (C# 7.0+)
 
 **C#**
+::: v-pre
 ```csharp
 // is 패턴
 if (obj is string str)
@@ -1462,6 +1473,7 @@ string DescribeList(int[] numbers) => numbers switch
     [var first, .., var last] => $"Multiple: {first}...{last}",
 };
 ```
+:::
 
 ## 12. 델리게이트와 이벤트
 
@@ -1645,6 +1657,7 @@ orderService.on('orderCreated', (data) => {
 ## 13. 특성 (Attributes)
 
 **C#**
+::: v-pre
 ```csharp
 // ASP.NET Core 특성
 [ApiController]
@@ -1721,6 +1734,7 @@ public void OldMethod()
     // ...
 }
 ```
+:::
 
 **TypeScript 데코레이터 비교**
 ::: v-pre
@@ -1756,6 +1770,7 @@ class ProductsController {
 ## 14. 확장 메서드
 
 **C#**
+::: v-pre
 ```csharp
 // 확장 메서드 정의 (static 클래스에 static 메서드)
 public static class StringExtensions
@@ -1807,10 +1822,12 @@ var nonNullNames = names.WhereNotNull();  // ["Alice", "Bob", "Charlie"]
 
 numbers.ForEach(n => Console.WriteLine(n));
 ```
+:::
 
 ## 15. 널 허용 참조 형식 (C# 8.0+)
 
 **C#**
+::: v-pre
 ```csharp
 // 프로젝트 전체 활성화 (.csproj)
 // <Nullable>enable</Nullable>
@@ -1872,6 +1889,7 @@ public void SetValue([AllowNull] string value)
     // ...
 }
 ```
+:::
 
 **TypeScript 비교**
 ```typescript

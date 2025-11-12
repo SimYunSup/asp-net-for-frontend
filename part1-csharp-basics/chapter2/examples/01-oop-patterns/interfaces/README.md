@@ -67,6 +67,7 @@ class ApiProductRepository implements ProductRepository {
 
 ### C# (After)
 
+::: v-pre
 ```csharp
 // Product.cs
 public class Product
@@ -158,6 +159,7 @@ public class ApiProductRepository : IProductRepository
     }
 }
 ```
+:::
 
 ## 예제 2: 제네릭 인터페이스
 
@@ -214,6 +216,7 @@ class GenericRepository<T extends Identifiable> implements Repository<T> {
 
 ### C# (After)
 
+::: v-pre
 ```csharp
 // IRepository.cs
 public interface IRepository<T> where T : IIdentifiable
@@ -306,6 +309,7 @@ var products = await productRepo.FindAllAsync();
 var userRepo = new GenericRepository<User>(httpClient, "/api/users");
 var users = await userRepo.FindAllAsync();
 ```
+:::
 
 ## 예제 3: 유니온 타입과 판별된 유니온
 
@@ -347,6 +351,7 @@ function calculateArea(shape: Shape): number {
 
 ### C# (After)
 
+::: v-pre
 ```csharp
 // Enum으로 변환 (문자열 리터럴 유니온)
 public enum Status
@@ -471,6 +476,7 @@ double CalculateArea(Shape shape)
     // return shape.CalculateArea();
 }
 ```
+:::
 
 ## 주요 변환 포인트
 
