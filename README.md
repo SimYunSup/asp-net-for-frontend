@@ -636,52 +636,55 @@ public class ProductsController : ControllerBase
 
 ---
 
-## **Part 7: 프론트엔드 통합 - React, Vue, Angular와 함께**
+## **Part 7: 프로덕션 준비 - 실시간 통신과 클라이언트 통합**
 
-### **Chapter 17: SPA 프레임워크와 ASP.NET Core 통합**
+### **Chapter 17: 실시간 통신과 백그라운드 처리**
 
-#### 16.1 통합 아키텍처 패턴
-- **완전 분리**: 별도 프로젝트, API 백엔드
-- **통합 프로젝트**: Visual Studio SPA 템플릿
-- **BFF (Backend for Frontend)**: YARP와 함께
+#### 16.1 실시간 통신 패턴
+- Polling, Long Polling, Server-Sent Events, WebSocket 비교
 - 각 패턴의 장단점과 선택 기준
+- Node.js 실시간 통신과 비교
 
-#### 16.2 React + ASP.NET Core
-- Visual Studio 2022 SPA 템플릿 (Vite 기반)
-- 개발 프록시 구성
-- API 엔드포인트 호출
-- 인증 토큰 관리
-- 프로덕션 빌드와 배포
+#### 16.2 Server-Sent Events (SSE)
+- SSE의 개념과 사용 사례
+- ASP.NET Core에서 SSE 구현
+- 실시간 알림, 로그 스트리밍
+- 브라우저 호환성과 폴백
 
-#### 16.3 Vue + ASP.NET Core
-- Vue 3 + Vite 프로젝트 설정
-- Composition API와 ASP.NET Core API
-- Axios를 통한 HTTP 통신
-- 환경 변수 관리
+#### 16.3 WebSocket 직접 사용
+- `System.Net.WebSockets` 네임스페이스
+- 연결 관리와 메시지 송수신
+- 재연결 로직과 하트비트
+- 에러 처리
 
-#### 16.4 Angular + ASP.NET Core
-- Angular CLI와 통합
-- HttpClient를 통한 API 호출
-- Interceptor를 통한 인증 헤더 추가
-- RxJS와 Observables
+#### 16.4 SignalR 고급 패턴
+- Strongly-typed Hub
+- 그룹 관리와 동적 그룹
+- Redis backplane으로 확장
+- Azure SignalR Service
 
-#### 16.5 .NET Aspire를 통한 통합 개발
-- JavaScript 프레임워크와 .NET 백엔드 오케스트레이션
-- 통합 대시보드
-- 분산 추적과 모니터링
+#### 16.5 백그라운드 작업 처리
+- `IHostedService`와 `BackgroundService`
+- 작업 큐 패턴: `IBackgroundTaskQueue`
+- 정상 종료(graceful shutdown)
+- Node.js Worker Threads와 비교
 
-#### 16.6 Server-Side Rendering (SSR) 고려사항
-- Next.js (React) + ASP.NET Core API
-- Nuxt.js (Vue) + ASP.NET Core API
-- Angular Universal + ASP.NET Core API
-- SEO와 성능 최적화
+#### 16.6 Hangfire: 고급 백그라운드 작업
+- Fire-and-forget, Delayed, Recurring, Continuation
+- 자동 재시도와 지수 백오프
+- 대시보드 UI로 작업 모니터링
+- Cron 표현식과 스케줄링
 
-#### 16.7 실습: Full-Stack 애플리케이션
-- React 프론트엔드 + ASP.NET Core API
-- JWT 인증 흐름 구현
-- CRUD 작업 완성
-- 에러 처리와 로딩 상태
-- 배포 준비
+#### 16.7 메시지 큐와 이벤트 기반 아키텍처
+- RabbitMQ: AMQP 프로토콜
+- Azure Service Bus: 클라우드 메시징
+- 메시지 발행/구독 패턴
+- 느슨한 결합과 마이크로서비스
+
+#### 16.8 실습: 실시간 대시보드와 백그라운드 작업
+- SignalR로 실시간 메트릭 업데이트
+- Hangfire로 이미지 처리 작업
+- 메시지 큐로 이벤트 기반 주문 시스템
 
 ---
 
