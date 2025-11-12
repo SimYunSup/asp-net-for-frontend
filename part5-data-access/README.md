@@ -657,7 +657,7 @@ public class BlogContext : DbContext
 
 // 쿼리 작성까지
 var recentPosts = await context.Posts
-    .Where(p => p.PublishedAt > DateTime.Now.AddDays(-7))
+    .Where(p => p.PublishedAt > DateTime.UtcNow.AddDays(-7))
     .Include(p => p.Comments)
     .OrderByDescending(p => p.PublishedAt)
     .ToListAsync();
