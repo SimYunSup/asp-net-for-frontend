@@ -30,11 +30,11 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 이 파트는 프론트엔드 개발자가 백엔드 개발로 부드럽게 전환할 수 있도록 설계되었습니다. Node.js/Express.js와의 지속적인 비교를 통해, 이미 알고 있는 개념을 ASP.NET Core에 매핑합니다.
 
-**Chapter 2**에서는 개발 환경을 설정하고 첫 번째 API를 만듭니다. `npm init`에서 `dotnet new`로, `package.json`에서 `.csproj`로, 그리고 Hot Reload로 빠르게 개발하는 방법을 배웁니다.
+**Chapter 3**에서는 개발 환경을 설정하고 첫 번째 API를 만듭니다. `npm init`에서 `dotnet new`로, `package.json`에서 `.csproj`로, 그리고 Hot Reload로 빠르게 개발하는 방법을 배웁니다.
 
-**Chapter 3**에서는 ASP.NET Core의 핵심 아키텍처를 깊이 파고듭니다. Express의 미들웨어 체인, Angular의 의존성 주입, React Router의 라우팅 개념이 ASP.NET Core에서 어떻게 구현되는지 배웁니다. 특히 의존성 주입은 ASP.NET Core의 DNA에 깊이 통합되어 있어, 대규모 애플리케이션을 깔끔하게 구조화할 수 있습니다.
+**Chapter 4**에서는 ASP.NET Core의 핵심 아키텍처를 깊이 파고듭니다. Express의 미들웨어 체인, Angular의 의존성 주입, React Router의 라우팅 개념이 ASP.NET Core에서 어떻게 구현되는지 배웁니다. 특히 의존성 주입은 ASP.NET Core의 DNA에 깊이 통합되어 있어, 대규모 애플리케이션을 깔끔하게 구조화할 수 있습니다.
 
-**Chapter 4**에서는 Minimal APIs로 Express.js처럼 간결한 API를 작성합니다. 컨트롤러 없이 `Program.cs`에서 직접 라우트를 정의하며, TypeScript의 강타입 시스템과 결합하여 안전하고 빠른 API를 만듭니다.
+**Chapter 5**에서는 Minimal APIs로 Express.js처럼 간결한 API를 작성합니다. 컨트롤러 없이 `Program.cs`에서 직접 라우트를 정의하며, TypeScript의 강타입 시스템과 결합하여 안전하고 빠른 API를 만듭니다.
 
 이 파트를 마치면, 여러분은 프론트엔드 애플리케이션이 소비하는 RESTful API를 직접 구축할 수 있게 됩니다. 풀스택 개발자로서의 첫 걸음입니다.
 
@@ -49,7 +49,7 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 ## 챕터 구성
 
-### [Chapter 2: ASP.NET Core 소개와 개발 환경 설정](./chapter2/README.md)
+### [Chapter 3: ASP.NET Core 소개와 개발 환경 설정](./chapter2/README.md)
 - ASP.NET Core란 무엇인가?
 - .NET Framework에서 .NET Core로의 진화
 - VS Code + C# Dev Kit으로 개발 환경 구성
@@ -58,7 +58,7 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 **핵심 개념**: 크로스 플랫폼, Kestrel, Hot Reload, .csproj
 
-### [Chapter 3: ASP.NET Core의 핵심 아키텍처](./chapter3/README.md)
+### [Chapter 4: ASP.NET Core의 핵심 아키텍처](./chapter3/README.md)
 - 요청-응답 파이프라인과 미들웨어
 - 의존성 주입(DI)의 강력한 활용
 - 라우팅 시스템 (컨벤션 vs 특성)
@@ -67,7 +67,7 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 **핵심 개념**: Middleware, DI Container, Service Lifetime, Configuration, ILogger
 
-### [Chapter 4: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](./chapter4/README.md)
+### [Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](./chapter4/README.md)
 - Minimal APIs 소개: 컨트롤러 없는 API
 - HTTP 메서드 매핑과 라우팅
 - 의존성 주입을 통한 서비스 사용
@@ -81,13 +81,13 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 각 챕터에는 실습 예제가 포함되어 있습니다. 직접 코드를 작성하며 개념을 익히세요.
 
-### Chapter 2 실습: "Hello World"에서 실제 API까지
+### Chapter 3 실습: "Hello World"에서 실제 API까지
 간단한 Todo API를 만들며 ASP.NET Core의 기본을 익힙니다.
 
-### Chapter 3 실습: 미들웨어 파이프라인 구축
+### Chapter 4 실습: 미들웨어 파이프라인 구축
 커스텀 미들웨어를 작성하여 요청 ID 추적, 성능 측정, 에러 처리를 구현합니다.
 
-### Chapter 4 실습: RESTful API 완성
+### Chapter 5 실습: RESTful API 완성
 Minimal APIs로 완전한 CRUD 엔드포인트, 유효성 검사, 에러 처리를 갖춘 API를 만듭니다.
 
 ## Express.js와 ASP.NET Core 비교

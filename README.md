@@ -83,7 +83,7 @@
 
 ## **Part 2: ASP.NET Core 기초 - 새로운 패러다임의 이해**
 
-### **Chapter 2: ASP.NET Core 소개와 개발 환경 설정**
+### **Chapter 3: ASP.NET Core 소개와 개발 환경 설정**
 
 #### 2.1 ASP.NET Core란 무엇인가?
 - .NET Framework에서 .NET Core로의 진화
@@ -116,7 +116,7 @@
 
 ---
 
-### **Chapter 3: ASP.NET Core의 핵심 아키텍처**
+### **Chapter 4: ASP.NET Core의 핵심 아키텍처**
 
 #### 3.1 요청-응답 파이프라인: Express 미들웨어와의 비교
 - 미들웨어 파이프라인의 실행 순서
@@ -157,7 +157,7 @@
 
 ---
 
-### **Chapter 4: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작**
+### **Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작**
 
 #### 4.1 Minimal APIs 소개
 - 컨트롤러 없는 API: Express.js 스타일
@@ -197,7 +197,7 @@ app.MapPost("/api/users", (User user) => { ... });
 
 ## **Part 3: 서버 사이드 렌더링 - Razor Pages와 MVC**
 
-### **Chapter 5: Razor 문법 - JSX를 아는 개발자를 위한 가이드**
+### **Chapter 6: Razor 문법 - JSX를 아는 개발자를 위한 가이드**
 
 #### 5.1 Razor 문법 기초
 - `@` 기호: JSX의 `{}`와 유사한 역할
@@ -236,7 +236,7 @@ app.MapPost("/api/users", (User user) => { ... });
 
 ---
 
-### **Chapter 6: Razor Pages - 단순함의 힘**
+### **Chapter 7: Razor Pages - 단순함의 힘**
 
 #### 6.1 Razor Pages 모델
 - 페이지 기반 라우팅: Next.js Pages Router와 유사
@@ -267,7 +267,7 @@ app.MapPost("/api/users", (User user) => { ... });
 
 ---
 
-### **Chapter 7: MVC 패턴 - 대규모 애플리케이션을 위한 구조**
+### **Chapter 8: MVC 패턴 - 대규모 애플리케이션을 위한 구조**
 
 #### 7.1 MVC 아키텍처 이해
 - Model, View, Controller의 역할
@@ -312,7 +312,7 @@ app.MapPost("/api/users", (User user) => { ... });
 
 ## **Part 4: Blazor - 프론트엔드 개발자의 친숙한 영역**
 
-### **Chapter 8: Blazor 소개 - C#으로 작성하는 프론트엔드**
+### **Chapter 9: Blazor 소개 - C#으로 작성하는 프론트엔드**
 
 #### 8.1 Blazor란 무엇인가?
 - React/Vue/Angular의 C# 대안
@@ -347,7 +347,7 @@ app.MapPost("/api/users", (User user) => { ... });
 
 ---
 
-### **Chapter 9: Blazor 컴포넌트 개발**
+### **Chapter 10: Blazor 컴포넌트 개발**
 
 #### 9.1 컴포넌트 기초
 - .razor 파일 구조
@@ -399,7 +399,7 @@ public EventCallback<string> OnClick { get; set; }
 
 ---
 
-### **Chapter 10: Blazor 고급 패턴**
+### **Chapter 11: Blazor 고급 패턴**
 
 #### 10.1 Blazor 라우팅
 - `@page` 지시문
@@ -440,7 +440,7 @@ public EventCallback<string> OnClick { get; set; }
 
 ## **Part 5: 데이터 액세스 - Entity Framework Core**
 
-### **Chapter 11: Entity Framework Core 기초**
+### **Chapter 12: Entity Framework Core 기초**
 
 #### 11.1 ORM 소개
 - SQL vs ORM
@@ -479,7 +479,7 @@ public EventCallback<string> OnClick { get; set; }
 
 ---
 
-### **Chapter 12: Entity Framework Core 고급**
+### **Chapter 13: Entity Framework Core 고급**
 
 #### 12.1 고급 쿼리 기법
 - 프로젝션과 익명 타입
@@ -517,7 +517,7 @@ public EventCallback<string> OnClick { get; set; }
 
 ## **Part 6: API 개발 - RESTful에서 GraphQL까지**
 
-### **Chapter 13: RESTful API 설계와 구현**
+### **Chapter 14: RESTful API 설계와 구현**
 
 #### 13.1 REST API 원칙
 - 리소스 중심 설계
@@ -566,7 +566,7 @@ public class ProductsController : ControllerBase
 
 ---
 
-### **Chapter 14: API 보안과 인증**
+### **Chapter 15: API 보안과 인증**
 
 #### 14.1 JWT 인증 구현
 - JWT 토큰 구조 이해
@@ -607,7 +607,7 @@ public class ProductsController : ControllerBase
 
 ---
 
-### **Chapter 15: GraphQL과 SignalR**
+### **Chapter 16: GraphQL과 SignalR**
 
 #### 15.1 GraphQL in ASP.NET Core
 - Hot Chocolate 라이브러리
@@ -638,7 +638,7 @@ public class ProductsController : ControllerBase
 
 ## **Part 7: 프론트엔드 통합 - React, Vue, Angular와 함께**
 
-### **Chapter 16: SPA 프레임워크와 ASP.NET Core 통합**
+### **Chapter 17: SPA 프레임워크와 ASP.NET Core 통합**
 
 #### 16.1 통합 아키텍처 패턴
 - **완전 분리**: 별도 프로젝트, API 백엔드
@@ -685,7 +685,7 @@ public class ProductsController : ControllerBase
 
 ---
 
-### **Chapter 17: API 클라이언트 패턴**
+### **Chapter 18: API 클라이언트 패턴**
 
 #### 17.1 타입 안전한 API 클라이언트
 - NSwag: OpenAPI에서 TypeScript 클라이언트 생성
@@ -719,7 +719,7 @@ public class ProductsController : ControllerBase
 
 ## **Part 8: 상태 관리와 패턴**
 
-### **Chapter 18: 서버 사이드 상태 관리**
+### **Chapter 19: 서버 사이드 상태 관리**
 
 #### 18.1 상태의 종류
 - 요청 범위 상태 (Scoped)
@@ -752,7 +752,7 @@ public class ProductsController : ControllerBase
 
 ---
 
-### **Chapter 19: 고급 아키텍처 패턴**
+### **Chapter 20: 고급 아키텍처 패턴**
 
 #### 19.1 Clean Architecture in ASP.NET Core
 - 계층 분리: Domain, Application, Infrastructure, Presentation
@@ -791,7 +791,7 @@ public class ProductsController : ControllerBase
 
 ## **Part 9: 테스팅 전략**
 
-### **Chapter 20: 단위 테스트와 통합 테스트**
+### **Chapter 21: 단위 테스트와 통합 테스트**
 
 #### 20.1 테스트 프레임워크
 - xUnit: .NET 표준
@@ -841,7 +841,7 @@ public void GetProduct_ReturnsProduct()
 
 ## **Part 10: 성능 최적화와 모니터링**
 
-### **Chapter 21: 성능 최적화 기법**
+### **Chapter 22: 성능 최적화 기법**
 
 #### 21.1 프로파일링과 벤치마킹
 - dotnet-trace, dotnet-counters
@@ -884,7 +884,7 @@ public void GetProduct_ReturnsProduct()
 
 ---
 
-### **Chapter 22: 모니터링과 로깅**
+### **Chapter 23: 모니터링과 로깅**
 
 #### 22.1 Application Insights
 - Azure Application Insights 통합
@@ -924,7 +924,7 @@ public void GetProduct_ReturnsProduct()
 
 ## **Part 11: 배포와 DevOps**
 
-### **Chapter 23: 컨테이너화와 Docker**
+### **Chapter 24: 컨테이너화와 Docker**
 
 #### 23.1 Docker 기초
 - Dockerfile 작성
@@ -959,7 +959,7 @@ public void GetProduct_ReturnsProduct()
 
 ---
 
-### **Chapter 24: 클라우드 배포 - Azure 중심**
+### **Chapter 25: 클라우드 배포 - Azure 중심**
 
 #### 24.1 Azure App Service
 - 웹앱 배포
@@ -1003,7 +1003,7 @@ public void GetProduct_ReturnsProduct()
 
 ---
 
-### **Chapter 25: 프로덕션 고려사항**
+### **Chapter 26: 프로덕션 고려사항**
 
 #### 25.1 환경 구성 관리
 - appsettings.Production.json
@@ -1050,7 +1050,7 @@ public void GetProduct_ReturnsProduct()
 
 ## **Part 12: 실전 프로젝트와 모범 사례**
 
-### **Chapter 26: 전자상거래 플랫폼 구축 (종합 프로젝트)**
+### **Chapter 27: 전자상거래 플랫폼 구축 (종합 프로젝트)**
 
 #### 26.1 프로젝트 개요와 요구사항
 - 기능 명세
@@ -1091,7 +1091,7 @@ public void GetProduct_ReturnsProduct()
 
 ---
 
-### **Chapter 27: 모범 사례 종합**
+### **Chapter 28: 모범 사례 종합**
 
 #### 27.1 코드 품질
 - 코딩 표준과 StyleCop
