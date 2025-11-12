@@ -1110,17 +1110,37 @@ public record CreateTodoDto
 }
 ```
 
-이로써 Chapter 2가 완료되었습니다. 다음 장에서는 ASP.NET Core의 핵심 아키텍처인 미들웨어 파이프라인, 의존성 주입, 라우팅 시스템을 깊이 있게 다룹니다.
+---
+
+## Chapter 2 마무리: 첫 번째 API의 완성
+
+축하합니다! Chapter 2를 완료하며 첫 번째 ASP.NET Core API를 만들었습니다. .NET SDK 설치부터 시작해서, `dotnet new webapi`로 프로젝트를 생성하고, Hot Reload로 빠르게 개발하며, Swagger로 API를 문서화하고, 에러 처리까지 구현했습니다. 이제 여러분은 간단하지만 완전히 동작하는 웹 API를 만들 수 있습니다.
+
+하지만 "Hello World"를 넘어 **프로덕션급 애플리케이션**을 만들려면, ASP.NET Core의 내부 작동 방식을 이해해야 합니다. Chapter 2에서 우리는 `builder.Build()`와 `app.Run()`을 사용했지만, 그 사이에서 무슨 일이 일어나는지는 깊이 다루지 않았습니다. 미들웨어는 어떻게 작동하나요? 의존성 주입은 어떻게 구현되나요? 요청이 어떻게 올바른 엔드포인트로 라우팅되나요?
+
+### 다음 단계: 프레임워크의 심장부로
+
+**[Chapter 3: ASP.NET Core의 핵심 아키텍처](./chapter3/README.md)** 에서는 프레임워크의 내부 동작을 깊이 파고듭니다. 단순히 "이렇게 쓴다"가 아니라 "왜 이렇게 설계되었는가"를 이해합니다.
+
+**미들웨어 파이프라인: Express.js를 넘어서**: Express.js의 미들웨어를 사용해봤다면 개념은 익숙합니다. 하지만 ASP.NET Core의 미들웨어는 더욱 정교합니다. 요청과 응답을 모두 가로챌 수 있고, 조건부로 파이프라인을 분기하며, 타입 안전성을 보장합니다. 커스텀 미들웨어로 요청 ID 추적, 성능 측정, 전역 에러 처리를 구현하면서, Express의 `app.use()`가 ASP.NET Core에서 어떻게 발전했는지 봅니다.
+
+**의존성 주입: Angular의 DI를 서버에서**: Angular의 의존성 주입 시스템을 좋아한다면, ASP.NET Core의 DI는 더 마음에 들 것입니다. `Transient`, `Scoped`, `Singleton` 라이프타임으로 서비스를 정밀하게 제어하고, 인터페이스 기반 설계로 테스트 가능한 코드를 작성합니다. `@Injectable()`에서 `services.AddScoped<T>()`로, 프론트엔드의 모범 사례가 백엔드에서 어떻게 구현되는지 배웁니다.
+
+**라우팅의 마법**: React Router의 경로 매칭, Vue Router의 동적 라우트—이 모든 개념이 ASP.NET Core에도 있습니다. 하지만 서버 라우팅은 클라이언트와 다른 고려사항이 있습니다. 라우트 제약 조건, 라우트 값, 엔드포인트 메타데이터를 활용하여 복잡한 API 구조를 우아하게 처리합니다.
+
+**구성 관리: .env를 넘어서**: Node.js의 `.env` 파일은 간단하지만 한계가 있습니다. ASP.NET Core는 `appsettings.json`, 환경 변수, 사용자 시크릿, Azure Key Vault 등 여러 구성 소스를 계층적으로 결합합니다. 개발 환경에서는 로컬 설정을, 프로덕션에서는 환경 변수를, 민감한 데이터는 Key Vault에서—모두 동일한 인터페이스로 접근합니다.
+
+**구조화된 로깅: console.log의 진화**: `console.log()`는 개발에 유용하지만, 프로덕션 모니터링에는 부족합니다. ASP.NET Core의 `ILogger`는 로그 레벨, 구조화된 데이터, 필터링, 다양한 출력 대상(콘솔, 파일, Application Insights, Elasticsearch)을 지원합니다. 로그를 단순한 텍스트가 아닌 쿼리 가능한 데이터로 다룹니다.
+
+Chapter 3를 마치면, 여러분은 ASP.NET Core가 단순한 웹 프레임워크가 아닌, 엔터프라이즈급 애플리케이션을 위한 완전한 플랫폼임을 이해하게 됩니다. 그리고 이 모든 강력한 기능을 Chapter 4의 Minimal APIs에서 간결하게 활용하는 방법을 배웁니다.
+
+준비되셨나요? [Chapter 3으로 이동하세요!](./chapter3/README.md)
 
 ---
 
-## 다음 단계
+## 추가 학습 리소스
 
-Chapter 3에서는 다음 내용을 학습합니다:
-- 미들웨어 파이프라인과 Express 미들웨어의 차이점
-- 의존성 주입의 강력한 활용
-- 라우팅 시스템의 세밀한 제어
-- 구성 관리와 환경별 설정
-- 구조화된 로깅
-
-실습을 계속 진행하며, 각 개념을 코드로 확인해보세요!
+- [ASP.NET Core 공식 문서](https://docs.microsoft.com/aspnet/core)
+- [dotnet CLI 가이드](https://docs.microsoft.com/dotnet/core/tools/)
+- [Swagger/OpenAPI 가이드](https://docs.microsoft.com/aspnet/core/tutorials/web-api-help-pages-using-swagger)
+- [Hot Reload 가이드](https://docs.microsoft.com/dotnet/core/tools/dotnet-watch)

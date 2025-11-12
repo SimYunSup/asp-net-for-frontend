@@ -779,13 +779,31 @@ if (obj is string s)
 
 ---
 
-## 다음 챕터 예고
+---
 
-Chapter 2에서는 C#의 고급 기능을 다룹니다:
-- 객체지향 프로그래밍 심화
-- 이벤트와 델리게이트
-- 값 타입 vs 참조 타입
-- LINQ 고급 활용
+## Chapter 1 마무리: TypeScript에서 C#으로의 첫 걸음
+
+축하합니다! Chapter 1을 완료했습니다. 이제 여러분은 TypeScript/JavaScript의 익숙한 개념들을 C#으로 표현할 수 있습니다. `const`와 `let`이 C#의 변수 선언으로, 화살표 함수가 람다 표현식으로, `Promise`가 `Task`로, 그리고 배열 메서드가 LINQ로 자연스럽게 매핑되는 것을 보았습니다.
+
+하지만 이것은 시작일 뿐입니다. Chapter 1에서 다룬 내용은 두 언어의 공통점에 초점을 맞췄습니다. TypeScript 개발자로서 이미 알고 있는 것을 새로운 문법으로 표현하는 법을 배웠죠. 그러나 C#에는 TypeScript에 없는, 또는 명시적이지 않은 강력한 기능들이 많이 있습니다.
+
+### 다음 단계: C#만의 고유한 세계로
+
+**[Chapter 2: C# 고급 기능과 객체지향 프로그래밍](./chapter2/README.md)** 에서는 C#의 진정한 힘을 경험하게 됩니다:
+
+**메모리의 비밀을 이해하기**: JavaScript는 메모리 관리를 추상화하여 개발자가 신경 쓸 필요가 없게 만듭니다. 하지만 C#에서는 값 타입(Value Types)과 참조 타입(Reference Types)을 구분하며, 스택과 힙 메모리를 이해하면 성능을 크게 최적화할 수 있습니다. `struct`와 `class`의 차이, boxing/unboxing의 비용을 배우면, 왜 일부 .NET 라이브러리가 그토록 빠른지 이해하게 됩니다.
+
+**프로퍼티의 우아함**: TypeScript에서는 getter/setter를 정의하지만, C#의 프로퍼티 시스템은 훨씬 더 정교합니다. `init` 전용 프로퍼티로 불변 객체를 만들고, 계산된 프로퍼티로 로직을 캡슐화하며, auto-property로 보일러플레이트를 제거합니다. React의 `useState`처럼, C# 프로퍼티는 상태 변경을 우아하게 다룹니다.
+
+**이벤트 주도 설계**: React의 props callback, Vue의 emit, Angular의 EventEmitter—모두 이벤트 기반 통신입니다. C#의 이벤트와 델리게이트는 이 패턴을 언어 수준에서 구현하며, 타입 안전성을 보장합니다. Observer 패턴이 언어의 일부가 된 것입니다.
+
+**LINQ의 진정한 힘**: Chapter 1에서 LINQ의 기본을 보았지만, Chapter 2에서는 `GroupBy`, `Join`, `SelectMany` 같은 고급 연산자로 복잡한 데이터 변환을 수행합니다. 더 놀라운 것은, 동일한 LINQ 쿼리가 Entity Framework와 함께 사용되면 SQL로 변환된다는 점입니다. C# 코드를 작성하면 자동으로 데이터베이스 쿼리가 생성됩니다!
+
+**최신 C# 기능**: C# 13과 14는 Primary Constructors, Raw String Literals, List Patterns 같은 현대적 기능을 추가했습니다. 이들은 코드를 더 간결하고 표현력 있게 만들며, TypeScript의 최신 기능들과 비슷한 철학을 공유합니다.
+
+Chapter 2를 마치면, 여러분은 단순히 "TypeScript 개념을 C#으로 번역하는" 수준을 넘어, "C#답게 생각하고 코드를 작성하는" 개발자가 됩니다. 그리고 Part 2에서는 이 모든 지식을 ASP.NET Core로 실제 웹 애플리케이션을 만드는 데 활용합니다.
+
+준비되셨나요? [Chapter 2로 이동하세요!](./chapter2/README.md)
 
 ---
 
@@ -794,3 +812,4 @@ Chapter 2에서는 C#의 고급 기능을 다룹니다:
 - [Microsoft C# 문서](https://docs.microsoft.com/dotnet/csharp/)
 - [C# 13의 새로운 기능](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-13)
 - [LINQ 101 샘플](https://docs.microsoft.com/samples/dotnet/try-samples/101-linq-samples/)
+- [TypeScript vs C# 비교](https://aka.ms/typescript-to-csharp)
