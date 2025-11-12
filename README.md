@@ -135,6 +135,8 @@ Part 12   (2-4주)   → 실전 프로젝트
 - **[Appendix F: 마이그레이션 가이드](./appendices/README.md#appendix-f-마이그레이션-가이드)**
 - **[Appendix G: 문제 해결 가이드](./appendices/README.md#appendix-g-문제-해결-가이드)**
 
+## [그 후](./conclusion.md)
+
 ---
 
 ## 🚀 시작하기
@@ -213,10 +215,7 @@ Part 12   (2-4주)   → 실전 프로젝트
 1. 오타, 잘못된 정보 수정
 2. 예제 코드 개선
 3. 새로운 실습 프로젝트 추가
-4. 번역 (한글 ↔ 영어)
-5. 이슈 리포팅
-
-자세한 내용은 [CONTRIBUTING.md](./CONTRIBUTING.md)를 참고하세요.
+4. 이슈 리포팅
 
 ---
 
