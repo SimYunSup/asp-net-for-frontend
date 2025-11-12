@@ -234,11 +234,7 @@ Part 12   (2-4주)   → 실전 프로젝트
 - [ASP.NET Core 공식 문서](https://learn.microsoft.com/aspnet/core/)
 - [C# 공식 문서](https://learn.microsoft.com/dotnet/csharp/)
 - [.NET Blog](https://devblogs.microsoft.com/dotnet/)
-
-### 한국 커뮤니티
-
-- [한국 .NET 개발자 그룹](https://www.facebook.com/groups/dotnetkorea/)
-- [ASP.NET Korea](https://forum.dotnetdev.kr/)
+- [닷넷데브 포럼](https://forum.dotnetdev.kr/)
 
 ---
 
