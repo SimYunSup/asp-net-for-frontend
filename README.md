@@ -643,7 +643,10 @@ public class ProductsController : ControllerBase
 #### 16.1 실시간 통신 패턴
 - Polling, Long Polling, Server-Sent Events, WebSocket 비교
 - 각 패턴의 장단점과 선택 기준
-- Node.js 실시간 통신과 비교
+- **Socket.io vs SignalR: Node.js 개발자를 위한 상세 비교**
+  - 코드 비교: 거의 1대1 대응
+  - 타입 안전성, 성능, 확장성 차이점
+  - 마이그레이션 가이드
 
 #### 16.2 Server-Sent Events (SSE)
 - SSE의 개념과 사용 사례
