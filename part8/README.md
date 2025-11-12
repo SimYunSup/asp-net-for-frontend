@@ -32,7 +32,22 @@ services.AddSingleton<IMemoryCache, MemoryCache>();
 
 이는 프론트엔드의 전역 상태(Redux store, Vuex store)와 유사합니다. 모든 컴포넌트가 접근할 수 있지만, 동시성 문제를 주의해야 합니다. 여러 요청이 동시에 같은 Singleton을 수정하려 하면 경쟁 조건(race condition)이 발생할 수 있습니다.
 
-**3. 사용자 세션 상태 (Session State)**
+**3. Transient 서비스 (Transient-scoped State)**
+
+매번 요청될 때마다 새로운 인스턴스가 생성됩니다. 가벼운 상태 비저장 서비스에 적합하며, 각 사용처마다 독립적인 인스턴스를 갖습니다.
+
+```csharp
+services.AddTransient<IEmailSender, EmailSender>();
+```
+
+`IEmailSender`가 주입될 때마다 새 `EmailSender` 인스턴스가 생성됩니다. 메모리 오버헤드가 있지만, 스레드 안전성을 보장하기 쉽습니다. 상태를 가지지 않는 유틸리티 서비스나 짧은 수명의 작업에 적합합니다.
+
+**언제 어떤 범위를 사용할까?**
+- **Singleton**: 상태가 없거나, 스레드 안전하게 공유 가능한 서비스 (로거, 캐시, 설정)
+- **Scoped**: 요청 단위로 상태를 유지하는 서비스 (DbContext, 현재 사용자 정보)
+- **Transient**: 상태가 없고 가벼운 서비스 (이메일 발송, 데이터 변환)
+
+**4. 사용자 세션 상태 (Session State)**
 
 특정 사용자와 연관되어, 여러 요청에 걸쳐 유지되는 상태입니다. 로그인 정보, 장바구니, 사용자 설정—이런 데이터는 세션에 저장됩니다. ASP.NET Core는 세션을 쿠키나 분산 캐시(Redis 등)에 저장할 수 있습니다.
 
@@ -196,15 +211,26 @@ public async Task UpdateProductAsync(Product product)
 
 Clean Architecture의 핵심 원칙은 **의존성 규칙(Dependency Rule)**입니다: 외부 계층이 내부 계층을 의존할 수 있지만, 내부 계층은 외부 계층을 알아서는 안 됩니다.
 
+**계층 구조와 의존성 방향:**
+
 ```
-[Presentation Layer]
-        ↓
-[Application Layer]
-        ↓
-  [Domain Layer]
-        ↑
-[Infrastructure Layer]
+┌─────────────────────────────────────────┐
+│  Presentation & Infrastructure Layer   │  ← 외부 계층 (Framework, DB, UI)
+│           ↓ 의존 방향 ↓                 │
+├─────────────────────────────────────────┤
+│       Application Layer                 │  ← 유즈 케이스
+│           ↓ 의존 방향 ↓                 │
+├─────────────────────────────────────────┤
+│         Domain Layer                    │  ← 핵심 비즈니스 로직
+│      (독립적, 의존성 없음)               │
+└─────────────────────────────────────────┘
 ```
+
+**의존성 규칙**:
+- Presentation과 Infrastructure는 모두 Application에 의존합니다
+- Application은 Domain에 의존합니다
+- Domain은 어떤 계층에도 의존하지 않습니다 (순수한 비즈니스 로직)
+- 화살표는 항상 안쪽(Domain)을 향합니다
 
 **Domain Layer (핵심)**
 
@@ -239,6 +265,15 @@ public record CreateOrderCommand(int UserId, List<OrderItemDto> Items) : IReques
 public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, int>
 {
     private readonly IOrderRepository _repository;
+    private readonly IProductRepository _productRepository;
+
+    public CreateOrderCommandHandler(
+        IOrderRepository repository,
+        IProductRepository productRepository)
+    {
+        _repository = repository;
+        _productRepository = productRepository;
+    }
 
     public async Task<int> Handle(CreateOrderCommand request, CancellationToken ct)
     {

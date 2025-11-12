@@ -198,6 +198,143 @@ public async ValueTask<Product> GetProductAsync(int id)
 }
 ```
 
+**ConfigureAwait: 컨텍스트 캡처 제어**
+
+`ConfigureAwait(false)`는 라이브러리 코드에서 성능을 개선하는 패턴입니다. `await` 시 .NET은 현재 `SynchronizationContext`나 `TaskScheduler`를 캡처하여, 연속 작업을 원래 컨텍스트에서 실행합니다. 하지만 ASP.NET Core는 요청마다 별도의 컨텍스트가 없으므로, 이 캡처가 불필요합니다.
+
+```csharp
+// 라이브러리 코드: ConfigureAwait(false) 권장
+public async Task<string> FetchDataAsync()
+{
+    using var client = new HttpClient();
+    var response = await client.GetStringAsync("https://api.example.com/data")
+        .ConfigureAwait(false); // 컨텍스트 캡처 비용 절약
+
+    return ProcessData(response);
+}
+
+// 컨트롤러 코드: ConfigureAwait는 일반적으로 불필요
+public async Task<IActionResult> GetData()
+{
+    var data = await _service.FetchDataAsync(); // ConfigureAwait(false) 불필요
+    return Ok(data);
+}
+```
+
+**언제 ConfigureAwait(false)를 사용할까?**
+- **라이브러리 코드**: 항상 사용하여 호출자에게 성능 이점 제공
+- **ASP.NET Core 컨트롤러**: 불필요 (SynchronizationContext가 없음)
+- **UI 스레드 필요**: 절대 사용 금지 (WPF/WinForms)
+
+**IAsyncEnumerable: 비동기 스트림**
+
+대용량 데이터를 한 번에 메모리에 로드하지 않고 스트리밍할 때 `IAsyncEnumerable<T>`를 사용합니다. 프론트엔드의 Observable이나 Generator 함수와 유사합니다.
+
+```csharp
+// 전통적인 방법: 모든 데이터를 메모리에 로드
+public async Task<List<Product>> GetAllProductsAsync()
+{
+    return await _context.Products.ToListAsync(); // 메모리 부담!
+}
+
+// IAsyncEnumerable: 스트리밍
+public async IAsyncEnumerable<Product> GetProductsStreamAsync()
+{
+    await foreach (var product in _context.Products.AsAsyncEnumerable())
+    {
+        // 각 항목을 개별적으로 yield
+        yield return product;
+    }
+}
+```
+
+컨트롤러에서 사용:
+
+```csharp
+[HttpGet("stream")]
+public IAsyncEnumerable<Product> StreamProducts()
+{
+    // 클라이언트는 청크 단위로 데이터를 받음
+    return _repository.GetProductsStreamAsync();
+}
+```
+
+클라이언트는 `Transfer-Encoding: chunked` 응답을 받으며, 첫 번째 항목이 즉시 도착합니다. 100만 개의 레코드를 기다릴 필요가 없습니다.
+
+**언제 IAsyncEnumerable을 사용할까?**
+- 대용량 데이터셋 (수천 개 이상의 항목)
+- 실시간 데이터 피드 (로그 스트리밍, 모니터링)
+- 메모리 제약이 있는 환경
+
+**Channels: 생산자-소비자 패턴**
+
+`System.Threading.Channels`는 고성능 비동기 생산자-소비자 큐입니다. 프론트엔드의 RxJS Subject와 유사하지만, 백프레셔(backpressure)를 지원합니다.
+
+```csharp
+using System.Threading.Channels;
+
+public class OrderProcessor
+{
+    private readonly Channel<Order> _channel;
+
+    public OrderProcessor()
+    {
+        // Bounded channel: 최대 100개 항목 버퍼링
+        _channel = Channel.CreateBounded<Order>(new BoundedChannelOptions(100)
+        {
+            FullMode = BoundedChannelFullMode.Wait // 가득 차면 생산자 대기
+        });
+    }
+
+    // 생산자: 주문을 채널에 추가
+    public async Task EnqueueOrderAsync(Order order)
+    {
+        await _channel.Writer.WriteAsync(order);
+    }
+
+    // 소비자: 백그라운드에서 주문 처리
+    public async Task ProcessOrdersAsync(CancellationToken ct)
+    {
+        await foreach (var order in _channel.Reader.ReadAllAsync(ct))
+        {
+            await ProcessOrderAsync(order);
+        }
+    }
+
+    private async Task ProcessOrderAsync(Order order)
+    {
+        // 실제 주문 처리 로직
+        await Task.Delay(100); // 시뮬레이션
+    }
+}
+```
+
+백그라운드 서비스로 실행:
+
+```csharp
+public class OrderProcessorService : BackgroundService
+{
+    private readonly OrderProcessor _processor;
+
+    protected override async Task ExecuteAsync(CancellationToken ct)
+    {
+        await _processor.ProcessOrdersAsync(ct);
+    }
+}
+
+// Program.cs
+services.AddSingleton<OrderProcessor>();
+services.AddHostedService<OrderProcessorService>();
+```
+
+**언제 Channels를 사용할까?**
+- 비동기 생산자-소비자 패턴
+- 백그라운드 작업 큐
+- 속도 제한 (rate limiting)
+- 이벤트 스트림 처리
+
+Channels는 `BlockingCollection`이나 `ConcurrentQueue`보다 비동기 시나리오에서 훨씬 효율적입니다.
+
 ### 응답 압축: 대역폭 절약
 
 압축은 저비용 고효율 최적화입니다. JSON 응답은 텍스트이므로 압축률이 높습니다. Gzip은 보통 60-80% 크기를 줄이며, Brotli는 더 나은 압축률을 제공합니다.
@@ -225,6 +362,345 @@ app.MapStaticAssets(); // .NET 9: 자동 fingerprinting + 사전 압축
 ```
 
 `MapStaticAssets`는 각 파일의 해시를 URL에 추가하여, 파일이 변경되면 URL도 변경되게 합니다. 따라서 무한 캐싱이 안전합니다.
+
+### 응답 캐싱: 불필요한 작업 피하기
+
+압축은 응답 크기를 줄이지만, 여전히 서버가 응답을 생성해야 합니다. 응답 캐싱은 한 단계 더 나아가: **동일한 요청에 대해 응답을 재사용**하여, 서버 작업을 완전히 건너뜁니다. 프론트엔드에서 SWR이나 React Query의 캐싱과 유사하지만, HTTP 프로토콜 레벨에서 작동합니다.
+
+**Response Caching 미들웨어**
+
+ASP.NET Core는 서버 측 응답 캐싱을 제공합니다:
+
+```csharp
+// Program.cs
+services.AddResponseCaching();
+
+app.UseResponseCaching(); // 라우팅 전에 추가
+app.MapControllers();
+```
+
+컨트롤러에서 캐싱 정책을 지정:
+
+```csharp
+[HttpGet("products")]
+[ResponseCache(Duration = 60)] // 60초 캐싱
+public IActionResult GetProducts()
+{
+    var products = _context.Products.ToList();
+    return Ok(products);
+}
+```
+
+이제 동일한 요청이 60초 이내에 들어오면, 서버는 메모리에서 캐시된 응답을 반환하며, 데이터베이스 쿼리를 건너뜁니다.
+
+**HTTP 캐시 헤더: 브라우저 캐싱 제어**
+
+HTTP 프로토콜은 클라이언트 측 캐싱을 위한 여러 헤더를 정의합니다. 이를 올바르게 설정하면, 브라우저가 서버에 요청조차 보내지 않습니다.
+
+**Cache-Control: 캐싱 정책의 핵심**
+
+`Cache-Control` 헤더는 응답이 캐시될 수 있는지, 얼마나 오래 캐시될지를 지정합니다:
+
+```csharp
+[HttpGet("products/{id}")]
+public IActionResult GetProduct(int id)
+{
+    var product = _context.Products.Find(id);
+
+    // Cache-Control 헤더 설정
+    Response.Headers.CacheControl = "public, max-age=300"; // 5분 캐싱
+
+    return Ok(product);
+}
+```
+
+주요 Cache-Control 지시어:
+- **public**: 모든 캐시(브라우저, CDN)가 저장 가능
+- **private**: 브라우저만 캐시 가능, CDN은 불가
+- **no-cache**: 캐시하지만, 사용 전 서버에 재검증 필요
+- **no-store**: 전혀 캐시하지 않음 (민감한 데이터)
+- **max-age=seconds**: 캐시 유효 시간
+
+```csharp
+// 정적 데이터: 긴 캐싱
+Response.Headers.CacheControl = "public, max-age=86400"; // 24시간
+
+// 사용자 데이터: 짧은 캐싱
+Response.Headers.CacheControl = "private, max-age=60"; // 1분
+
+// 민감한 데이터: 캐시 금지
+Response.Headers.CacheControl = "no-store";
+```
+
+**ETag: 효율적인 검증**
+
+`ETag` (Entity Tag)는 리소스의 "지문"입니다. 내용이 변경되면 ETag도 변경됩니다. 클라이언트는 `If-None-Match` 헤더로 ETag를 보내며, 서버는 변경 여부를 확인합니다.
+
+```csharp
+[HttpGet("products/{id}")]
+public IActionResult GetProduct(int id)
+{
+    var product = _context.Products.Find(id);
+    if (product == null) return NotFound();
+
+    // ETag 생성 (간단한 예: LastModified 해시)
+    var etag = $"\"{product.LastModified:yyyyMMddHHmmss}\"";
+
+    // 클라이언트가 보낸 ETag 확인
+    if (Request.Headers.IfNoneMatch == etag)
+    {
+        return StatusCode(304); // 304 Not Modified - 본문 없음
+    }
+
+    Response.Headers.ETag = etag;
+    Response.Headers.CacheControl = "public, max-age=60";
+
+    return Ok(product);
+}
+```
+
+304 응답은 본문이 없으므로 매우 빠릅니다. 클라이언트는 기존 캐시를 재사용합니다.
+
+**Last-Modified: 시간 기반 검증**
+
+`Last-Modified` 헤더는 리소스가 마지막으로 수정된 시간을 나타냅니다. 클라이언트는 `If-Modified-Since` 헤더로 이를 보내며, 서버는 변경 여부를 확인합니다.
+
+```csharp
+[HttpGet("articles/{id}")]
+public IActionResult GetArticle(int id)
+{
+    var article = _context.Articles.Find(id);
+    if (article == null) return NotFound();
+
+    var lastModified = article.UpdatedAt;
+
+    // 클라이언트가 보낸 If-Modified-Since 확인
+    if (Request.Headers.IfModifiedSince.Any())
+    {
+        var ifModifiedSince = DateTimeOffset.Parse(
+            Request.Headers.IfModifiedSince.ToString()
+        );
+
+        if (lastModified <= ifModifiedSince)
+        {
+            return StatusCode(304); // 304 Not Modified
+        }
+    }
+
+    Response.Headers.LastModified = lastModified.ToString("R"); // RFC1123 형식
+    Response.Headers.CacheControl = "public, max-age=300";
+
+    return Ok(article);
+}
+```
+
+**VaryBy: 조건부 캐싱**
+
+동일한 URL이지만 헤더나 쿼리에 따라 다른 응답을 반환할 때, `VaryBy`를 사용합니다:
+
+```csharp
+[HttpGet("products")]
+[ResponseCache(Duration = 60, VaryByQueryKeys = new[] { "category", "sort" })]
+public IActionResult GetProducts(string category, string sort)
+{
+    // category와 sort 조합마다 별도 캐시 항목
+    var products = _context.Products
+        .Where(p => p.Category == category)
+        .OrderBy(p => sort == "price" ? p.Price : p.Name)
+        .ToList();
+
+    return Ok(products);
+}
+
+[HttpGet("content")]
+[ResponseCache(Duration = 300, VaryByHeader = "Accept-Language")]
+public IActionResult GetContent()
+{
+    // Accept-Language 헤더마다 별도 캐시 (다국어 지원)
+    var language = Request.Headers.AcceptLanguage.ToString();
+    var content = GetLocalizedContent(language);
+
+    return Ok(content);
+}
+```
+
+**캐싱 전략 가이드**
+
+```csharp
+// 불변 데이터 (이미지, 정적 자산)
+Response.Headers.CacheControl = "public, max-age=31536000, immutable"; // 1년
+
+// 자주 변경되는 데이터 (뉴스 피드)
+Response.Headers.CacheControl = "public, max-age=60"; // 1분
+
+// 사용자별 데이터 (프로필)
+Response.Headers.CacheControl = "private, max-age=300"; // 5분
+
+// 실시간 데이터 (주식 시세)
+Response.Headers.CacheControl = "no-cache"; // 항상 재검증
+
+// 민감한 데이터 (결제 정보)
+Response.Headers.CacheControl = "no-store"; // 캐시 금지
+```
+
+### 데이터베이스 최적화: 쿼리 효율 높이기
+
+데이터베이스는 종종 애플리케이션의 병목입니다. 느린 쿼리 하나가 전체 응답 시간을 지배할 수 있습니다. Entity Framework Core는 편리하지만, 잘못 사용하면 성능 문제가 발생합니다.
+
+**AsNoTracking(): 읽기 전용 쿼리 최적화**
+
+EF Core는 기본적으로 조회한 엔티티를 **추적(tracking)**합니다. 변경 감지를 위해 원본 값을 메모리에 보관하며, `SaveChanges()` 시 변경된 부분만 업데이트합니다. 하지만 읽기 전용 쿼리에서는 이 추적이 불필요한 오버헤드입니다.
+
+```csharp
+// 기본: 추적 활성화 (읽기 + 쓰기 시나리오)
+var products = await _context.Products.ToListAsync();
+products[0].Price = 99.99m;
+await _context.SaveChanges(); // 변경 감지 및 업데이트
+
+// 읽기 전용: 추적 비활성화로 성능 향상
+var products = await _context.Products
+    .AsNoTracking()
+    .ToListAsync();
+// 20-30% 더 빠르고, 메모리 사용량 절감
+```
+
+**성능 이점**:
+- **메모리 절약**: 원본 값을 저장하지 않음
+- **CPU 절약**: 변경 감지 로직 실행 안 함
+- **쿼리 속도 향상**: 객체 구체화(materialization)가 더 빠름
+
+```csharp
+// API 엔드포인트: 거의 항상 읽기 전용
+[HttpGet]
+public async Task<IActionResult> GetProducts()
+{
+    var products = await _context.Products
+        .AsNoTracking() // 추적 불필요
+        .Where(p => p.IsActive)
+        .ToListAsync();
+
+    return Ok(products);
+}
+
+// 수정이 필요한 경우: 추적 활성화
+[HttpPut("{id}")]
+public async Task<IActionResult> UpdateProduct(int id, ProductDto dto)
+{
+    var product = await _context.Products.FindAsync(id); // 추적 활성화
+    if (product == null) return NotFound();
+
+    product.Price = dto.Price;
+    await _context.SaveChangesAsync(); // 변경 감지 작동
+
+    return Ok(product);
+}
+```
+
+**전역 NoTracking 설정**
+
+대부분의 쿼리가 읽기 전용이라면, 전역으로 NoTracking을 설정하고 필요할 때만 추적을 활성화할 수 있습니다:
+
+```csharp
+// Program.cs
+services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking); // 기본값 변경
+});
+
+// 특정 쿼리에서 추적 활성화
+var product = await _context.Products
+    .AsTracking() // 명시적으로 추적 활성화
+    .FirstOrDefaultAsync(p => p.Id == id);
+```
+
+**N+1 쿼리 해결: Include로 Eager Loading**
+
+이미 프로파일링 섹션에서 언급했지만, N+1 쿼리는 가장 흔한 성능 문제입니다:
+
+```csharp
+// ❌ N+1 쿼리 문제
+var orders = await _context.Orders.ToListAsync(); // 1번 쿼리
+foreach (var order in orders)
+{
+    // 각 주문마다 별도 쿼리 실행! (N번 쿼리)
+    var customer = await _context.Customers.FindAsync(order.CustomerId);
+    var items = await _context.OrderItems.Where(i => i.OrderId == order.Id).ToListAsync();
+}
+// 총 1 + N + N = 1 + 2N 개의 쿼리
+
+// ✅ Eager Loading으로 해결
+var orders = await _context.Orders
+    .Include(o => o.Customer) // JOIN으로 한 번에 가져오기
+    .Include(o => o.Items)
+        .ThenInclude(i => i.Product) // 중첩 관계도 가능
+    .AsNoTracking() // 읽기 전용이면 추적 비활성화
+    .ToListAsync();
+// 총 1개의 쿼리 (또는 최적화된 2-3개)
+```
+
+**Select로 필요한 필드만 가져오기**
+
+전체 엔티티를 가져오는 대신, 필요한 필드만 프로젝션하면 네트워크 대역폭과 메모리를 절약할 수 있습니다:
+
+```csharp
+// ❌ 전체 엔티티 조회 (모든 필드 포함)
+var products = await _context.Products.ToListAsync();
+
+// ✅ 필요한 필드만 선택
+var products = await _context.Products
+    .Select(p => new ProductListDto
+    {
+        Id = p.Id,
+        Name = p.Name,
+        Price = p.Price
+        // Description, CreatedAt 등 불필요한 필드 제외
+    })
+    .ToListAsync();
+```
+
+**인덱싱: 쿼리 속도의 핵심**
+
+인덱스가 없으면 데이터베이스는 전체 테이블을 스캔해야 합니다. 100만 개의 레코드가 있다면 치명적입니다.
+
+```csharp
+public class Product
+{
+    public int Id { get; set; }
+
+    [Index] // 단일 컬럼 인덱스
+    public string Sku { get; set; }
+
+    [Index] // 자주 필터링되는 필드
+    public bool IsActive { get; set; }
+
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}
+
+// FluentAPI로 복합 인덱스 설정
+modelBuilder.Entity<Product>()
+    .HasIndex(p => new { p.Category, p.IsActive }); // 두 필드를 함께 조회할 때 유용
+```
+
+**Connection Pooling: 연결 재사용**
+
+데이터베이스 연결을 열고 닫는 것은 비용이 큽니다. Connection Pooling은 연결을 재사용하여 오버헤드를 제거합니다. EF Core는 기본적으로 활성화되어 있지만, 풀 크기를 조정할 수 있습니다:
+
+```csharp
+// 연결 문자열에서 풀 설정
+"Server=...;Database=...;Max Pool Size=100;Min Pool Size=10;"
+```
+
+고부하 시나리오에서는 풀 크기를 늘려야 할 수 있지만, 너무 크면 데이터베이스 서버에 부담을 줍니다.
+
+**데이터베이스 최적화 체크리스트**
+- ✅ 읽기 전용 쿼리는 `.AsNoTracking()` 사용
+- ✅ N+1 쿼리 확인 및 `.Include()`로 해결
+- ✅ 필요한 필드만 `.Select()`로 프로젝션
+- ✅ 자주 조회/필터링되는 컬럼에 인덱스 추가
+- ✅ 복합 조건 쿼리는 복합 인덱스 고려
+- ✅ Connection Pooling 설정 확인
 
 ### Native AOT: 빠른 시작, 작은 footprint
 

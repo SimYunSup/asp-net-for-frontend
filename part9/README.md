@@ -93,7 +93,7 @@ E2E 테스트는 중요한 사용자 흐름에만 사용합니다: "사용자가
 Playwright for .NET이나 Selenium WebDriver로 E2E 테스트를 작성할 수 있습니다.
 
 ```csharp
-[Test]
+[Fact]
 public async Task UserCanPlaceOrder()
 {
     await _page.GotoAsync("https://localhost:5001");
@@ -290,6 +290,105 @@ mockPaymentGateway
 // 이제 OrderService가 이 예외를 어떻게 처리하는지 테스트
 ```
 
+### FluentAssertions: 가독성 높은 검증
+
+xUnit의 기본 `Assert` 클래스는 강력하지만, 때로는 읽기 어렵습니다. FluentAssertions는 자연어에 가까운 문법으로 더 표현력 있는 검증을 작성할 수 있게 해줍니다. Jest의 `expect()` 체이닝과 유사한 경험을 제공합니다.
+
+**기본 Assert vs FluentAssertions**
+
+```csharp
+// xUnit Assert
+Assert.Equal(expected, actual);
+Assert.True(list.Count > 0);
+Assert.Throws<ArgumentException>(() => method());
+
+// FluentAssertions
+actual.Should().Be(expected);
+list.Should().NotBeEmpty();
+Action act = () => method();
+act.Should().Throw<ArgumentException>();
+```
+
+FluentAssertions는 더 읽기 쉽고, 실패 메시지도 더 명확합니다.
+
+**컬렉션 검증**
+
+```csharp
+var products = await _repository.GetAllAsync();
+
+// 풍부한 컬렉션 검증
+products.Should().NotBeNull()
+    .And.HaveCount(3)
+    .And.Contain(p => p.Name == "Book")
+    .And.OnlyContain(p => p.Price > 0);
+
+// 특정 순서 검증
+products.Should().BeInAscendingOrder(p => p.Name);
+
+// 복잡한 객체 비교
+products.Should().BeEquivalentTo(new[]
+{
+    new { Name = "Book", Price = 10m },
+    new { Name = "Pen", Price = 2m }
+}, options => options.ExcludingMissingMembers());
+```
+
+**예외 검증 개선**
+
+```csharp
+// 예외 메시지와 내부 예외까지 검증
+Action act = () => service.CreateOrder(null);
+
+act.Should().Throw<ArgumentNullException>()
+    .WithMessage("*order*")
+    .And.ParamName.Should().Be("order");
+
+// 비동기 예외 검증
+Func<Task> act = async () => await service.ProcessPaymentAsync(-100);
+
+await act.Should().ThrowAsync<InvalidOperationException>()
+    .WithMessage("Amount must be positive");
+```
+
+**복잡한 객체 비교**
+
+```csharp
+var actualOrder = await _repository.GetByIdAsync(1);
+
+// 특정 속성만 비교
+actualOrder.Should().BeEquivalentTo(expectedOrder, options => options
+    .Excluding(o => o.CreatedAt)
+    .Excluding(o => o.Id));
+
+// 중첩된 객체 검증
+order.Items.Should().AllSatisfy(item =>
+{
+    item.Quantity.Should().BeGreaterThan(0);
+    item.Price.Should().BePositive();
+    item.Product.Should().NotBeNull();
+});
+```
+
+**시간 관련 검증**
+
+```csharp
+var createdAt = order.CreatedAt;
+
+// 시간 범위 검증 (타임존 고려)
+createdAt.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(5));
+
+// 날짜 부분만 검증
+createdAt.Should().BeSameDateAs(DateTime.Today);
+```
+
+FluentAssertions를 설치하려면:
+
+```bash
+dotnet add package FluentAssertions
+```
+
+그리고 테스트 파일에서 `using FluentAssertions;`를 추가하면 모든 객체에 `.Should()` 메서드가 확장됩니다.
+
 ### WebApplicationFactory: 실제처럼 테스트하기
 
 통합 테스트는 단위 테스트와 달리, 실제 애플리케이션의 동작을 확인합니다. 하지만 테스트마다 서버를 시작하고 종료하는 것은 느립니다. ASP.NET Core의 `WebApplicationFactory`는 이 문제를 해결합니다. 메모리 내에서 애플리케이션을 호스팅하므로, 실제 HTTP 요청을 빠르게 테스트할 수 있습니다.
@@ -374,23 +473,26 @@ Blazor 컴포넌트를 테스트하려면 어떻게 해야 할까요? 컴포넌�
 **bUnit 기본 사용**
 
 ```csharp
-@using Bunit
-@inherits TestContext
+using Bunit;
+using Xunit;
 
-[Fact]
-public void Counter_ClickButton_IncrementsCount()
+public class CounterTests : TestContext
 {
-    // Arrange
-    var cut = RenderComponent<Counter>();
+    [Fact]
+    public void Counter_ClickButton_IncrementsCount()
+    {
+        // Arrange
+        var cut = RenderComponent<Counter>();
 
-    // Assert - 초기 상태
-    cut.Find("p").MarkupMatches("<p>Current count: 0</p>");
+        // Assert - 초기 상태
+        cut.Find("p").MarkupMatches("<p>Current count: 0</p>");
 
-    // Act - 버튼 클릭
-    cut.Find("button").Click();
+        // Act - 버튼 클릭
+        cut.Find("button").Click();
 
-    // Assert - 업데이트된 상태
-    cut.Find("p").MarkupMatches("<p>Current count: 1</p>");
+        // Assert - 업데이트된 상태
+        cut.Find("p").MarkupMatches("<p>Current count: 1</p>");
+    }
 }
 ```
 
@@ -536,6 +638,158 @@ public void Add_Test()
 ```
 
 커버리지 목표는 80-90%가 합리적입니다. 100%를 추구하면, 의미 없는 테스트를 작성하게 되는 경향이 있습니다(getter/setter 테스트 등).
+
+### 비동기 테스트: async/await 올바르게 다루기
+
+ASP.NET Core는 본질적으로 비동기적입니다. 대부분의 데이터베이스 호출, HTTP 요청, I/O 작업은 `async/await`를 사용합니다. 비동기 코드를 테스트할 때는 몇 가지 주의사항이 있습니다.
+
+**기본 비동기 테스트**
+
+xUnit은 비동기 테스트를 완벽하게 지원합니다. 테스트 메서드를 `async Task`로 선언하면 됩니다:
+
+```csharp
+[Fact]
+public async Task GetProductAsync_ExistingId_ReturnsProduct()
+{
+    // Arrange
+    var repository = new ProductRepository(_dbContext);
+
+    // Act
+    var product = await repository.GetByIdAsync(1);
+
+    // Assert
+    Assert.NotNull(product);
+    Assert.Equal("Book", product.Name);
+}
+```
+
+**async void는 절대 사용하지 마세요**
+
+테스트 메서드는 반드시 `Task`를 반환해야 합니다. `async void`는 xUnit이 테스트 완료를 감지할 수 없어 불안정한 결과를 초래합니다:
+
+```csharp
+// ❌ 절대 하지 마세요
+[Fact]
+public async void BadTest()
+{
+    await SomeAsyncMethod();
+    // 테스트가 완료되기 전에 xUnit이 종료할 수 있음
+}
+
+// ✅ 올바른 방법
+[Fact]
+public async Task GoodTest()
+{
+    await SomeAsyncMethod();
+}
+```
+
+**비동기 예외 테스트**
+
+비동기 메서드의 예외를 테스트할 때는 `Assert.ThrowsAsync`를 사용합니다:
+
+```csharp
+[Fact]
+public async Task DeleteProductAsync_NonExistentId_ThrowsException()
+{
+    var repository = new ProductRepository(_dbContext);
+
+    // ✅ 비동기 예외 검증
+    await Assert.ThrowsAsync<NotFoundException>(
+        async () => await repository.DeleteAsync(999)
+    );
+}
+
+// FluentAssertions 사용 시
+[Fact]
+public async Task ProcessPaymentAsync_InsufficientFunds_ThrowsException()
+{
+    var service = new PaymentService();
+
+    Func<Task> act = async () => await service.ProcessPaymentAsync(-100);
+
+    await act.Should().ThrowAsync<InvalidOperationException>()
+        .WithMessage("Amount must be positive");
+}
+```
+
+**Task 반환 메서드 테스트**
+
+`Task<T>`를 반환하지만 `await`하지 않는 메서드를 테스트할 때 주의하세요:
+
+```csharp
+// ❌ 잘못된 방법 - Task를 await하지 않음
+[Fact]
+public void BadAsyncTest()
+{
+    var task = _repository.GetByIdAsync(1);
+    // Task가 완료되지 않은 상태로 테스트 종료
+}
+
+// ✅ 올바른 방법
+[Fact]
+public async Task GoodAsyncTest()
+{
+    var product = await _repository.GetByIdAsync(1);
+    Assert.NotNull(product);
+}
+```
+
+**병렬 비동기 작업 테스트**
+
+여러 비동기 작업을 병렬로 실행하는 코드를 테스트할 때는 `Task.WhenAll`을 사용합니다:
+
+```csharp
+[Fact]
+public async Task GetMultipleProducts_ParallelExecution_ReturnsAll()
+{
+    var repository = new ProductRepository(_dbContext);
+
+    // Act - 3개의 제품을 병렬로 가져오기
+    var tasks = new[]
+    {
+        repository.GetByIdAsync(1),
+        repository.GetByIdAsync(2),
+        repository.GetByIdAsync(3)
+    };
+
+    var products = await Task.WhenAll(tasks);
+
+    // Assert
+    Assert.Equal(3, products.Length);
+    Assert.All(products, p => Assert.NotNull(p));
+}
+```
+
+**타임아웃 설정**
+
+무한 대기를 방지하기 위해 타임아웃을 설정할 수 있습니다:
+
+```csharp
+[Fact(Timeout = 5000)] // 5초 타임아웃
+public async Task SlowOperation_CompletesWithinTimeout()
+{
+    var service = new DataProcessingService();
+
+    var result = await service.ProcessLargeDatasetAsync();
+
+    Assert.NotNull(result);
+}
+```
+
+**ConfigureAwait in Tests**
+
+테스트 코드에서는 일반적으로 `ConfigureAwait(false)`를 사용할 필요가 없습니다. 테스트는 SynchronizationContext가 없는 환경에서 실행되므로, 컨텍스트 전환 오버헤드가 없습니다:
+
+```csharp
+[Fact]
+public async Task TestMethod()
+{
+    // 테스트에서는 ConfigureAwait(false) 불필요
+    var result = await _service.GetDataAsync();
+    Assert.NotNull(result);
+}
+```
 
 ### Part 9에서 배울 내용
 
