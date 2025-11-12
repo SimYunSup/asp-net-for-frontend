@@ -1,0 +1,24 @@
+{
+  "name": "asp-net-for-frontend",
+  "version": "1.0.0",
+  "description": "Frontend Developer's Complete Guide to ASP.NET Core",
+  "type": "module",
+  "scripts": {
+    "docs:dev": "vitepress dev",
+    "docs:build": "vitepress build",
+    "docs:preview": "vitepress preview"
+  },
+  "keywords": [
+    "asp.net",
+    "dotnet",
+    "csharp",
+    "frontend",
+    "guide",
+    "tutorial"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  }
+}
