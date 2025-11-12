@@ -3,6 +3,73 @@
 
 ---
 
+## 목차 (Table of Contents)
+
+### [**Part 1: C# 기초 - 자바스크립트/타입스크립트 개발자 관점**](#part-1-c-기초---자바스크립트타입스크립트-개발자-관점)
+- [Chapter 1: C# 기초 문법 - TypeScript 개발자를 위한 빠른 시작](#chapter-1-c-기초-문법---typescript-개발자를-위한-빠른-시작)
+- [Chapter 2: 객체지향 프로그래밍과 고급 기능](#chapter-2-객체지향-프로그래밍과-고급-기능)
+
+### [**Part 2: ASP.NET Core 기초 - 새로운 패러다임의 이해**](#part-2-aspnet-core-기초---새로운-패러다임의-이해)
+- [Chapter 3: ASP.NET Core 소개와 개발 환경 설정](#chapter-3-aspnet-core-소개와-개발-환경-설정)
+- [Chapter 4: ASP.NET Core의 핵심 아키텍처](#chapter-4-aspnet-core의-핵심-아키텍처)
+- [Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](#chapter-5-minimal-apis---nodejs-express-개발자를-위한-빠른-시작)
+
+### [**Part 3: 서버 사이드 렌더링 - Razor Pages와 MVC**](#part-3-서버-사이드-렌더링---razor-pages와-mvc)
+- [Chapter 6: Razor 문법 - JSX를 아는 개발자를 위한 가이드](#chapter-6-razor-문법---jsx를-아는-개발자를-위한-가이드)
+- [Chapter 7: Razor Pages - 단순함의 힘](#chapter-7-razor-pages---단순함의-힘)
+- [Chapter 8: MVC 패턴 - 대규모 애플리케이션을 위한 구조](#chapter-8-mvc-패턴---대규모-애플리케이션을-위한-구조)
+
+### [**Part 4: Blazor - 프론트엔드 개발자의 친숙한 영역**](#part-4-blazor---프론트엔드-개발자의-친숙한-영역)
+- [Chapter 9: Blazor 소개 - C#으로 작성하는 프론트엔드](#chapter-9-blazor-소개---c으로-작성하는-프론트엔드)
+- [Chapter 10: Blazor 컴포넌트 개발](#chapter-10-blazor-컴포넌트-개발)
+- [Chapter 11: Blazor 고급 패턴](#chapter-11-blazor-고급-패턴)
+
+### [**Part 5: 데이터 액세스 - Entity Framework Core**](#part-5-데이터-액세스---entity-framework-core)
+- [Chapter 12: Entity Framework Core 기초](#chapter-12-entity-framework-core-기초)
+- [Chapter 13: Entity Framework Core 고급](#chapter-13-entity-framework-core-고급)
+
+### [**Part 6: API 개발 - RESTful에서 GraphQL까지**](#part-6-api-개발---restful에서-graphql까지)
+- [Chapter 14: RESTful API 설계와 구현](#chapter-14-restful-api-설계와-구현)
+- [Chapter 15: API 보안과 인증](#chapter-15-api-보안과-인증)
+- [Chapter 16: GraphQL과 SignalR](#chapter-16-graphql과-signalr)
+
+### [**Part 7: 프로덕션 준비 - 실시간 통신과 클라이언트 통합**](#part-7-프로덕션-준비---실시간-통신과-클라이언트-통합)
+- [Chapter 17: 실시간 통신과 백그라운드 처리](#chapter-17-실시간-통신과-백그라운드-처리)
+- [Chapter 18: API 클라이언트 패턴](#chapter-18-api-클라이언트-패턴)
+
+### [**Part 8: 상태 관리와 패턴**](#part-8-상태-관리와-패턴)
+- [Chapter 19: 서버 사이드 상태 관리](#chapter-19-서버-사이드-상태-관리)
+- [Chapter 20: 고급 아키텍처 패턴](#chapter-20-고급-아키텍처-패턴)
+
+### [**Part 9: 테스팅 전략**](#part-9-테스팅-전략)
+- [Chapter 21: 단위 테스트와 통합 테스트](#chapter-21-단위-테스트와-통합-테스트)
+
+### [**Part 10: 성능 최적화와 모니터링**](#part-10-성능-최적화와-모니터링)
+- [Chapter 22: 성능 최적화 기법](#chapter-22-성능-최적화-기법)
+- [Chapter 23: 모니터링과 로깅](#chapter-23-모니터링과-로깅)
+
+### [**Part 11: 배포와 DevOps**](#part-11-배포와-devops)
+- [Chapter 24: 컨테이너화와 Docker](#chapter-24-컨테이너화와-docker)
+- [Chapter 25: 클라우드 배포 - Azure 중심](#chapter-25-클라우드-배포---azure-중심)
+- [Chapter 26: 프로덕션 고려사항](#chapter-26-프로덕션-고려사항)
+
+### [**Part 12: 실전 프로젝트와 모범 사례**](#part-12-실전-프로젝트와-모범-사례)
+- [Chapter 27: 전자상거래 플랫폼 구축 (종합 프로젝트)](#chapter-27-전자상거래-플랫폼-구축-종합-프로젝트)
+- [Chapter 28: 모범 사례 종합](#chapter-28-모범-사례-종합)
+
+### [**부록 (Appendices)**](#부록)
+- [Appendix A: C# 치트 시트 - JavaScript/TypeScript 개발자용](#appendix-a-c-치트-시트---javascripttypescript-개발자용)
+- [Appendix B: ASP.NET Core 프로젝트 템플릿 가이드](#appendix-b-aspnet-core-프로젝트-템플릿-가이드)
+- [Appendix C: 유용한 NuGet 패키지 모음](#appendix-c-유용한-nuget-패키지-모음)
+- [Appendix D: 도구와 확장 프로그램](#appendix-d-도구와-확장-프로그램)
+- [Appendix E: 학습 리소스와 커뮤니티](#appendix-e-학습-리소스와-커뮤니티)
+- [Appendix F: 마이그레이션 가이드](#appendix-f-마이그레이션-가이드)
+- [Appendix G: 문제 해결 가이드](#appendix-g-문제-해결-가이드)
+
+### [**맺음말: 프론트엔드 개발자에서 풀스택 .NET 개발자로**](#맺음말-프론트엔드-개발자에서-풀스택-net-개발자로)
+
+---
+
 ## **Part 1: C# 기초 - 자바스크립트/타입스크립트 개발자 관점**
 
 📖 **[Part 1 시작하기](./part1-csharp-basics/README.md)**
@@ -1331,13 +1398,23 @@ public void GetProduct_ReturnsProduct()
 - 계속되는 학습
 
 ### 최종 조언
-- 프론트엔드 지식은 자산이다
-- 점진적으로 학습하라
-- 실습이 가장 중요하다
-- 커뮤니티를 활용하라
+- **프론트엔드 지식은 자산이다**: 여러분이 가진 JavaScript, TypeScript, React 등의 경험은 ASP.NET Core를 학습하는 데 큰 도움이 됩니다. 비슷한 개념들이 많고, 오히려 더 나은 관점으로 .NET 생태계를 이해할 수 있습니다.
+- **점진적으로 학습하라**: 한 번에 모든 것을 배우려 하지 마세요. Part 1부터 차근차근 진행하며, 각 단계마다 충분한 실습 시간을 가지세요.
+- **실습이 가장 중요하다**: 이론만으로는 부족합니다. 작은 프로젝트라도 직접 만들어보면서 배운 내용을 적용해보세요. 실패와 디버깅 과정에서 가장 많이 배웁니다.
+- **커뮤니티를 활용하라**: .NET 커뮤니티는 매우 활발하고 친절합니다. 막힐 때는 주저하지 말고 질문하세요. Stack Overflow, Reddit, Discord 등 다양한 채널이 여러분을 기다립니다.
+
+### 마치며
+
+프론트엔드 개발자로서 ASP.NET Core를 배우는 것은 단순히 새로운 기술을 익히는 것 이상의 의미가 있습니다. 전체 스택을 이해하게 되면서 더 나은 프론트엔드 개발자가 될 수 있고, 필요할 때는 백엔드도 직접 구축할 수 있는 역량을 갖추게 됩니다.
+
+이 가이드를 통해 여러분이 자신감 있게 ASP.NET Core 프로젝트를 시작하고, 점차 복잡한 시스템을 설계하고 구현할 수 있기를 바랍니다.
+
+**Remember**: 모든 전문가도 처음에는 초보자였습니다. 여러분의 프론트엔드 경험은 이미 훌륭한 출발점입니다. 이제 그 위에 강력한 백엔드 기술을 쌓아올릴 차례입니다.
+
+행운을 빕니다! 🚀
 
 ---
 
-**총 27개 챕터, 약 800-1000페이지 분량 예상**
+**총 28개 챕터 + 7개 부록, 약 800-1000페이지 분량**
 
-이 책은 JavaScript/TypeScript 백그라운드를 가진 프론트엔드 개발자가 ASP.NET Core를 효과적으로 학습할 수 있도록 설계되었습니다. 익숙한 개념에서 시작하여 점진적으로 .NET 생태계의 강력한 기능들을 탐구하며, 실전 프로젝트를 통해 완전한 풀스택 개발자로 성장할 수 있는 로드맵을 제공합니다.
+*이 가이드는 JavaScript/TypeScript 백그라운드를 가진 프론트엔드 개발자가 ASP.NET Core를 효과적으로 학습할 수 있도록 설계되었습니다.*
