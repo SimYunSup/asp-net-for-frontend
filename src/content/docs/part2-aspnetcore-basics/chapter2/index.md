@@ -950,9 +950,7 @@ app.post('/api/todos', (req, res) => {
 ASP.NET Core의 장점:
 - **타입 안정성**: 컴파일 타임에 모든 타입 오류를 잡습니다
 - **자동 바인딩**: `[FromBody]`, `[FromRoute]` 없이도 자동으로 요청 데이터를 바인딩합니다
-- **상태 코드 헬퍼**: `Ok()`, `NotFound()`, `Created
-
-AtAction()` 등으로 명확하게 응답 생성
+- **상태 코드 헬퍼**: `Ok()`, `NotFound()`, `CreatedAtAction()` 등으로 명확하게 응답 생성
 - **OpenAPI 자동 생성**: Swagger가 자동으로 API 문서를 만듭니다
 
 ### Postman/Thunder Client로 테스트

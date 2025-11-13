@@ -478,4 +478,4 @@ kubectl apply -f deployment.yaml
 
 ---
 
-**Happy Coding!** 🚀
+**Happy Coding!**

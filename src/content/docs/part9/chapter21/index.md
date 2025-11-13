@@ -1410,7 +1410,7 @@ public class OrderE2ETests : PageTest
 
         // 결과 확인
         var products = Page.Locator(".product-card");
-        await Expect(products).toHaveCountGreaterThanAsync(0);
+        (await products.CountAsync()).Should().BeGreaterThan(0);
 
         // 모든 결과에 "book"이 포함되어야 함
         var productNames = await products.Locator("h3").AllTextContentsAsync();
