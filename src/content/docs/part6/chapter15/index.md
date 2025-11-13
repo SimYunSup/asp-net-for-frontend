@@ -181,7 +181,8 @@ public class TokenService : ITokenService
         if (!string.IsNullOrEmpty(user.Department))
             claims.Add(new Claim("department", user.Department));
 
-        var expiryMinutes = int.Parse(jwtSettings["ExpiryMinutes"] ?? "60");
+        if (!int.TryParse(jwtSettings["ExpiryMinutes"], out var expiryMinutes))
+            expiryMinutes = 60;
 
         var token = new JwtSecurityToken(
             issuer: jwtSettings["Issuer"],
@@ -406,6 +407,98 @@ if (productsResponse.status === 401) {
 }
 ```
 
+### JWT 취소 메커니즘
+
+JWT의 주요 단점 중 하나는 한번 발급되면 만료 시간까지 유효하다는 것입니다. 사용자가 로그아웃하거나 계정이 비활성화되어도 토큰은 여전히 작동합니다. 이를 해결하기 위한 방법이 **토큰 블랙리스트**입니다.
+
+**블랙리스트 인터페이스:**
+```csharp
+public interface ITokenBlacklist
+{
+    Task RevokeTokenAsync(string jti, DateTime expiry);
+    Task<bool> IsRevokedAsync(string jti);
+}
+
+public class RedisTokenBlacklist : ITokenBlacklist
+{
+    private readonly IConnectionMultiplexer _redis;
+
+    public RedisTokenBlacklist(IConnectionMultiplexer redis)
+    {
+        _redis = redis;
+    }
+
+    public async Task RevokeTokenAsync(string jti, DateTime expiry)
+    {
+        var db = _redis.GetDatabase();
+        var ttl = expiry - DateTime.UtcNow;
+
+        if (ttl > TimeSpan.Zero)
+        {
+            await db.StringSetAsync($"blacklist:{jti}", "revoked", ttl);
+        }
+    }
+
+    public async Task<bool> IsRevokedAsync(string jti)
+    {
+        var db = _redis.GetDatabase();
+        return await db.KeyExistsAsync($"blacklist:{jti}");
+    }
+}
+```
+
+**JWT 검증 시 블랙리스트 확인:**
+```csharp
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+.AddJwtBearer(options =>
+{
+    // ... 기존 설정 ...
+
+    options.Events = new JwtBearerEvents
+    {
+        OnTokenValidated = async context =>
+        {
+            var tokenBlacklist = context.HttpContext.RequestServices
+                .GetRequiredService<ITokenBlacklist>();
+
+            var jti = context.Principal?.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
+
+            if (jti != null && await tokenBlacklist.IsRevokedAsync(jti))
+            {
+                context.Fail("Token has been revoked");
+            }
+        }
+    };
+});
+```
+
+**로그아웃 시 토큰 블랙리스트 추가:**
+```csharp
+[HttpPost("logout")]
+[Authorize]
+public async Task<IActionResult> Logout()
+{
+    var jti = User.FindFirst(JwtRegisteredClaimNames.Jti)?.Value;
+    var exp = User.FindFirst(JwtRegisteredClaimNames.Exp)?.Value;
+
+    if (jti != null && exp != null)
+    {
+        var expiryDate = DateTimeOffset.FromUnixTimeSeconds(long.Parse(exp)).DateTime;
+        await _tokenBlacklist.RevokeTokenAsync(jti, expiryDate);
+    }
+
+    var userId = int.Parse(User.FindFirst(JwtRegisteredClaimNames.Sub)?.Value ?? "0");
+    await _userService.RevokeRefreshTokensAsync(userId);
+
+    return Ok(new { message = "Logged out successfully" });
+}
+```
+
+**주의사항:**
+- 블랙리스트는 메모리나 Redis 같은 빠른 저장소에 보관해야 합니다
+- 만료된 토큰은 자동으로 블랙리스트에서 제거됩니다 (TTL 활용)
+- 짧은 Access Token 만료 시간을 사용하면 블랙리스트 크기를 줄일 수 있습니다
+
 ### JWT 보안 모범 사례
 
 **✅ 해야 할 것:**
@@ -533,6 +626,10 @@ public class AccountController : ControllerBase
 
         if (!result.Succeeded)
         {
+            // 프로덕션: 보안을 위해 일반적인 메시지 사용
+            // return BadRequest(new { message = "Registration failed" });
+
+            // 개발: 자세한 에러 정보 제공
             return BadRequest(new { errors = result.Errors.Select(e => e.Description) });
         }
 
