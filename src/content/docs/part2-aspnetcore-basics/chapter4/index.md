@@ -1,10 +1,10 @@
 ---
-title: "Chapter 4 - Minimal APIs - Node.js Express 개발자를 위한 빠른 시작"
+title: "Chapter 5 - Minimal APIs - Node.js Express 개발자를 위한 빠른 시작"
 ---
 
-# Chapter 4: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작
+# Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작
 
-## 4.1 Minimal APIs 소개
+## 5.1 Minimal APIs 소개
 
 ### 컨트롤러 없는 API: Express.js 스타일
 

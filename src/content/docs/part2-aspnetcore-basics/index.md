@@ -53,7 +53,7 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 ## 챕터 구성
 
-### [Chapter 3: ASP.NET Core 소개와 개발 환경 설정](./chapter3/index.md)
+### [Chapter 3: ASP.NET Core 소개와 개발 환경 설정](./chapter2/index.md)
 - ASP.NET Core란 무엇인가?
 - .NET Framework에서 .NET Core로의 진화
 - VS Code + C# Dev Kit으로 개발 환경 구성
@@ -62,7 +62,7 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 **핵심 개념**: 크로스 플랫폼, Kestrel, Hot Reload, .csproj
 
-### [Chapter 4: ASP.NET Core의 핵심 아키텍처](./chapter4/index.md)
+### [Chapter 4: ASP.NET Core의 핵심 아키텍처](./chapter3/index.md)
 - 요청-응답 파이프라인과 미들웨어
 - 의존성 주입(DI)의 강력한 활용
 - 라우팅 시스템 (컨벤션 vs 특성)
@@ -71,7 +71,7 @@ Microsoft의 공식 지원, 예측 가능한 릴리스 주기, LTS(Long Term Sup
 
 **핵심 개념**: Middleware, DI Container, Service Lifetime, Configuration, ILogger
 
-### [Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](./chapter5/index.md)
+### [Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](./chapter4/index.md)
 - Minimal APIs 소개: 컨트롤러 없는 API
 - HTTP 메서드 매핑과 라우팅
 - 의존성 주입을 통한 서비스 사용

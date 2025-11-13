@@ -1,8 +1,8 @@
 ---
-title: "Chapter 5 - Razor 문법 - JSX를 아는 개발자를 위한 가이드"
+title: "Chapter 6 - Razor 문법 - JSX를 아는 개발자를 위한 가이드"
 ---
 
-# Chapter 5: Razor 문법 - JSX를 아는 개발자를 위한 가이드
+# Chapter 6: Razor 문법 - JSX를 아는 개발자를 위한 가이드
 
 ## JSX에서 Razor로: 놀라운 유사성
 

@@ -1,8 +1,8 @@
 ---
-title: "Chapter 6 - Razor Pages - 단순함의 힘"
+title: "Chapter 7 - Razor Pages - 단순함의 힘"
 ---
 
-# Chapter 6: Razor Pages - 단순함의 힘
+# Chapter 7: Razor Pages - 단순함의 힘
 
 ## Next.js Pages Router의 서버 버전
 
