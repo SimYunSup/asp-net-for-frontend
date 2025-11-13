@@ -1,10 +1,10 @@
 ---
-title: "Chapter 3 - ASP.NET Core의 핵심 아키텍처"
+title: "Chapter 4 - ASP.NET Core의 핵심 아키텍처"
 ---
 
-# Chapter 3: ASP.NET Core의 핵심 아키텍처
+# Chapter 4: ASP.NET Core의 핵심 아키텍처
 
-## 3.1 요청-응답 파이프라인: Express 미들웨어와의 비교
+## 4.1 요청-응답 파이프라인: Express 미들웨어와의 비교
 
 ### 미들웨어 파이프라인의 실행 순서
 
@@ -1896,17 +1896,17 @@ app.Run();
 
 ---
 
-## Chapter 3 마무리: 프레임워크의 핵심 이해
+## Chapter 4 마무리: 프레임워크의 핵심 이해
 
-축하합니다! Chapter 3를 완료하며 ASP.NET Core의 심장부를 탐험했습니다. 미들웨어 파이프라인으로 요청-응답 흐름을 제어하고, 의존성 주입으로 느슨하게 결합된 코드를 작성하며, 라우팅 시스템으로 복잡한 URL 패턴을 처리하고, 구성 관리와 로깅으로 프로덕션급 애플리케이션의 기반을 다졌습니다.
+축하합니다! Chapter 4를 완료하며 ASP.NET Core의 심장부를 탐험했습니다. 미들웨어 파이프라인으로 요청-응답 흐름을 제어하고, 의존성 주입으로 느슨하게 결합된 코드를 작성하며, 라우팅 시스템으로 복잡한 URL 패턴을 처리하고, 구성 관리와 로깅으로 프로덕션급 애플리케이션의 기반을 다졌습니다.
 
 이제 여러분은 ASP.NET Core가 **어떻게** 작동하는지 깊이 이해하고 있습니다. `builder.Build()`가 서비스 컨테이너를 구성하고, 미들웨어 파이프라인이 요청을 처리하며, 라우팅이 엔드포인트를 찾고, DI가 의존성을 주입하는—전체 흐름을 볼 수 있습니다. 하지만 이 모든 지식을 실제 API 개발에 어떻게 적용할까요?
 
 ### 다음 단계: 간결함과 강력함의 만남
 
-**[Chapter 4: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](./chapter4/index.md)** 에서는 배운 것을 모두 활용하면서도 **Express.js처럼 간결하게** API를 작성합니다.
+**[Chapter 5: Minimal APIs - Node.js Express 개발자를 위한 빠른 시작](../chapter4/index.md)** 에서는 배운 것을 모두 활용하면서도 **Express.js처럼 간결하게** API를 작성합니다.
 
-**컨트롤러 없는 API**: Chapter 2와 3에서 우리는 MVC 패턴과 컨트롤러를 사용했습니다. 하지만 간단한 API에는 과하죠. Minimal APIs는 Express.js의 간결함을 ASP.NET Core에 가져옵니다. `app.MapGet()`, `app.MapPost()`로 라우트를 직접 정의하며, 보일러플레이트를 최소화합니다.
+**컨트롤러 없는 API**: Chapter 3과 4에서 우리는 MVC 패턴과 컨트롤러를 사용했습니다. 하지만 간단한 API에는 과하죠. Minimal APIs는 Express.js의 간결함을 ASP.NET Core에 가져옵니다. `app.MapGet()`, `app.MapPost()`로 라우트를 직접 정의하며, 보일러플레이트를 최소화합니다.
 
 ```csharp
 // Express.js 스타일
@@ -1914,7 +1914,7 @@ app.MapGet("/api/users/{id}", async (int id, IUserService service) =>
     await service.GetByIdAsync(id));
 ```
 
-단 3줄의 코드에, Chapter 3에서 배운 DI, 라우팅, 비동기 처리가 모두 들어있습니다.
+단 3줄의 코드에, Chapter 4에서 배운 DI, 라우팅, 비동기 처리가 모두 들어있습니다.
 
 **강타입의 마법**: Express.js에서는 `req.params.id`를 수동으로 파싱하고 검증해야 합니다. Minimal APIs는 자동으로 타입 변환, 유효성 검사, 모델 바인딩을 수행합니다. `string`을 기대하면 string을, `int`를 기대하면 int를, 복잡한 객체를 기대하면 JSON을 역직렬화합니다—모두 컴파일 타임 타입 안전성과 함께.
 
@@ -1922,11 +1922,11 @@ app.MapGet("/api/users/{id}", async (int id, IUserService service) =>
 
 **OpenAPI의 즉시 생성**: Swagger 문서를 수동으로 작성할 필요가 없습니다. 코드에서 타입 정보를 추출하여 자동으로 OpenAPI 스펙을 생성하고, Swagger UI를 제공합니다. 프론트엔드 팀은 즉시 API 문서를 보고 테스트할 수 있습니다.
 
-**완전한 CRUD API**: Chapter 4에서는 완전한 Todo API를 만듭니다. Create, Read, Update, Delete 엔드포인트, 유효성 검사, 에러 처리, 필터링, 페이지네이션—실제 프로덕션 API에 필요한 모든 것을 간결한 Minimal API 스타일로 구현합니다.
+**완전한 CRUD API**: Chapter 5에서는 완전한 Todo API를 만듭니다. Create, Read, Update, Delete 엔드포인트, 유효성 검사, 에러 처리, 필터링, 페이지네이션—실제 프로덕션 API에 필요한 모든 것을 간결한 Minimal API 스타일로 구현합니다.
 
-Chapter 4를 마치면, 여러분은 Express.js의 간결함과 ASP.NET Core의 강력함을 모두 가진 API를 만들 수 있습니다. 프론트엔드 개발자로서 익숙한 개발 경험에, 백엔드의 타입 안전성, 성능, 엔터프라이즈 기능을 더한 것입니다.
+Chapter 5를 마치면, 여러분은 Express.js의 간결함과 ASP.NET Core의 강력함을 모두 가진 API를 만들 수 있습니다. 프론트엔드 개발자로서 익숙한 개발 경험에, 백엔드의 타입 안전성, 성능, 엔터프라이즈 기능을 더한 것입니다.
 
-마지막 챕터를 시작할 준비가 되셨나요? [Chapter 4로 이동하세요!](./chapter4/index.md)
+마지막 챕터를 시작할 준비가 되셨나요? [Chapter 5로 이동하세요!](../chapter4/index.md)
 
 ---
 

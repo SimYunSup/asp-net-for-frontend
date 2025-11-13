@@ -8,7 +8,7 @@ title: "결론 - 프론트엔드 개발자를 위한 ASP.NET Core 여정"
 
 ## 학습 여정 요약
 
-### Part 1-2: 기초 (Chapters 1-4)
+### Part 1-2: 기초 (Chapters 1-5)
 **핵심 개념**:
 - C# 기본 문법과 TypeScript와의 비교
 - .NET 생태계 이해 (CLI, NuGet, 프로젝트 구조)
@@ -17,7 +17,7 @@ title: "결론 - 프론트엔드 개발자를 위한 ASP.NET Core 여정"
 
 **주요 성과**: Express.js와 유사하지만 더 강력한 타입 시스템과 엔터프라이즈 기능을 가진 ASP.NET Core의 기본 구조를 이해했습니다.
 
-### Part 3-5: 데이터베이스 및 API 개발 (Chapters 5-10)
+### Part 3-5: 데이터베이스 및 API 개발 (Chapters 6-10)
 **핵심 개념**:
 - Entity Framework Core를 사용한 데이터베이스 작업
 - 마이그레이션, LINQ, 복잡한 쿼리 작성

@@ -22,9 +22,9 @@ Blazor 컴포넌트는 `.razor` 확장자를 가진 파일입니다. Vue의 단�
 @* TodoItem.razor *@
 
 @* 1. 마크업 섹션 (템플릿) *@
-<div class="todo-item @(todo.IsCompleted ? "completed" : "")">
-  <input type="checkbox" checked="@todo.IsCompleted" @onchange="ToggleComplete" />
-  <span>@todo.Title</span>
+<div class="todo-item @(Todo.IsCompleted ? "completed" : "")">
+  <input type="checkbox" checked="@Todo.IsCompleted" @onchange="ToggleComplete" />
+  <span>@Todo.Title</span>
   <button @onclick="OnDelete">삭제</button>
 </div>
 
@@ -38,7 +38,7 @@ Blazor 컴포넌트는 `.razor` 확장자를 가진 파일입니다. Vue의 단�
 
   private void ToggleComplete()
   {
-    todo.IsCompleted = !todo.IsCompleted;
+    Todo.IsCompleted = !Todo.IsCompleted;
   }
 }
 ```

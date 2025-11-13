@@ -164,13 +164,13 @@ Models/
 
 이 파트는 프론트엔드 개발자가 서버 사이드 렌더링의 세계로 자연스럽게 진입할 수 있도록 설계되었습니다. React/Vue의 개념을 Razor로 매핑하며, 각 단계에서 "왜 이렇게 하는가?"를 명확히 합니다.
 
-**Chapter 5: Razor 문법 - JSX를 아는 개발자를 위한 가이드**
+**Chapter 6: Razor 문법 - JSX를 아는 개발자를 위한 가이드**
 
 Razor 문법의 모든 것을 배웁니다. `@` 기호, 코드 블록, 표현식, 지시문(directives), 레이아웃, 부분 뷰(Partial Views), Tag Helpers... JSX와 직접 비교하며, "React에서는 이렇게 했는데 Razor에서는 어떻게 하지?"라는 질문에 답합니다.
 
 자동 HTML 인코딩은 XSS 공격을 기본적으로 방지하며, 강타입 모델은 런타임 오류를 컴파일 타임에 잡아냅니다. View Components는 React 컴포넌트와 유사하지만, 서버 사이드 로직을 포함할 수 있습니다.
 
-**Chapter 6: Razor Pages - 단순함의 힘**
+**Chapter 7: Razor Pages - 단순함의 힘**
 
 Next.js Pages Router를 아는 개발자라면 Razor Pages가 매우 친숙할 것입니다. 파일 기반 라우팅, 페이지별 데이터 페칭, 폼 처리, 상태 관리를 배웁니다.
 
@@ -178,7 +178,7 @@ PageModel 클래스는 `OnGet`, `OnPost` 같은 핸들러 메서드를 통해 HT
 
 실습에서는 완전한 블로그 CRUD 애플리케이션을 만들며, 게시글 목록, 작성, 수정, 삭제, 검색 기능을 구현합니다.
 
-**Chapter 7: MVC 패턴 - 대규모 애플리케이션을 위한 구조**
+**Chapter 8: MVC 패턴 - 대규모 애플리케이션을 위한 구조**
 
 MVC 아키텍처를 깊이 이해합니다. Flux/Redux를 아는 개발자라면 단방향 데이터 흐름의 개념이 익숙할 것입니다. MVC는 다른 방식이지만, 같은 문제(복잡성 관리)를 해결합니다.
 
@@ -204,7 +204,7 @@ Part 3를 마치면 다음을 할 수 있습니다:
 
 ## 챕터 구성
 
-### [Chapter 5: Razor 문법 - JSX를 아는 개발자를 위한 가이드](./chapter5/index.md)
+### [Chapter 6: Razor 문법 - JSX를 아는 개발자를 위한 가이드](./chapter6/index.md)
 
 Razor의 모든 것을 JSX/Vue 템플릿과 비교하며 배웁니다.
 
@@ -220,7 +220,7 @@ Razor의 모든 것을 JSX/Vue 템플릿과 비교하며 배웁니다.
 
 **실습**: JSX 코드를 Razor로 변환, 동적 UI 렌더링, 재사용 가능한 컴포넌트 생성
 
-### [Chapter 6: Razor Pages - 단순함의 힘](./chapter6/index.md)
+### [Chapter 7: Razor Pages - 단순함의 힘](./chapter7/index.md)
 
 Next.js Pages Router와 유사한 Razor Pages로 애플리케이션을 빠르게 개발합니다.
 
@@ -237,7 +237,7 @@ Next.js Pages Router와 유사한 Razor Pages로 애플리케이션을 빠르게
 
 **실습**: 블로그 CRUD 애플리케이션 - 게시글 목록/작성/수정/삭제, 검색 기능
 
-### [Chapter 7: MVC 패턴 - 대규모 애플리케이션을 위한 구조](./chapter7/index.md)
+### [Chapter 8: MVC 패턴 - 대규모 애플리케이션을 위한 구조](./chapter8/index.md)
 
 전통적이지만 여전히 강력한 MVC로 복잡한 애플리케이션을 구조화합니다.
 
@@ -274,14 +274,14 @@ Next.js Pages Router와 유사한 Razor Pages로 애플리케이션을 빠르게
 
 각 챕터에는 실전 프로젝트가 포함되어 있습니다.
 
-### Chapter 5 실습: Razor 문법 마스터하기
+### Chapter 6 실습: Razor 문법 마스터하기
 - JSX 코드를 Razor로 변환하는 연습
 - 동적 리스트 렌더링
 - 조건부 UI 표시
 - Tag Helpers로 폼 생성
 - View Components로 재사용 가능한 위젯 만들기
 
-### Chapter 6 실습: 블로그 애플리케이션
+### Chapter 7 실습: 블로그 애플리케이션
 Razor Pages로 완전한 블로그 시스템을 만듭니다:
 - 게시글 목록 페이지 (페이징 포함)
 - 게시글 상세 페이지
@@ -290,7 +290,7 @@ Razor Pages로 완전한 블로그 시스템을 만듭니다:
 - 검색 및 태그 필터링
 - 댓글 시스템
 
-### Chapter 7 실습: 전자상거래 플랫폼
+### Chapter 8 실습: 전자상거래 플랫폼
 MVC로 복잡한 전자상거래 애플리케이션을 구축합니다:
 - 상품 카탈로그 (카테고리별 필터링, 검색)
 - 상품 상세 페이지
@@ -362,11 +362,11 @@ Razor Pages/MVC는 오래된 기술이 아닙니다. 현대적인 프론트엔�
 
 Part 3는 순차적으로 학습하도록 설계되었습니다:
 
-1. **Chapter 5부터 시작하세요**: Razor 문법은 모든 것의 기초입니다. JSX와 비교하며 빠르게 익힐 수 있습니다.
+1. **Chapter 6부터 시작하세요**: Razor 문법은 모든 것의 기초입니다. JSX와 비교하며 빠르게 익힐 수 있습니다.
 
-2. **Chapter 6로 실전 경험을**: Razor Pages로 실제 애플리케이션을 만들며 개념을 체화합니다. 대부분의 프로젝트는 Razor Pages만으로 충분합니다.
+2. **Chapter 7로 실전 경험을**: Razor Pages로 실제 애플리케이션을 만들며 개념을 체화합니다. 대부분의 프로젝트는 Razor Pages만으로 충분합니다.
 
-3. **Chapter 7은 필요할 때**: MVC는 더 복잡한 프로젝트를 위한 것입니다. Razor Pages로 한계를 느낄 때 학습하세요.
+3. **Chapter 8은 필요할 때**: MVC는 더 복잡한 프로젝트를 위한 것입니다. Razor Pages로 한계를 느낄 때 학습하세요.
 
 ## 다음 단계
 
@@ -376,7 +376,7 @@ Part 3를 마치면, 여러분은 서버 사이드 렌더링의 강력함을 이
 
 **Part 5: Entity Framework Core**에서는 데이터베이스 접근을 배웁니다. Razor Pages/MVC는 UI 계층이고, EF Core는 데이터 계층입니다. 둘을 결합하면 완전한 풀스택 애플리케이션이 완성됩니다.
 
-지금 바로 Chapter 5로 이동하여, 첫 Razor 뷰를 작성해보세요!
+지금 바로 Chapter 6으로 이동하여, 첫 Razor 뷰를 작성해보세요!
 
 ---
 

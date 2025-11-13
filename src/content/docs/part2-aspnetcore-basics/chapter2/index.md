@@ -1,10 +1,10 @@
 ---
-title: "Chapter 2 - ASP.NET Core 소개와 개발 환경 설정"
+title: "Chapter 3 - ASP.NET Core 소개와 개발 환경 설정"
 ---
 
-# Chapter 2: ASP.NET Core 소개와 개발 환경 설정
+# Chapter 3: ASP.NET Core 소개와 개발 환경 설정
 
-## 2.1 ASP.NET Core란 무엇인가?
+## 3.1 ASP.NET Core란 무엇인가?
 
 ### .NET Framework에서 .NET Core로의 진화
 
@@ -108,7 +108,7 @@ ASP.NET Core를 선택해야 하는 이유는 다음과 같습니다:
 
 물론 Node.js도 훌륭한 선택이며, JavaScript/TypeScript 전용 팀이라면 NestJS가 더 적합할 수 있습니다. 하지만 성능이 중요하거나, 강타입 시스템을 선호하거나, 대규모 엔터프라이즈 환경이라면 ASP.NET Core는 매우 강력한 대안입니다.
 
-## 2.2 개발 환경 선택과 설정
+## 3.2 개발 환경 선택과 설정
 
 ### Visual Studio 2022 vs Rider vs VS Code: 각각의 장단점
 
@@ -332,7 +332,7 @@ dotnet add package Newtonsoft.Json
 
 솔루션 파일(`.sln`)은 여러 프로젝트를 그룹화하는 컨테이너입니다. 프론트엔드 모노레포의 워크스페이스와 유사한 개념으로, 관련된 여러 프로젝트(API, 웹앱, 라이브러리 등)를 하나로 묶어 관리합니다.
 
-## 2.3 첫 번째 ASP.NET Core 애플리케이션
+## 3.3 첫 번째 ASP.NET Core 애플리케이션
 
 ### `dotnet new` 템플릿 탐색
 
@@ -524,7 +524,7 @@ Hot Reload가 지원되지 않는 변경 (재시작 필요):
 
 실제로 개발하면서 대부분의 변경은 Hot Reload로 처리되므로, 개발 경험이 매우 빠릅니다. Blazor 개발 시에는 서버와 클라이언트 양쪽에서 Hot Reload가 작동하여, 프론트엔드와 거의 동일한 경험을 제공합니다.
 
-## 2.4 프로젝트 구조 해부
+## 3.4 프로젝트 구조 해부
 
 ### Solution과 Project의 관계
 
@@ -796,7 +796,7 @@ public IActionResult GetUser(int id)
 - `Shift+F11`: Step Out (함수 밖으로)
 - `F5`: Continue (다음 중단점까지)
 
-## 2.5 실습: "Hello World"에서 실제 API까지
+## 3.5 실습: "Hello World"에서 실제 API까지
 
 ### 간단한 REST API 엔드포인트 생성
 
@@ -1114,15 +1114,15 @@ public record CreateTodoDto
 
 ---
 
-## Chapter 2 마무리: 첫 번째 API의 완성
+## Chapter 3 마무리: 첫 번째 API의 완성
 
-축하합니다! Chapter 2를 완료하며 첫 번째 ASP.NET Core API를 만들었습니다. .NET SDK 설치부터 시작해서, `dotnet new webapi`로 프로젝트를 생성하고, Hot Reload로 빠르게 개발하며, Swagger로 API를 문서화하고, 에러 처리까지 구현했습니다. 이제 여러분은 간단하지만 완전히 동작하는 웹 API를 만들 수 있습니다.
+축하합니다! Chapter 3을 완료하며 첫 번째 ASP.NET Core API를 만들었습니다. .NET SDK 설치부터 시작해서, `dotnet new webapi`로 프로젝트를 생성하고, Hot Reload로 빠르게 개발하며, Swagger로 API를 문서화하고, 에러 처리까지 구현했습니다. 이제 여러분은 간단하지만 완전히 동작하는 웹 API를 만들 수 있습니다.
 
-하지만 "Hello World"를 넘어 **프로덕션급 애플리케이션**을 만들려면, ASP.NET Core의 내부 작동 방식을 이해해야 합니다. Chapter 2에서 우리는 `builder.Build()`와 `app.Run()`을 사용했지만, 그 사이에서 무슨 일이 일어나는지는 깊이 다루지 않았습니다. 미들웨어는 어떻게 작동하나요? 의존성 주입은 어떻게 구현되나요? 요청이 어떻게 올바른 엔드포인트로 라우팅되나요?
+하지만 "Hello World"를 넘어 **프로덕션급 애플리케이션**을 만들려면, ASP.NET Core의 내부 작동 방식을 이해해야 합니다. Chapter 3에서 우리는 `builder.Build()`와 `app.Run()`을 사용했지만, 그 사이에서 무슨 일이 일어나는지는 깊이 다루지 않았습니다. 미들웨어는 어떻게 작동하나요? 의존성 주입은 어떻게 구현되나요? 요청이 어떻게 올바른 엔드포인트로 라우팅되나요?
 
 ### 다음 단계: 프레임워크의 심장부로
 
-**[Chapter 3: ASP.NET Core의 핵심 아키텍처](./chapter3/index.md)** 에서는 프레임워크의 내부 동작을 깊이 파고듭니다. 단순히 "이렇게 쓴다"가 아니라 "왜 이렇게 설계되었는가"를 이해합니다.
+**[Chapter 4: ASP.NET Core의 핵심 아키텍처](../chapter3/index.md)** 에서는 프레임워크의 내부 동작을 깊이 파고듭니다. 단순히 "이렇게 쓴다"가 아니라 "왜 이렇게 설계되었는가"를 이해합니다.
 
 **미들웨어 파이프라인: Express.js를 넘어서**: Express.js의 미들웨어를 사용해봤다면 개념은 익숙합니다. 하지만 ASP.NET Core의 미들웨어는 더욱 정교합니다. 요청과 응답을 모두 가로챌 수 있고, 조건부로 파이프라인을 분기하며, 타입 안전성을 보장합니다. 커스텀 미들웨어로 요청 ID 추적, 성능 측정, 전역 에러 처리를 구현하면서, Express의 `app.use()`가 ASP.NET Core에서 어떻게 발전했는지 봅니다.
 
@@ -1134,9 +1134,9 @@ public record CreateTodoDto
 
 **구조화된 로깅: console.log의 진화**: `console.log()`는 개발에 유용하지만, 프로덕션 모니터링에는 부족합니다. ASP.NET Core의 `ILogger`는 로그 레벨, 구조화된 데이터, 필터링, 다양한 출력 대상(콘솔, 파일, Application Insights, Elasticsearch)을 지원합니다. 로그를 단순한 텍스트가 아닌 쿼리 가능한 데이터로 다룹니다.
 
-Chapter 3를 마치면, 여러분은 ASP.NET Core가 단순한 웹 프레임워크가 아닌, 엔터프라이즈급 애플리케이션을 위한 완전한 플랫폼임을 이해하게 됩니다. 그리고 이 모든 강력한 기능을 Chapter 4의 Minimal APIs에서 간결하게 활용하는 방법을 배웁니다.
+Chapter 4를 마치면, 여러분은 ASP.NET Core가 단순한 웹 프레임워크가 아닌, 엔터프라이즈급 애플리케이션을 위한 완전한 플랫폼임을 이해하게 됩니다. 그리고 이 모든 강력한 기능을 Chapter 5의 Minimal APIs에서 간결하게 활용하는 방법을 배웁니다.
 
-준비되셨나요? [Chapter 3으로 이동하세요!](./chapter3/index.md)
+준비되셨나요? [Chapter 4로 이동하세요!](../chapter3/index.md)
 
 ---
 

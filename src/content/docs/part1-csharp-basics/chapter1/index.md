@@ -769,17 +769,15 @@ if (obj is string s)
 
 ## 1.5 실습: 기초 문법 변환 연습
 
-이 섹션에서는 실제 코드를 변환하면서 학습합니다. `examples/` 폴더의 코드를 참고하세요.
+이 섹션에서는 실제 코드를 변환하면서 학습합니다.
 
 ### 실습 1: Async 패턴 비교 실습
 
 **목표**: Promise/async-await를 Task/async-await로 변환
-- [예제 코드 보기](./examples/01-async-patterns/)
 
 ### 실습 2: Array 메서드를 LINQ로 재작성하기
 
 **목표**: JavaScript 배열 메서드를 LINQ로 변환
-- [예제 코드 보기](./examples/02-linq-basics/)
 
 ---
 
@@ -1343,7 +1341,7 @@ public class Result<T, E>
 
 ## 연습 문제
 
-the exercises below 파일에서 다음을 구현하세요:
+다음을 구현해보세요:
 
 1. 여러 API를 병렬로 호출하고 결과를 결합
 2. 타임아웃이 있는 비동기 작업
@@ -1866,7 +1864,7 @@ var userWithOrders2 = from user in users
 
 ## 연습 문제
 
-the exercises below 파일에서 다음을 구현하세요:
+다음을 구현해보세요:
 
 1. 제품 목록에서 카테고리별 총 가격 계산
 2. 학생 성적 데이터에서 과목별 최고 점수 학생 찾기

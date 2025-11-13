@@ -1,8 +1,8 @@
 ---
-title: "Chapter 7 - MVC 패턴 - 대규모 애플리케이션을 위한 구조"
+title: "Chapter 8 - MVC 패턴 - 대규모 애플리케이션을 위한 구조"
 ---
 
-# Chapter 7: MVC 패턴 - 대규모 애플리케이션을 위한 구조
+# Chapter 8: MVC 패턴 - 대규모 애플리케이션을 위한 구조
 
 ## Flux/Redux를 아는 개발자를 위한 MVC
 

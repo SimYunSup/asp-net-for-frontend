@@ -1,8 +1,8 @@
 ---
-title: "Chapter 6 - Razor Pages - 단순함의 힘"
+title: "Chapter 7 - Razor Pages - 단순함의 힘"
 ---
 
-# Chapter 6: Razor Pages - 단순함의 힘
+# Chapter 7: Razor Pages - 단순함의 힘
 
 ## Next.js Pages Router의 서버 버전
 
@@ -1109,7 +1109,7 @@ public class DeleteModel : PageModel
 
 Razor Pages로 간단하고 생산적인 웹 애플리케이션을 만들 수 있게 되었습니다. 하지만 대규모 프로젝트나 복잡한 비즈니스 로직에는 더 구조화된 접근이 필요할 수 있습니다.
 
-**Chapter 7: MVC 패턴**에서는 Model-View-Controller 아키텍처를 배웁니다. 관심사를 명확히 분리하고, 재사용 가능한 컴포넌트를 만들며, 팀 협업에 적합한 구조를 설계하는 방법을 익히게 됩니다.
+**Chapter 8: MVC 패턴**에서는 Model-View-Controller 아키텍처를 배웁니다. 관심사를 명확히 분리하고, 재사용 가능한 컴포넌트를 만들며, 팀 협업에 적합한 구조를 설계하는 방법을 익히게 됩니다.
 
 ---
 
@@ -1120,4 +1120,4 @@ Razor Pages로 간단하고 생산적인 웹 애플리케이션을 만들 수 �
 - [유효성 검사 가이드](https://docs.microsoft.com/aspnet/core/mvc/models/validation)
 - [TempData, ViewData, ViewBag 비교](https://docs.microsoft.com/aspnet/core/mvc/views/overview)
 
-다음 챕터: [Chapter 7: MVC 패턴 - 대규모 애플리케이션을 위한 구조](../chapter7/index.md)
+다음 챕터: [Chapter 8: MVC 패턴 - 대규모 애플리케이션을 위한 구조](../chapter8/index.md)
