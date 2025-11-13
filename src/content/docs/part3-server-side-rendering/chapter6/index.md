@@ -346,7 +346,7 @@ JSX의 `.map()`이 Razor의 `@foreach`로 바뀌었습니다. `key` prop은 Razo
 @foreach (var user in Model)
 {
   <li>
-    @(++index). @user.name
+    @(++index). @user.Name
   </li>
 }
 ```
@@ -1066,4 +1066,4 @@ Razor는 단순한 템플릿 엔진이 아닙니다. 강력한 타입 시스템,
 - [View Components 상세 가이드](https://docs.microsoft.com/aspnet/core/mvc/views/view-components)
 - [Razor 문법 치트시트](https://docs.microsoft.com/aspnet/core/mvc/views/razor#razor-syntax)
 
-다음 챕터: [Chapter 6: Razor Pages - 단순함의 힘](../chapter6/index.md)
+다음 챕터: [Chapter 7: Razor Pages - 단순함의 힘](../chapter7/index.md)
