@@ -192,7 +192,8 @@ public class ProductsController : ControllerBase
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 10,
         [FromQuery] string? category = null,
-        [FromQuery] string? search = null)
+        [FromQuery] string? search = null,
+        CancellationToken cancellationToken = default)
     {
         var query = _context.Products.AsQueryable();
 
@@ -203,10 +204,10 @@ public class ProductsController : ControllerBase
         if (!string.IsNullOrEmpty(search))
             query = query.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
 
-        // 총 개수
-        var totalCount = await query.CountAsync();
+        // 총 개수 (CancellationToken 전달)
+        var totalCount = await query.CountAsync(cancellationToken);
 
-        // 페이징
+        // 페이징 (CancellationToken 전달)
         var products = await query
             .OrderBy(p => p.Name)
             .Skip((page - 1) * pageSize)
@@ -220,7 +221,7 @@ public class ProductsController : ControllerBase
                 Category = p.Category,
                 ImageUrl = p.ImageUrl
             })
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
 
         var result = new PagedResult<ProductDto>
         {
@@ -242,9 +243,9 @@ public class ProductsController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ProductDto>> GetProduct(int id)
+    public async Task<ActionResult<ProductDto>> GetProduct(int id, CancellationToken cancellationToken = default)
     {
-        var product = await _context.Products.FindAsync(id);
+        var product = await _context.Products.FindAsync(new object[] { id }, cancellationToken);
 
         if (product == null)
         {

@@ -233,7 +233,9 @@ builder.Services
     .AddMutationType<Mutation>()
     .AddFiltering()
     .AddSorting()
-    .AddProjections();
+    .AddProjections()
+    .AddMaxExecutionDepthRule(10) // 쿼리 깊이 제한 (보안)
+    .AddQueryComplexityAnalyzer(); // 쿼리 복잡도 분석 (DoS 방지)
 
 app.MapGraphQL();
 ```
@@ -995,7 +997,15 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin()
+        // 개발 환경: 모든 origin 허용
+        // policy.AllowAnyOrigin()
+        //       .AllowAnyHeader()
+        //       .AllowAnyMethod()
+        //       .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+
+        // 프로덕션 환경: 특정 origin만 허용
+        policy.WithOrigins("https://yourdomain.com", "https://app.yourdomain.com")
+              .AllowCredentials()
               .AllowAnyHeader()
               .AllowAnyMethod()
               .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
@@ -1302,25 +1312,30 @@ builder.Services.AddHostedService<NotificationService>();
 ```csharp
 public class ChatHub : Hub<IChatClient>
 {
-    private static readonly Dictionary<string, HashSet<string>> _roomUsers = new();
+    private static readonly ConcurrentDictionary<string, HashSet<string>> _roomUsers = new();
 
     public async Task JoinRoom(string roomName)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
 
-        lock (_roomUsers)
-        {
-            if (!_roomUsers.ContainsKey(roomName))
-                _roomUsers[roomName] = new HashSet<string>();
+        // ConcurrentDictionary 사용으로 thread-safe 보장
+        // 주의: HashSet 자체는 thread-safe하지 않으므로 lock 여전히 필요
+        var users = _roomUsers.GetOrAdd(roomName, _ => new HashSet<string>());
 
-            _roomUsers[roomName].Add(Context.ConnectionId);
+        lock (users)
+        {
+            users.Add(Context.ConnectionId);
         }
 
         // 방의 다른 사용자에게 알림
         await Clients.Group(roomName).UserJoined(Context.User?.Identity?.Name ?? "Anonymous");
 
         // 현재 방 사용자 목록 전송
-        var userCount = _roomUsers[roomName].Count;
+        int userCount;
+        lock (users)
+        {
+            userCount = users.Count;
+        }
         await Clients.Caller.SystemMessage($"Room '{roomName}' has {userCount} users");
     }
 
@@ -1328,13 +1343,15 @@ public class ChatHub : Hub<IChatClient>
     {
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
 
-        lock (_roomUsers)
+        if (_roomUsers.TryGetValue(roomName, out var users))
         {
-            if (_roomUsers.ContainsKey(roomName))
+            lock (users)
             {
-                _roomUsers[roomName].Remove(Context.ConnectionId);
-                if (_roomUsers[roomName].Count == 0)
-                    _roomUsers.Remove(roomName);
+                users.Remove(Context.ConnectionId);
+                if (users.Count == 0)
+                {
+                    _roomUsers.TryRemove(roomName, out _);
+                }
             }
         }
 
