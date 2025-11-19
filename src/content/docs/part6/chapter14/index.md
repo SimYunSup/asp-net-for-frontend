@@ -115,7 +115,7 @@ public class ProductsController : ControllerBase
 - Microsoft.AspNetCore.Mvc.Versioning
 
 ### 8. API 문서화
-- OpenAPI/Swagger 통합 (.NET 9 내장 지원)
+- OpenAPI/Swagger 통합 (.NET 9+ 내장 지원)
 - XML 주석 활용
 - 예제 응답 정의
 - Swagger UI 커스터마이징

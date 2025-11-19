@@ -937,7 +937,7 @@ await context.Posts
 
 **원시 SQL로 직접 벌크 작업**
 
-EF Core 7부터는 `ExecuteUpdate`와 `ExecuteDelete`가 내장되어 있습니다:
+EF Core 7+부터는 `ExecuteUpdate`와 `ExecuteDelete`가 내장되어 있습니다:
 
 ```csharp
 // 조건에 맞는 모든 행 업데이트 (단일 SQL)

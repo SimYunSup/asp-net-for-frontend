@@ -175,7 +175,7 @@ self.addEventListener('fetch', event => {
 
 **초기 다운로드 크기**: .NET 런타임 자체가 약 2.5MB (gzip 압축 후)이며, 애플리케이션 DLL과 의존성 라이브러리를 합치면 더 커집니다. 작은 앱도 최소 3-5MB는 됩니다. React 앱(200KB-1MB)보다 훨씬 큽니다.
 
-.NET 7/8/9의 AOT(Ahead-of-Time) 컴파일로 크기를 줄일 수 있지만, 여전히 JavaScript보다 큽니다. 트레이드오프가 있습니다: 큰 초기 로드 vs 이후 빠른 성능.
+.NET 7+의 AOT(Ahead-of-Time) 컴파일로 크기를 줄일 수 있지만, 여전히 JavaScript보다 큽니다. 트레이드오프가 있습니다: 큰 초기 로드 vs 이후 빠른 성능.
 
 **브라우저 제약**: WebAssembly는 샌드박스에서 실행되므로, 파일 시스템, 직접 데이터베이스 접근, 네이티브 API를 사용할 수 없습니다. 이런 작업은 JavaScript Interop이나 Web API를 통해 우회해야 합니다.
 
@@ -539,11 +539,11 @@ function ProductList({ products }) {
 
 ### 사전 준비
 
-.NET 8 SDK 이상이 필요합니다. 설치 확인:
+.NET 10 SDK 이상이 필요합니다. 설치 확인:
 
 ```bash
 dotnet --version
-# 8.0.0 이상이어야 함
+# 10.0.0 이상이어야 함
 ```
 
 ### Blazor Server 프로젝트 생성

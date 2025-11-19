@@ -105,7 +105,7 @@ function ProductDetail() {
 }
 ```
 
-URL: `/blog/2024/11/12/blazor-introduction`
+URL: `/blog/2025/11/12/blazor-introduction`
 
 사용 가능한 제약:
 - `:int`, `:long`, `:float`, `:double`, `:decimal`
@@ -294,7 +294,7 @@ React의 Layout 컴포넌트와 유사하게, Blazor는 레이아웃을 통해 �
   </main>
 
   <footer>
-    <p>&copy; 2024 My Blazor App</p>
+    <p>&copy; 2025 My Blazor App</p>
   </footer>
 </div>
 

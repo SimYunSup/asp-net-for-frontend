@@ -395,7 +395,7 @@ public IActionResult GetUser(int id)
 }
 ```
 
-정적 자산(이미지, CSS, JS)은 더 긴 시간 캐싱할 수 있습니다. .NET 9의 `MapStaticAssets`는 파일 내용 기반 해시를 URL에 추가하여, 파일이 변경되면 URL도 변경되게 합니다. 따라서 무한정 캐싱해도 안전합니다.
+정적 자산(이미지, CSS, JS)은 더 긴 시간 캐싱할 수 있습니다. .NET 9+의 `MapStaticAssets`는 파일 내용 기반 해시를 URL에 추가하여, 파일이 변경되면 URL도 변경되게 합니다. 따라서 무한정 캐싱해도 안전합니다.
 
 **2. 서버 사이드 메모리 캐싱: IMemoryCache**
 
@@ -464,9 +464,9 @@ public class ProductService
 
 분산 캐시는 일관성을 보장하지만, 네트워크 왕복이 필요하므로 메모리 캐시보다 느립니다.
 
-**4. HybridCache (.NET 9): 두 세계의 장점**
+**4. HybridCache (.NET 9+): 두 세계의 장점**
 
-.NET 9의 `HybridCache`는 두 접근을 결합합니다. L1(메모리 캐시) + L2(분산 캐시) 구조로, 먼저 메모리에서 찾고, 없으면 분산 캐시에서 찾습니다. 게다가 "stampede" 문제(여러 요청이 동시에 캐시 미스를 경험하여 데이터베이스에 동일한 쿼리를 여러 번 보내는 현상)를 자동으로 방지합니다.
+.NET 9에서 도입된 `HybridCache`는 두 접근을 결합합니다. L1(메모리 캐시) + L2(분산 캐시) 구조로, 먼저 메모리에서 찾고, 없으면 분산 캐시에서 찾습니다. 게다가 "stampede" 문제(여러 요청이 동시에 캐시 미스를 경험하여 데이터베이스에 동일한 쿼리를 여러 번 보내는 현상)를 자동으로 방지합니다.
 
 ```csharp
 public class ProductService
@@ -559,7 +559,7 @@ Part 7은 프로덕션 환경의 현실적인 문제들을 다룹니다. 실시�
 
 React Query, Redux Toolkit의 RTK Query와 생성된 클라이언트를 통합하여, 선언적 데이터 페칭과 타입 안전성을 동시에 얻습니다. Optimistic UI 업데이트, 에러 처리, 재시도 로직, 캐싱 정책을 구현합니다.
 
-HybridCache (.NET 9)를 사용하여 서버 측 캐싱을 적용하고, 클라이언트 측 캐싱(React Query)과 조합하여 최적의 성능을 얻습니다. HTTP 캐시 헤더를 적절히 설정하여 브라우저 캐싱도 활용합니다.
+HybridCache (.NET 9+)를 사용하여 서버 측 캐싱을 적용하고, 클라이언트 측 캐싱(React Query)과 조합하여 최적의 성능을 얻습니다. HTTP 캐시 헤더를 적절히 설정하여 브라우저 캐싱도 활용합니다.
 
 실습에서는 전체 스택(ASP.NET Core API + 생성된 TypeScript 클라이언트 + React Query)을 통합하며, 서버 타입을 변경했을 때 프론트엔드가 자동으로 업데이트되거나 컴파일 에러를 발생시키는 것을 경험합니다.
 
@@ -735,6 +735,6 @@ Part 7을 마치면, 여러분은 프로덕션 환경에서 견고하고 확장 
 - [NSwag 문서](https://github.com/RicoSuter/NSwag/wiki)
 - [Microsoft Kiota](https://learn.microsoft.com/openapi/kiota/)
 - [React Query 문서](https://tanstack.com/query/latest)
-- [.NET 9 HybridCache](https://learn.microsoft.com/aspnet/core/performance/caching/hybrid)
+- [.NET HybridCache Documentation](https://learn.microsoft.com/aspnet/core/performance/caching/hybrid)
 
 **예상 학습 시간**: 2-3주 (각 챕터당 7-10일, 실습 포함)

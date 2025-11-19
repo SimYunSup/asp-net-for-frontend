@@ -104,7 +104,7 @@ dotnet tool install -g NSwag.ConsoleCore
 
 ```json
 {
-  "runtime": "Net80",
+  "runtime": "Net100",
   "defaultVariables": null,
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
@@ -160,7 +160,7 @@ dotnet tool install -g NSwag.ConsoleCore
       "className": "{controller}Client",
       "moduleName": "",
       "namespace": "",
-      "typeScriptVersion": 4.3,
+      "typeScriptVersion": 5.4,
       "template": "Fetch",
       "promiseType": "Promise",
       "httpClass": "HttpClient",
@@ -705,9 +705,9 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 ```
 
-### Layer 5: HybridCache (.NET 9) - 최선의 조합
+### Layer 5: HybridCache (.NET 9+) - 최선의 조합
 
-.NET 9의 `HybridCache`는 L1(메모리) + L2(분산) 캐시를 자동으로 조합하며, stampede 문제도 방지합니다.
+.NET 9에서 도입된 `HybridCache`는 L1(메모리) + L2(분산) 캐시를 자동으로 조합하며, stampede 문제도 방지합니다.
 
 ```csharp
 public class UserService
@@ -775,7 +775,7 @@ public async Task UpdateUserAsync(int id, UpdateUserDto dto)
 **3. Tag-based Invalidation**: 관련된 캐시를 그룹으로 무효화.
 
 ```csharp
-// HybridCache는 태그를 지원합니다 (.NET 9)
+// HybridCache는 태그를 지원합니다 (.NET 9+)
 await _cache.GetOrCreateAsync(
     $"user_{id}",
     factory,

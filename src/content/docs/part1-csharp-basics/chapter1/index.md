@@ -309,7 +309,7 @@ Predicate<int> isEven = n => n % 2 == 0;
 // C# 10+: 자연스러운 타입 추론
 var multiply = (int x, int y) => x * y;
 
-// C# 13: 기본 람다 매개변수 (새로운 기능!)
+// C# 14: 기본 람다 매개변수
 var increment = (int x, int step = 1) => x + step;
 Console.WriteLine(increment(5));    // 6
 Console.WriteLine(increment(5, 2)); // 7
@@ -801,7 +801,7 @@ if (obj is string s)
 
 **LINQ의 진정한 힘**: Chapter 1에서 LINQ의 기본을 보았지만, Chapter 2에서는 `GroupBy`, `Join`, `SelectMany` 같은 고급 연산자로 복잡한 데이터 변환을 수행합니다. 더 놀라운 것은, 동일한 LINQ 쿼리가 Entity Framework와 함께 사용되면 SQL로 변환된다는 점입니다. C# 코드를 작성하면 자동으로 데이터베이스 쿼리가 생성됩니다!
 
-**최신 C# 기능**: C# 13과 14는 Primary Constructors, Raw String Literals, List Patterns 같은 현대적 기능을 추가했습니다. 이들은 코드를 더 간결하고 표현력 있게 만들며, TypeScript의 최신 기능들과 비슷한 철학을 공유합니다.
+**최신 C# 기능**: C# 14는 Primary Constructors, Raw String Literals, List Patterns 같은 현대적 기능을 더욱 발전시켰습니다. 이들은 코드를 더 간결하고 표현력 있게 만들며, TypeScript의 최신 기능들과 비슷한 철학을 공유합니다.
 
 Chapter 2를 마치면, 여러분은 단순히 "TypeScript 개념을 C#으로 번역하는" 수준을 넘어, "C#답게 생각하고 코드를 작성하는" 개발자가 됩니다. 그리고 Part 2에서는 이 모든 지식을 ASP.NET Core로 실제 웹 애플리케이션을 만드는 데 활용합니다.
 
@@ -812,7 +812,7 @@ Chapter 2를 마치면, 여러분은 단순히 "TypeScript 개념을 C#으로 �
 ## 추가 학습 리소스
 
 - [Microsoft C# 문서](https://docs.microsoft.com/dotnet/csharp/)
-- [C# 13의 새로운 기능](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-13)
+- [C# 14의 새로운 기능](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-14)
 - [LINQ 101 샘플](https://docs.microsoft.com/samples/dotnet/try-samples/101-linq-samples/)
 - [TypeScript vs C# 비교](https://aka.ms/typescript-to-csharp)
 

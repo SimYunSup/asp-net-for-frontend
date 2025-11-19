@@ -144,8 +144,8 @@ src/
 이 프로젝트에서 사용하는 기술들:
 
 **백엔드:**
-- **.NET 9** - 최신 ASP.NET Core
-- **Entity Framework Core 9** - ORM
+- **.NET 10** - 최신 ASP.NET Core
+- **Entity Framework Core 10** - ORM
 - **PostgreSQL** - 주 데이터베이스
 - **Redis** - 캐싱과 세션
 - **MediatR** - CQRS 패턴

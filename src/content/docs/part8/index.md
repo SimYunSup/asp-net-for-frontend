@@ -170,9 +170,9 @@ services.AddStackExchangeRedisCache(options =>
 
 분산 캐시는 일관성을 보장하지만, 네트워크 왕복이 필요하므로 메모리 캐시보다 느립니다. 하지만 단일 서버의 메모리 제약을 넘어서는 대용량 데이터를 캐싱하거나, 여러 서버 간 일관성이 중요할 때 필수적입니다.
 
-**4. HybridCache (.NET 9의 게임 체인저)**
+**4. HybridCache (.NET 9+의 게임 체인저)**
 
-.NET 9의 `HybridCache`는 L1(메모리) + L2(분산 캐시)의 2단계 캐싱을 제공하며, 캐시 stampede 문제를 자동으로 해결합니다.
+.NET 9에서 도입된 `HybridCache`는 L1(메모리) + L2(분산 캐시)의 2단계 캐싱을 제공하며, 캐시 stampede 문제를 자동으로 해결합니다.
 
 ```csharp
 public async Task<Product> GetProductAsync(int id)
@@ -403,7 +403,7 @@ CQRS의 이점:
 
 상태의 여러 계층(요청, 애플리케이션, 세션, 영속적)을 이해하고 각각을 적절히 사용합니다. 세션과 JWT의 차이를 깊이 비교하며, 각각의 적합한 사용 사례를 배웁니다.
 
-캐싱의 모든 계층(Response, Memory, Distributed, Hybrid)을 마스터하며, 캐시 무효화 전략을 학습합니다. .NET 9의 HybridCache가 어떻게 L1+L2 캐싱과 stampede 방지를 제공하는지 경험합니다.
+캐싱의 모든 계층(Response, Memory, Distributed, Hybrid)을 마스터하며, 캐시 무효화 전략을 학습합니다. .NET 9+의 HybridCache가 어떻게 L1+L2 캐싱과 stampede 방지를 제공하는지 경험합니다.
 
 TempData, ViewData, ViewBag의 차이와 사용 시나리오를 배우며, 실습에서는 분산 세션을 사용한 장바구니와 HybridCache를 적용한 제품 카탈로그를 구현합니다.
 
@@ -463,7 +463,7 @@ Part 8을 마치면 다음을 할 수 있습니다:
   - 여러 서버 간 일관성
   - 직렬화와 역직렬화 오버헤드
   - 네트워크 지연 고려
-- HybridCache (.NET 9): 통합된 L1+L2 캐싱
+- HybridCache (.NET 9+): 통합된 L1+L2 캐싱
   - 메모리 캐시 + 분산 캐시 자동 관리
   - Stampede 방지: 동시 요청 시 단일 쿼리만 실행
   - 타입 안전한 API
@@ -623,7 +623,7 @@ Part 8을 마치면, 여러분은 복잡한 시스템을 설계하고 상태를 
 - [Dependency Injection in ASP.NET Core](https://docs.microsoft.com/aspnet/core/fundamentals/dependency-injection)
 - [Response Caching in ASP.NET Core](https://docs.microsoft.com/aspnet/core/performance/caching/response)
 - [Distributed Caching in ASP.NET Core](https://docs.microsoft.com/aspnet/core/performance/caching/distributed)
-- [HybridCache in .NET 9](https://learn.microsoft.com/aspnet/core/performance/caching/hybrid)
+- [HybridCache Documentation](https://learn.microsoft.com/aspnet/core/performance/caching/hybrid)
 - [Clean Architecture by Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [CQRS Pattern](https://martinfowler.com/bliki/CQRS.html)
 - [MediatR Documentation](https://github.com/jbogard/MediatR/wiki)

@@ -284,7 +284,11 @@ Blazor는 2018년 실험적 프로젝트로 시작했지만, 이제는 프로덕
 
 Microsoft는 Blazor에 크게 투자하고 있습니다. Azure Portal의 일부 기능이 Blazor로 재작성되고 있으며, Visual Studio의 일부 UI도 Blazor 기반입니다. Stack Overflow의 2023년 설문조사에서 Blazor는 "가장 사랑받는 웹 프레임워크" 상위권에 올랐습니다.
 
-.NET 8에서 도입된 정적 서버 사이드 렌더링(Static SSR)과 스트리밍 렌더링은 Blazor를 Next.js와 동등한 수준으로 끌어올렸습니다. .NET 9의 생성자 주입(Constructor Injection)은 의존성 주입을 더 간결하게 만들었습니다. 앞으로도 계속 개선될 것입니다.
+- **.NET 8 (2023)**: Blazor United (Full Stack Web UI) 도입. Server와 WebAssembly 모드를 자유롭게 전환.
+- **.NET 9 (2024)**: 성능 최적화 및 정적 자산 관리 개선.
+- **.NET 10 (2025)**: 최신 버전. 성능이 더욱 강화되고 개발자 경험이 향상되었습니다.
+
+이 강의에서는 **.NET 10**을 기준으로 Blazor의 최신 기능을 다룹니다.
 
 ### Part 4에서 배울 내용
 

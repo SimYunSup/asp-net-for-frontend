@@ -22,24 +22,24 @@ Node.js로 개발할 때를 떠올려보세요. MacBook에서 개발하고, Linu
 
 더 나아가, ASP.NET Core는 자체 내장 웹 서버인 Kestrel을 포함합니다. Kestrel은 경량이면서도 고성능으로, TechEmpower 벤치마크에서 상위권을 차지할 정도로 빠릅니다. Express.js의 내장 서버처럼 개발 중에는 독립적으로 실행되고, 프로덕션에서는 Nginx나 Apache 같은 리버스 프록시 뒤에 배치할 수 있습니다.
 
-### .NET 8 (LTS)과 .NET 9의 차이점
+### .NET 10 (LTS)과 이전 버전의 차이점
 
-.NET은 매년 11월 새 버전을 출시하며, 짝수 버전(6, 8, 10...)은 LTS(Long Term Support)로 3년간 지원됩니다. 홀수 버전(7, 9, 11...)은 표준 지원으로 18개월간 지원됩니다. 이는 Node.js의 버전 정책과 유사합니다.
+.NET은 매년 11월 새 버전을 출시하며, 짝수 버전(8, 10...)은 LTS(Long Term Support)로 3년간 지원됩니다. 홀수 버전(9, 11...)은 표준 지원으로 18개월간 지원됩니다. 이는 Node.js의 버전 정책과 유사합니다.
 
-.NET 8은 2023년 11월에 출시된 LTS 버전으로, 프로덕션 환경에서 안정성이 검증되었습니다. 주요 특징으로는:
+.NET 10은 2025년 11월에 출시된 최신 LTS 버전으로, 향후 3년간 안정적인 지원을 받습니다. 주요 특징으로는:
 
-- **성능 향상**: JSON 직렬화 속도가 크게 개선되었고, 가비지 컬렉션 최적화로 메모리 사용량이 줄었습니다
-- **Native AOT 지원**: 애플리케이션을 네이티브 바이너리로 컴파일하여 시작 시간을 극적으로 단축시킬 수 있습니다
-- **새로운 Identity API**: 사용자 인증을 위한 최소한의 API 엔드포인트를 제공합니다
+- **성능 향상**: 런타임 성능이 더욱 최적화되었고, 특히 클라우드 네이티브 환경에서의 시작 속도가 개선되었습니다.
+- **C# 14 지원**: `field` 키워드 등 최신 언어 기능을 완벽하게 지원합니다.
+- **AI 통합**: AI 모델을 애플리케이션에 쉽게 통합할 수 있는 새로운 API가 추가되었습니다.
 
-.NET 9는 2024년 11월에 출시되었으며, 다음과 같은 혁신적인 기능을 추가했습니다:
+이전 버전인 .NET 9(2024년 11월 출시)는 다음과 같은 혁신적인 기능을 도입했습니다:
 
 - **HybridCache**: 메모리 캐시와 분산 캐시를 통합한 새로운 캐싱 API로, cache stampede 문제를 자동으로 방지합니다
 - **OpenAPI 내장 지원**: 별도 패키지 없이 Swagger 문서를 자동 생성할 수 있습니다
 - **개선된 Rate Limiting**: 더 유연하고 강력한 요청 제한 기능을 제공합니다
 - **Keyed Services**: 동일한 인터페이스의 여러 구현체를 키로 구분하여 등록할 수 있습니다
 
-프로덕션 환경이라면 .NET 8 LTS를 권장하지만, 최신 기능을 실험하고 싶다면 .NET 9를 사용해도 좋습니다. 두 버전 간의 마이그레이션은 비교적 간단하며, 대부분의 코드가 호환됩니다.
+프로덕션 환경이라면 최신 LTS인 **.NET 10**을 권장합니다. .NET 8 LTS를 사용 중이라면 .NET 10으로의 마이그레이션을 고려해볼 시기입니다. 두 버전 간의 마이그레이션은 비교적 간단하며, 대부분의 코드가 호환됩니다.
 
 ### Express.js, NestJS와 비교: 왜 ASP.NET Core인가?
 
@@ -185,7 +185,7 @@ VS Code로 ASP.NET Core 개발을 시작하는 것은 매우 간단합니다. �
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/bin/Debug/net9.0/MyApp.dll",
+      "program": "${workspaceFolder}/bin/Debug/net10.0/MyApp.dll",
       "args": [],
       "cwd": "${workspaceFolder}",
       "env": {
@@ -302,13 +302,13 @@ Node.js 프로젝트의 `package.json`은 의존성, 스크립트, 메타데이�
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 </Project>
@@ -705,12 +705,12 @@ dotnet publish -c Release -o ./publish
 MyProject/
 ├── bin/
 │   ├── Debug/
-│   │   └── net9.0/
+│   │   └── net10.0/
 │   │       ├── MyProject.dll
 │   │       ├── MyProject.pdb (디버그 심볼)
 │   │       └── appsettings.json
 │   └── Release/
-│       └── net9.0/
+│       └── net10.0/
 └── obj/  (임시 빌드 파일)
 ```
 
@@ -720,7 +720,7 @@ MyProject/
 ```xml
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
 
     <!-- Release 빌드 최적화 -->
     <PublishTrimmed>true</PublishTrimmed>  <!-- 사용하지 않는 코드 제거 -->
@@ -747,7 +747,7 @@ VS Code에서 디버깅을 시작하려면 `F5`를 누르거나 디버그 패널
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/bin/Debug/net9.0/MyApi.dll",
+      "program": "${workspaceFolder}/bin/Debug/net10.0/MyApi.dll",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,

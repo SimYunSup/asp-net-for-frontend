@@ -1336,7 +1336,7 @@ E2E 테스트는 사용자 관점에서 애플리케이션 전체를 테스트�
 ```bash
 dotnet add package Microsoft.Playwright
 dotnet add package Microsoft.Playwright.NUnit
-pwsh bin/Debug/net8.0/playwright.ps1 install
+pwsh bin/Debug/net10.0/playwright.ps1 install
 ```
 
 ```csharp

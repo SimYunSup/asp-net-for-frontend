@@ -13,20 +13,20 @@ title: "Appendix B - .NET CLI 명령어 참조"
 ```bash
 # .NET SDK 버전 확인
 dotnet --version
-# 출력 예: 8.0.100
+# 출력 예: 10.0.100
 
 # 설치된 모든 SDK 버전 나열
 dotnet --list-sdks
 # 출력 예:
-# 6.0.420 [C:\Program Files\dotnet\sdk]
-# 7.0.407 [C:\Program Files\dotnet\sdk]
-# 8.0.100 [C:\Program Files\dotnet\sdk]
+# 8.0.400 [C:\Program Files\dotnet\sdk]
+# 9.0.100 [C:\Program Files\dotnet\sdk]
+# 10.0.100 [C:\Program Files\dotnet\sdk]
 
 # 설치된 모든 런타임 나열
 dotnet --list-runtimes
 # 출력 예:
-# Microsoft.AspNetCore.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
-# Microsoft.NETCore.App 8.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+# Microsoft.AspNetCore.App 10.0.0 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+# Microsoft.NETCore.App 10.0.0 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
 
 # .NET 정보 전체 출력
 dotnet --info

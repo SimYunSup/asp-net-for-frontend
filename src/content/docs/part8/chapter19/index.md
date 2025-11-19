@@ -10,7 +10,7 @@ title: "Chapter 19 - 서버 사이드 상태 관리"
 
 하지만 서버의 상태는 근본적으로 다릅니다. 단일 사용자가 아닌 **수천 명의 동시 사용자**가 상태를 공유하며, 단일 브라우저 탭이 아닌 **여러 서버 인스턴스**가 상태를 관리합니다. 페이지를 새로고침해도 사라지지 않는 **영속적 상태**가 있으며, 요청이 끝나면 즉시 폐기되는 **일시적 상태**도 있습니다.
 
-이 챕터는 서버 사이드 상태 관리의 모든 측면을 다룹니다. 의존성 주입의 세 가지 수명 주기, 세션과 JWT의 철학적 차이, 다계층 캐싱 전략, 그리고 .NET 9의 HybridCache가 이 모든 것을 어떻게 단순화하는지 배웁니다.
+이 챕터는 서버 사이드 상태 관리의 모든 측면을 다룹니다. 의존성 주입의 세 가지 수명 주기, 세션과 JWT의 철학적 차이, 다계층 캐싱 전략, 그리고 .NET 9+의 HybridCache가 이 모든 것을 어떻게 단순화하는지 배웁니다.
 
 ## Part 1: 의존성 주입 수명 주기 - 상태의 범위
 
@@ -779,12 +779,12 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 **성능**: 메모리 캐시보다 느림 (네트워크 왕복), 하지만 서버 간 일관성 보장.
 
-### Layer 4: HybridCache (.NET 9) - 최선의 조합
+### Layer 4: HybridCache (.NET 9+) - 최선의 조합
 
 **HybridCache**는 L1(메모리) + L2(분산 캐시)를 자동으로 관리하며, **Stampede 방지**를 내장합니다.
 
 ```bash
-dotnet add package Microsoft.Extensions.Caching.Hybrid --prerelease
+dotnet add package Microsoft.Extensions.Caching.Hybrid
 ```
 
 ```csharp
@@ -881,7 +881,7 @@ public async Task UpdateProductAsync(int id, UpdateProductDto dto)
 관련 캐시를 그룹으로 무효화.
 
 ```csharp
-// HybridCache는 태그 지원 (.NET 9)
+// HybridCache는 태그 지원 (.NET 9+)
 await _cache.GetOrCreateAsync(
     $"product_{id}",
     factory,

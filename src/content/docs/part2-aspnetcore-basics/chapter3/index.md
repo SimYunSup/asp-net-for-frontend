@@ -757,9 +757,9 @@ public class MyService
 }
 ```
 
-### Keyed Services (.NET 9 신기능)
+### Keyed Services (.NET 9+)
 
-.NET 8까지는 동일한 인터페이스의 여러 구현체를 등록하기 어려웠습니다. .NET 9의 Keyed Services는 이 문제를 우아하게 해결합니다.
+.NET 8까지는 동일한 인터페이스의 여러 구현체를 등록하기 어려웠습니다. .NET 9에서 도입된 Keyed Services는 이 문제를 우아하게 해결합니다.
 
 **문제 상황**:
 ```csharp
@@ -778,7 +778,7 @@ builder.Services.AddScoped<ICacheService, RedisCache>();
 builder.Services.AddScoped<ICacheService, MemoryCache>();  // 이것만 사용됨
 ```
 
-**.NET 9 Keyed Services**:
+**.NET 9+ Keyed Services**:
 ```csharp
 // 키로 구분하여 등록
 builder.Services.AddKeyedScoped<ICacheService, RedisCache>("redis");

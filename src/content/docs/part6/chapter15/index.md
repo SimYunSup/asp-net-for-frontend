@@ -1007,7 +1007,7 @@ public async Task<IActionResult> UpdateDocument(int id, [FromBody] UpdateDocumen
 - [ ] CSRF 방지 (SameSite 쿠키, Anti-forgery 토큰)
 
 ### Rate Limiting
-- [ ] API Rate Limiting 구현 (.NET 9 기능 활용)
+- [ ] API Rate Limiting 구현 (.NET 9+ 기능 활용)
 - [ ] IP 기반 및 사용자 기반 제한
 - [ ] 429 Too Many Requests 응답
 

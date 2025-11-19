@@ -357,12 +357,12 @@ services.Configure<BrotliCompressionProviderOptions>(options =>
 });
 ```
 
-**.NET 9의 빌드 타임 압축**
+**.NET 9+의 빌드 타임 압축**
 
 정적 자산(CSS, JS)은 빌드 시 미리 압축할 수 있습니다. 런타임 오버헤드가 없으며, CPU를 절약합니다.
 
 ```csharp
-app.MapStaticAssets(); // .NET 9: 자동 fingerprinting + 사전 압축
+app.MapStaticAssets(); // .NET 9+: 자동 fingerprinting + 사전 압축
 ```
 
 `MapStaticAssets`는 각 파일의 해시를 URL에 추가하여, 파일이 변경되면 URL도 변경되게 합니다. 따라서 무한 캐싱이 안전합니다.
@@ -879,7 +879,7 @@ Kubernetes나 로드 밸런서는 이 엔드포인트를 주기적으로 호출�
 
 프로파일링 도구(Visual Studio Profiler, dotnet-trace, PerfView)로 병목을 식별합니다. BenchmarkDotNet으로 정확한 벤치마크를 작성하며, 최적화 전후를 비교합니다.
 
-비동기 프로그래밍의 모범 사례를 배우며, `ValueTask`와 `IAsyncEnumerable`을 활용합니다. 응답 압축(Gzip, Brotli)을 설정하고, .NET 9의 빌드 타임 압축을 경험합니다.
+비동기 프로그래밍의 모범 사례를 배우며, `ValueTask`와 `IAsyncEnumerable`을 활용합니다. 응답 압축(Gzip, Brotli)을 설정하고, .NET 9+의 빌드 타임 압축을 경험합니다.
 
 데이터베이스 최적화(N+1 해결, 인덱싱, Connection Pooling)를 다루며, Native AOT의 장단점을 이해합니다. 실습에서는 느린 API를 프로파일링하여 병목을 찾고, 최적화하며, 벤치마크로 개선을 검증합니다.
 
@@ -936,7 +936,7 @@ Part 10을 마치면 다음을 할 수 있습니다:
 - Gzip vs Brotli: 압축률과 CPU 사용
 - 압축 레벨 선택
 - HTTPS에서의 압축 고려사항
-- .NET 9의 빌드 타임 압축
+- .NET 9+의 빌드 타임 압축
   - `MapStaticAssets`: 자동 fingerprinting
   - 사전 압축된 파일 제공
 
@@ -1046,7 +1046,7 @@ Part 10을 마치면 다음을 할 수 있습니다:
 - Grafana 대시보드
   - 시계열 그래프
   - 알림 규칙
-- Kestrel 연결 메트릭 (.NET 9)
+- Kestrel 연결 메트릭 (.NET 9+)
   - 동시 연결 수
   - 요청 큐 길이
 - 커스텀 메트릭 생성

@@ -78,7 +78,7 @@ ASP.NET Core는 대부분의 기능을 프레임워크에 내장하고 있습니
 
 **4. 엔터프라이즈급 도구: Visual Studio와 Rider의 강력함**
 
-VS Code는 훌륭한 에디터지만, 완전한 IDE는 아닙니다. Visual Studio 2022나 JetBrains Rider는 리팩토링, 디버깅, 프로파일링, 코드 분석에서 차원이 다른 경험을 제공합니다. "Extract Interface", "Rename Symbol", "Find All References"—이 모든 것이 프로젝트 전체에서 타입 안전하게 작동합니다. 디버거는 복잡한 비동기 코드의 흐름을 시각화하며, 프로파일러는 성능 병목을 정확히 찾아냅니다.
+VS Code는 훌륭한 에디터지만, 완전한 IDE는 아닙니다. Visual Studio나 JetBrains Rider는 리팩토링, 디버깅, 프로파일링, 코드 분석에서 차원이 다른 경험을 제공합니다. "Extract Interface", "Rename Symbol", "Find All References"—이 모든 것이 프로젝트 전체에서 타입 안전하게 작동합니다. 디버거는 복잡한 비동기 코드의 흐름을 시각화하며, 프로파일러는 성능 병목을 정확히 찾아냅니다.
 
 **5. 보안: 기본적으로 안전한 설계**
 
